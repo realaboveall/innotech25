@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Hyperspeed from "./HyperSpeed";
 
 const Form = () => {
   const navigate = useNavigate();
