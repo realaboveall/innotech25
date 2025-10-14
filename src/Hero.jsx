@@ -6,7 +6,7 @@ import Participate from "./Participate";
 import Contact from "./Contact";
 import Footer from "./Footer";
 import Gallery from "./Gallery";
-import Hyperspeed from "./HyperSpeed";
+import Hyperspeed from "./Hyperspeed";
 import { motion } from "motion/react";
 import Theme from "./Theme";
 import Register from "./Register";
