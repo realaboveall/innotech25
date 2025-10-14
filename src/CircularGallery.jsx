@@ -370,51 +370,47 @@ class App {
     const defaultItems = [
       {
         image: `https://res.cloudinary.com/dbugu6aej/image/upload/v1759136968/Innotech_Gallery1_hj4wcb.jpg`,
-        text: "Bridge",
+        text: "",
       },
       {
         image: `https://res.cloudinary.com/dbugu6aej/image/upload/v1759136968/Innotech_Gallery3_jsbkax.jpg`,
-        text: "Desk Setup",
+        text: "",
       },
       {
         image: `https://res.cloudinary.com/dbugu6aej/image/upload/v1759136968/Innotech_Gallery2_fhsozk.jpg`,
-        text: "Waterfall",
+        text: "",
       },
       {
         image: `https://res.cloudinary.com/dbugu6aej/image/upload/v1759136969/Innotech_Gallery7_nay0gv.jpg`,
-        text: "Strawberries",
+        text: "",
       },
       {
-        image: `https://picsum.photos/seed/5/800/600?grayscale`,
-        text: "Deep Diving",
+        image: `https://res.cloudinary.com/dbugu6aej/image/upload/v1759136969/Innotech_Gallery6_pvjbpw.jpg`,
+        text: "",
       },
       {
-        image: `https://picsum.photos/seed/16/800/600?grayscale`,
-        text: "Train Track",
+        image: `https://res.cloudinary.com/dbugu6aej/image/upload/v1759136970/Innotech_Gallery4_qvpqev.jpg`,
+        text: "",
       },
       {
-        image: `https://picsum.photos/seed/17/800/600?grayscale`,
-        text: "Santorini",
+        image: `https://res.cloudinary.com/dbugu6aej/image/upload/v1759136968/Innotech_Gallery5_p0atum.jpg`,
+        text: "",
       },
       {
-        image: `https://picsum.photos/seed/8/800/600?grayscale`,
-        text: "Blurry Lights",
+        image: `https://res.cloudinary.com/dbugu6aej/image/upload/v1759137613/Innotech_Gallery9_nwccz2.jpg`,
+        text: "",
       },
       {
-        image: `https://picsum.photos/seed/9/800/600?grayscale`,
-        text: "New York",
+        image: `https://res.cloudinary.com/dccufw6lh/image/upload/v1759522094/Picture3_gyo3pa.jpg`,
+        text: "",
       },
       {
-        image: `https://picsum.photos/seed/10/800/600?grayscale`,
-        text: "Good Boy",
+        image: `https://res.cloudinary.com/dccufw6lh/image/upload/v1759522094/Picture2_c8vmri.jpg`,
+        text: "",
       },
       {
-        image: `https://picsum.photos/seed/21/800/600?grayscale`,
-        text: "Coastline",
-      },
-      {
-        image: `https://picsum.photos/seed/12/800/600?grayscale`,
-        text: "Palm Trees",
+        image: `https://res.cloudinary.com/dbugu6aej/image/upload/v1759137613/Innotech_Gallery8_xdbwox.jpg`,
+        text: "",
       },
     ];
     const galleryItems = items && items.length ? items : defaultItems;

@@ -51,22 +51,20 @@ const FNav = () => {
 
           {/* MIDDLE: Nav Links (Desktop) */}
           <div className="hidden md:flex items-center justify-center gap-8">
-            {["Home", "Tracks", "Timeline", "Gallery", "Contact"].map(
-              (item) => (
-                <NavLink
-                  key={item}
-                  to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
-                  className={({ isActive }) =>
-                    `relative text-sm tracking-wide transition-all duration-300 ${
-                      isActive
-                        ? "text-white font-semibold after:absolute after:bottom-[-6px] after:left-1/2 after:-translate-x-1/2 after:w-1.5 after:h-1.5 after:rounded-full after:bg-gradient-to-r after:from-cyan-400 after:to-pink-400"
-                        : "text-gray-300 hover:text-white"
-                    }`
-                  }>
-                  {item}
-                </NavLink>
-              )
-            )}
+            {["Home", "Tracks", "Gallery"].map((item) => (
+              <NavLink
+                key={item}
+                to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+                className={({ isActive }) =>
+                  `relative text-sm tracking-wide transition-all duration-300 ${
+                    isActive
+                      ? "text-white font-semibold after:absolute after:bottom-[-6px] after:left-1/2 after:-translate-x-1/2 after:w-1.5 after:h-1.5 after:rounded-full after:bg-gradient-to-r after:from-cyan-400 after:to-pink-400"
+                      : "text-gray-300 hover:text-white"
+                  }`
+                }>
+                {item}
+              </NavLink>
+            ))}
           </div>
 
           {/* RIGHT: Team Buttons */}
@@ -79,7 +77,7 @@ const FNav = () => {
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
                 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[2000ms]"
               />
-              <span className="relative z-10">Join a Team</span>
+              <span className="relative z-10">Login</span>
             </button>
 
             <button
@@ -114,17 +112,15 @@ const FNav = () => {
               transition={{ duration: 0.3 }}
               className="md:hidden mt-4 bg-black/70 backdrop-blur-md rounded-2xl border border-white/10 p-4">
               <div className="flex flex-col items-center space-y-3">
-                {["Home", "Tracks", "Timeline", "Gallery", "Contact"].map(
-                  (item) => (
-                    <NavLink
-                      key={item}
-                      to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
-                      onClick={() => setMenuOpen(false)}
-                      className="text-white/80 hover:text-white text-lg transition-all duration-300">
-                      {item}
-                    </NavLink>
-                  )
-                )}
+                {["Home", "Tracks", "Gallery"].map((item) => (
+                  <NavLink
+                    key={item}
+                    to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+                    onClick={() => setMenuOpen(false)}
+                    className="text-white/80 hover:text-white text-lg transition-all duration-300">
+                    {item}
+                  </NavLink>
+                ))}
 
                 <div className="flex flex-col gap-3 pt-4">
                   <button
