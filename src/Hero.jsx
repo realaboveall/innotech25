@@ -190,10 +190,10 @@ function Hero() {
       {/* MODALS */}
       {openModal && (
         <div
-          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 backdrop-blur-sm"
+          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 backdrop-blur-sm "
           onClick={handleClose}>
           <div
-            className="relative p-6 rounded-2xl w-[90%] max-w-4xl max-h-[85vh] overflow-y-auto 
+            className="relative p-6 rounded-2xl w-[90%] max-w-4xl max-h-[85vh] overflow-y-auto no-scrollbar
     bg-black/60 backdrop-blur-xl border border-white/10 shadow-[0_0_35px_rgba(147,51,234,0.15)]"
             onClick={(e) => e.stopPropagation()}>
             <button

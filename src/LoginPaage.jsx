@@ -50,7 +50,7 @@ const LoginPage = () => {
         <div className="absolute inset-0 rounded-3xl border border-white/10 pointer-events-none" />
 
         <h1
-          className="text-3xl md:text-4xl font-semibold text-center mb-6 
+          className="text-3xl md:text-4xl font-semibold text-center mb-6 pb-2 
           bg-gradient-to-r from-cyan-300 via-purple-300 to-pink-300 
           bg-clip-text text-transparent">
           Login to Innotech
