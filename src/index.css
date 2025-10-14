@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+@import "tailwindcss";
+
+@theme {
+  --font-Fira: "Fira Sans", sans-serif;
+  --font-pt: "PT Serif", serif;
+}
+
+.nav-hover-btn {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  @apply relative ms-10 text-base uppercase text-blue-50 after:absolute after:-bottom-0.5 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-neutral-800 after:transition-transform after:duration-300 after:ease-[cubic-bezier(0.65_0.05_0.36_1)] hover:after:origin-bottom-left hover:after:scale-x-100 dark:after:bg-white cursor-pointer;
+}
+
+.floating-nav {
+  flex: auto;
+  @apply bg-white rounded-lg border;
+}
+
+.absolute-center {
+  @apply absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%];
+}
