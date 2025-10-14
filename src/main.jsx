@@ -11,12 +11,14 @@ import Register from "./Register.jsx"; // ✅ import your Register component
 import Footer from "./Footer.jsx";
 import LoginPage from "./LoginPaage.jsx";
 import Form from "./Form.jsx";
+import FNav from "./FNav.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <Preloader src={KIETlogo}>
-        <Navbar />
+        {/* <Navbar /> */}
+        <FNav />
 
         {/* ✅ Define your routes here */}
         <Routes>

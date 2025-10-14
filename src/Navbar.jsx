@@ -35,7 +35,11 @@ const Navbar = () => {
         </div>
 
         {/* RIGHT: Buttons (Hidden on mobile) */}
-        <div className="hidden md:flex items-end gap-4">
+        <div
+          className="hidden md:flex items-end
+        
+        
+        gap-4">
           <button
             className="relative px-5 py-2 rounded-full border border-white/20 text-sm text-white/90 
               backdrop-blur-md bg-white/5 hover:bg-white/10 transition-all duration-500
