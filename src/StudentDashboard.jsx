@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { CheckCircle2 } from 'lucide-react';
 import { getTokenFromCookie, clearAuthCookie } from './auth';
 
 // --- Helper Components (Reused for consistent styling) ---
@@ -178,20 +179,66 @@ function StudentDashboard() {
         <div className="min-h-screen w-full  text-white font-sans bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] p-4 sm:p-8 flex flex-col items-center">
             <div className="w-full max-w-7xl my-8 mt-20">
                 {userProfile && !userProfile.isProfileComplete.categoryProfile ? (
-                    <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="w-full">
-                        <GlassSection className="max-w-xl mx-auto text-center">
+                <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="w-full">
+                    <GlassSection className="max-w-2xl mx-auto">
+                        <div className="text-center">
                             <h1 className="text-3xl font-semibold text-white mb-4">One Last Step!</h1>
                             <p className="text-gray-300 mb-8">
-                                Please complete your profile to get full access to the dashboard and event features.
+                                Please complete your profile to get full access to all features.
                             </p>
-                            <button 
-                                onClick={() => navigate('/complete-profile')}
-                                className="w-full font-semibold text-lg text-white bg-gradient-to-r from-cyan-500 to-purple-600 py-3 px-6 rounded-lg hover:opacity-90 transition-opacity duration-300 shadow-[0_0_20px_rgba(168,85,247,0.4)]"
-                            >
-                                Complete Your Profile
-                            </button>
-                        </GlassSection>
-                    </motion.div>
+                        </div>
+
+                        {/* Step-by-step progress indicator */}
+                        <div className="mt-8 space-y-2 text-left">
+                            {/* Step 1: Completed */}
+                            <div className="flex items-start">
+                                <div className="flex flex-col items-center mr-4">
+                                    <div className="bg-green-500 rounded-full p-1">
+                                        <CheckCircle2 className="w-6 h-6 text-white" />
+                                    </div>
+                                    <div className="w-px h-8 bg-gray-600 my-1" />
+                                </div>
+                                <div>
+                                    <h3 className="font-semibold text-white text-lg">Register</h3>
+                                    <p className="text-gray-400 text-sm">Completed</p>
+                                </div>
+                            </div>
+
+                            {/* Step 2: Completed */}
+                            <div className="flex items-start">
+                                <div className="flex flex-col items-center mr-4">
+                                    <div className="bg-green-500 rounded-full p-1">
+                                        <CheckCircle2 className="w-6 h-6 text-white" />
+                                    </div>
+                                    <div className="w-px h-8 bg-gray-600 my-1" />
+                                </div>
+                                <div>
+                                    <h3 className="font-semibold text-white text-lg">Basic Information</h3>
+                                    <p className="text-gray-400 text-sm">Completed</p>
+                                </div>
+                            </div>
+                            
+                            {/* Step 3: Current Step */}
+                            <div className="flex items-start">
+                                 <div className="flex flex-col items-center mr-4 mt-1">
+                                     <div className="flex items-center justify-center w-8 h-8 border-2 border-purple-500 rounded-full">
+                                         <div className="w-4 h-4 bg-purple-500 rounded-full animate-pulse"></div>
+                                     </div>
+                                </div>
+                                <div>
+                                    <h3 className="font-semibold text-white text-lg">Complete Your Profile</h3>
+                                    <p className="text-gray-400 text-sm mb-4">Provide the final details to get started.</p>
+                                    <button 
+                                        onClick={() => navigate('/complete-profile')}
+                                        className="w-full sm:w-auto font-semibold text-lg text-white bg-gradient-to-r from-cyan-500 to-purple-600 py-3 px-6 rounded-lg hover:opacity-90 transition-opacity duration-300 shadow-[0_0_20px_rgba(168,85,247,0.4)]"
+                                    >
+                                        Complete Your Profile
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </GlassSection>
+                </motion.div>
                 ) : userProfile ? (
                      <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="w-full">
                         <GlassSection>
