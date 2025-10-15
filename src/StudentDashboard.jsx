@@ -182,14 +182,8 @@ function StudentDashboard() {
             const user = data?.user ?? (data && data.name ? data : null);
             if (!user) throw new Error(data?.message || 'Failed to retrieve user data');
 
-            setCurrentUser(user);
-            setFormData(prev => ({
-                ...prev,
-                name: user.name || prev.name,
-                isKietian: typeof user.isKietian === 'boolean' ? user.isKietian : prev.isKietian,
-                college: user.isKietian ? "KIET Group of institutions" : prev.college,
-                rollno: user?.categoryProfile?.rollno ?? user?.rollno ?? prev.rollno,
-            }));
+            setUserProfile(data.user);
+           
 
         } catch (err) {
             setError(err.message);
@@ -286,16 +280,15 @@ function StudentDashboard() {
                                         <p className="text-gray-400 text-sm mb-4">Provide the final details to get started.</p>
                                         <button
                                             onClick={() => navigate('/complete-profile')}
-                                            className="w-full sm:w-auto font-semibold text-lg text-white bg-gradient-to-r from-cyan-500 to-purple-600 py-3 px-6 rounded-lg hover:opacity-90 transition-opacity duration-300 shadow-[0_0_20px_rgba(168,85,247,0.4)]"
+                                            className="w-full sm:w-auto font-semibold mb-4 text-lg text-white bg-gradient-to-r from-cyan-500 to-purple-600 py-3 px-6 rounded-lg hover:opacity-90 transition-opacity duration-300 shadow-[0_0_20px_rgba(168,85,247,0.4)]"
                                         >
                                             Complete Your Profile
                                         </button>
-                                        <div>
+                                        {userProfile.participationCategory === 'startup' && (
+                                            <div >
                                             <PendingRequests onAction={() => fetchUser()} />
-                                            <div className="mt-6">
-                                                <StartupForm formData={formData} handleFormChange={handleFormChange} />
-                                            </div>
-                                        </div>
+                                            
+                                        </div>)}
                                     </div>
                                 </div>
                             </div>
