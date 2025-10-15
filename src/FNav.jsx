@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link as ScrollLink } from "react-scroll";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import logo from "/kietlogo.jpg";
@@ -8,14 +8,15 @@ import logo2 from "/InnotechLogoLarge.png";
 
 const FNav = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleScroll = () => setMenuOpen(false);
 
   const scrollSettings = {
     smooth: true,
     duration: 600,
-    offset: -80, // adjust for fixed navbar height
-    spy: true, // 👈 highlights active section
+    offset: -80, // adjust for navbar height
+    spy: true,
     activeClass:
       "text-white font-semibold after:absolute after:bottom-[-6px] after:left-1/2 after:-translate-x-1/2 after:w-1.5 after:h-1.5 after:rounded-full after:bg-gradient-to-r after:from-cyan-400 after:to-pink-400",
   };
@@ -61,17 +62,26 @@ const FNav = () => {
 
           {/* MIDDLE: Nav Links (Desktop) */}
           <div className="hidden md:flex items-center justify-center gap-8 relative">
-            {["Home", "Tracks", "Gallery", "Sponsors", "Domains"].map(
-              (item) => (
-                <ScrollLink
-                  key={item}
-                  to={item.toLowerCase()}
-                  {...scrollSettings}
-                  className="relative text-sm tracking-wide text-gray-300 hover:text-white transition-all duration-300 cursor-pointer">
-                  {item}
-                </ScrollLink>
-              )
-            )}
+            {/* Home routes to "/" instead of scrolling */}
+            <span
+              onClick={() => {
+                setMenuOpen(false);
+                navigate("/");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="relative text-sm tracking-wide text-gray-300 hover:text-white transition-all duration-300 cursor-pointer">
+              Home
+            </span>
+
+            {["Tracks", "Gallery", "Sponsors", "Domains"].map((item) => (
+              <ScrollLink
+                key={item}
+                to={item.toLowerCase()}
+                {...scrollSettings}
+                className="relative text-sm tracking-wide text-gray-300 hover:text-white transition-all duration-300 cursor-pointer">
+                {item}
+              </ScrollLink>
+            ))}
           </div>
 
           {/* RIGHT: Team Buttons */}
@@ -83,7 +93,7 @@ const FNav = () => {
                 hover:scale-[1.05] hover:border-white/40 overflow-hidden group">
                 <span
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
-                translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[2000ms] font-Fira"
+                translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[2000ms]"
                 />
                 <span className="relative z-10">Login</span>
               </button>
@@ -98,7 +108,7 @@ const FNav = () => {
                 overflow-hidden group">
                 <span
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent 
-                translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[2000ms] font-Fira"
+                translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[2000ms]"
                 />
                 <span className="relative z-10">Create a Team</span>
               </button>
@@ -123,19 +133,29 @@ const FNav = () => {
               transition={{ duration: 0.3 }}
               className="md:hidden mt-4 bg-black/70 backdrop-blur-md rounded-2xl border border-white/10 p-4">
               <div className="flex flex-col items-center space-y-3">
-                {["Home", "Tracks", "Gallery", "Sponsors", "Domains"].map(
-                  (item) => (
-                    <ScrollLink
-                      key={item}
-                      to={item.toLowerCase()}
-                      {...scrollSettings}
-                      onClick={handleScroll}
-                      className="text-white/80 hover:text-white text-lg transition-all duration-300 cursor-pointer">
-                      {item}
-                    </ScrollLink>
-                  )
-                )}
+                {/* Home routes to "/" */}
+                <span
+                  onClick={() => {
+                    handleScroll();
+                    navigate("/");
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
+                  className="text-white/80 hover:text-white text-lg transition-all duration-300 cursor-pointer">
+                  Home
+                </span>
 
+                {["Tracks", "Gallery", "Domains", "Sponsors"].map((item) => (
+                  <ScrollLink
+                    key={item}
+                    to={item.toLowerCase()}
+                    {...scrollSettings}
+                    onClick={handleScroll}
+                    className="text-white/80 hover:text-white text-lg transition-all duration-300 cursor-pointer">
+                    {item}
+                  </ScrollLink>
+                ))}
+
+                {/* Buttons */}
                 <div className="flex flex-col gap-3 pt-4">
                   <Link to="/login">
                     <button

@@ -12,10 +12,12 @@ import Footer from "./Footer.jsx";
 import LoginPage from "./LoginPaage.jsx";
 import Form from "./Form.jsx";
 import FNav from "./FNav.jsx";
+import PersistentBackground from "./PersistentBackground.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
+      <PersistentBackground />
       <Preloader src={KIETlogo}>
         {/* <Navbar /> */}
         <FNav />

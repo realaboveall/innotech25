@@ -6,8 +6,7 @@ import Participate from "./Participate";
 import Contact from "./Contact";
 import Footer from "./Footer";
 import Gallery from "./Gallery";
-import Hyperspeed from "./Hyperspeed";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import Theme from "./Theme";
 import Register from "./Register";
 import InnovationDomains from "./Domains";
@@ -16,7 +15,6 @@ import { Element } from "react-scroll";
 
 function Hero() {
   const [openModal, setOpenModal] = useState(null);
-
   const handleOpen = (type) => setOpenModal(type);
   const handleClose = () => setOpenModal(null);
 
@@ -25,49 +23,6 @@ function Hero() {
       {/* HERO SECTION */}
       <Element name="home">
         <section className="relative h-screen overflow-hidden flex flex-col items-center justify-center">
-          {/* Background */}
-          <div className="fixed inset-0 bg-black -z-10">
-            <Hyperspeed
-              effectOptions={{
-                onSpeedUp: () => {},
-                onSlowDown: () => {},
-                distortion: "turbulentDistortion",
-                length: 300,
-                roadWidth: 10,
-                islandWidth: 2,
-                lanesPerRoad: 4,
-                fov: 100,
-                fovSpeedUp: 150,
-                speedUp: 2,
-                carLightsFade: 0.4,
-                totalSideLightSticks: 20,
-                lightPairsPerRoadWay: 40,
-                shoulderLinesWidthPercentage: 0.05,
-                brokenLinesWidthPercentage: 0.1,
-                brokenLinesLengthPercentage: 0.5,
-                lightStickWidth: [0.12, 0.5],
-                lightStickHeight: [1.3, 1.7],
-                movingAwaySpeed: [60, 80],
-                movingCloserSpeed: [-120, -160],
-                carLightsLength: [400 * 0.03, 400 * 0.2],
-                carLightsRadius: [0.05, 0.14],
-                carWidthPercentage: [0.3, 0.5],
-                carShiftX: [-0.8, 0.8],
-                carFloorSeparation: [0, 5],
-                colors: {
-                  roadColor: 0x080808,
-                  islandColor: 0x0a0a0a,
-                  background: 0x000000,
-                  shoulderLines: 0xffffff,
-                  brokenLines: 0xffffff,
-                  leftCars: [0xd856bf, 0x6750a2, 0xc247ac],
-                  rightCars: [0x03b3c3, 0x0e5ea5, 0x324555],
-                  sticks: 0x03b3c3,
-                },
-              }}
-            />
-          </div>
-
           {/* Road to Innotech Button */}
           <div className="absolute top-50 flex justify-center w-full z-20">
             <button
@@ -76,14 +31,11 @@ function Hero() {
                 backdrop-blur-md bg-white/5 hover:bg-white/10 transition-all duration-500 
                 hover:scale-[1.05] hover:border-white/40 overflow-hidden group
                 shadow-[0_0_15px_rgba(255,255,255,0.05)]">
-              {/* Shimmering line animation */}
               <span
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
                 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[2000ms]"
               />
-              {/* Glow ring */}
               <span className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400/10 via-fuchsia-400/10 to-purple-400/10 opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-700" />
-              {/* Button text */}
               <span className="relative z-10 drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">
                 🚀 Road to Innotech
               </span>
@@ -92,28 +44,26 @@ function Hero() {
 
           {/* Hero Text */}
           <div className="relative z-10 flex flex-col items-center justify-center text-center">
-            <div className="relative z-10 flex flex-col items-center justify-center text-center mt-6 select-none">
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1 }}
-                className="text-6xl md:text-7xl lg:text-8xl font-Fira font-extrabold tracking-tight
-                  bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500
-                  bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(147,51,234,0.35)]
-                  animate-pulse-slow">
-                INNOTECH ’25
-              </motion.h1>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+              className="text-6xl md:text-7xl lg:text-8xl font-Fira font-extrabold tracking-tight
+                bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500
+                bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(147,51,234,0.35)]
+                animate-pulse-slow">
+              INNOTECH ’25
+            </motion.h1>
 
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 1 }}
-                className="mt-4 text-lg md:text-2xl text-gray-300 
-                  bg-gradient-to-r from-cyan-300 via-fuchsia-400 to-purple-400
-                  bg-clip-text text-transparent font-medium tracking-wide font-pt">
-                Think Big. Build Smart. Act Sustainable.
-              </motion.p>
-            </div>
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 1 }}
+              className="mt-4 text-lg md:text-2xl text-gray-300 
+                bg-gradient-to-r from-cyan-300 via-fuchsia-400 to-purple-400
+                bg-clip-text text-transparent font-medium tracking-wide font-pt">
+              Think Big. Build Smart. Act Sustainable.
+            </motion.p>
 
             {/* CTA Buttons */}
             <div className="mt-10 flex flex-wrap justify-center gap-5">
@@ -190,48 +140,51 @@ function Hero() {
         </Element>
       </section>
 
-      {/* MODALS */}
-      {openModal && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
-          onClick={handleClose}>
+      {/* FULLSCREEN MODALS */}
+      <AnimatePresence>
+        {openModal && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 15 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 15 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            onClick={(e) => e.stopPropagation()}
-            className="relative w-[90%] max-w-4xl max-h-[85vh] overflow-y-auto no-scrollbar
-              rounded-2xl border border-white/10 
-              bg-gradient-to-br from-white/10 via-white/5 to-transparent
-              backdrop-blur-2xl shadow-[0_0_25px_rgba(255,255,255,0.07)] 
-              hover:shadow-[0_0_35px_rgba(255,255,255,0.1)]
-              transition-all duration-700">
-            {/* Close button */}
+            key="modal"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="fixed inset-0 z-[60] flex items-center justify-center 
+              bg-black/60 backdrop-blur-2xl"
+            onClick={handleClose}>
+            {/* Close Button */}
             <button
               onClick={handleClose}
-              className="absolute top-3 right-3 z-20 text-white/70 hover:text-white transition-all duration-300
-                rounded-full border border-white/10 bg-white/5 px-2 py-1 text-lg 
-                hover:bg-white/10 hover:border-white/20 shadow-[0_0_10px_rgba(255,255,255,0.1)]">
+              className="fixed top-5 right-6 text-white/80 hover:text-white 
+                transition-all duration-300 text-2xl font-light z-[70]
+                backdrop-blur-md bg-white/5 border border-white/10 rounded-full px-3 py-1
+                hover:bg-white/10 hover:border-white/20 shadow-[0_0_10px_rgba(255,255,255,0.15)]">
               ✕
             </button>
 
-            {/* Subtle shimmer overlay */}
-            <span
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent 
-                translate-x-[-100%] animate-[shimmer_4s_linear_infinite] rounded-2xl pointer-events-none opacity-40"
-            />
-
-            {/* Content wrapper */}
-            <div className="relative z-10 p-4 sm:p-6 md:p-8">
-              {openModal === "register" && <Register />}
-              {openModal === "participate" && <Participate />}
-              {openModal === "timeline" && <Timeline />}
-              {openModal === "contact" && <Contact />}
-            </div>
+            {/* Modal Content (Fullscreen Glass Panel) */}
+            <motion.div
+              initial={{ scale: 0.98, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.98, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 120, damping: 18 }}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full h-full overflow-y-auto no-scrollbar 
+                bg-gradient-to-br from-white/10 via-white/5 to-transparent 
+                backdrop-blur-[25px] border border-white/10 
+                shadow-[0_0_30px_rgba(255,255,255,0.08)] 
+                p-6 sm:p-8 md:p-12 text-white
+                transition-all duration-700">
+              <div className="max-w-5xl mx-auto">
+                {openModal === "register" && <Register />}
+                {openModal === "participate" && <Participate />}
+                {openModal === "timeline" && <Timeline />}
+                {openModal === "contact" && <Contact />}
+              </div>
+            </motion.div>
           </motion.div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
     </>
   );
 }

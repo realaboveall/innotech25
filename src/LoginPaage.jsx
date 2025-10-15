@@ -40,7 +40,7 @@ const LoginPage = () => {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-black text-white px-4">
+    <section className="min-h-screen flex items-center justify-center text-white px-4">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
