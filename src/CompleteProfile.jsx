@@ -76,7 +76,7 @@ const SchoolForm = ({ formData, handleFormChange }) => (
         <FormInput id="school" name="school" label="School Name" type="text" required value={formData.school} onChange={handleFormChange} placeholder="ABC Public School" />
         <FormInput id="standard" name="standard" label="Class / Standard" type="number" required value={formData.standard} onChange={handleFormChange} placeholder="12" />
         <FormInput id="board" name="board" label="Board" type="text" required value={formData.board} onChange={handleFormChange} placeholder="CBSE" />
-        <FormInput id="uid_school" name="uid" label="Unique School ID" type="text" required value={formData.uid} onChange={handleFormChange} placeholder="Your School ID" />
+        <FormInput id="uid_school" name="uid" label="Student Adhar ID" type="text" required value={formData.uid} onChange={handleFormChange} placeholder="Student Adhar ID" />
     </div>
 );
 
@@ -94,7 +94,7 @@ const StartupForm = ({ formData, handleFormChange }) => (
         {/* Founder Details */}
         <FormInput id="founderName" name="founderName" label="Founder's Name" type="text" required value={formData.founderName} onChange={handleFormChange} placeholder="Jane Doe" />
         <FormInput id="founderEmail" name="founderEmail" label="Founder's Email" type="email" required value={formData.founderEmail} onChange={handleFormChange} placeholder="founder@example.com" />
-        <FormInput id="founderUid" name="founderUid" label="Founder's Unique ID" type="text" required value={formData.founderUid} onChange={handleFormChange} placeholder="Unique ID provided" />
+        <FormInput id="founderUid" name="founderUid" label="Founder's Adhar ID" type="text" required value={formData.founderUid} onChange={handleFormChange} placeholder="Adhar ID" />
         <FormInput id="founderPhonenumber" name="founderPhonenumber" label="Founder's Phone" type="tel" required value={formData.founderPhonenumber} onChange={handleFormChange} placeholder="+911234567890" />
         
         {/* Startup Description */}
@@ -121,7 +121,7 @@ const StartupForm = ({ formData, handleFormChange }) => (
 
 const ResearchForm = ({ formData, handleFormChange }) => (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <FormInput id="uid_researcher" name="uid" label="Unique Researcher ID" type="text" required value={formData.uid} onChange={handleFormChange} placeholder="Your University/Institute ID" />
+        <FormInput id="uid_researcher" name="uid" label="Adhar ID" type="text" required value={formData.uid} onChange={handleFormChange} placeholder="Adhar ID" />
         <FormInput id="universityName" name="universityName" label="University / Institution Name" type="text" required value={formData.universityName} onChange={handleFormChange} placeholder="Indian Institute of Technology, Delhi" />
         <div className="sm:col-span-2">
             <FormSelect id="pursuingDegree" name="pursuingDegree" label="Pursuing Degree" required value={formData.pursuingDegree} onChange={handleFormChange}>
