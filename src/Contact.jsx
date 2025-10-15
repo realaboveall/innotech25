@@ -42,7 +42,7 @@ const Contact = () => {
   ];
 
   return (
-    <GlassSection className="max-w-5xl mx-auto my-24">
+    <GlassSection className="max-w-5xl mx-auto">
       <motion.h1
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

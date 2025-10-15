@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const GlassSection = ({ children, className = "", delay = 0 }) => {
   return (
-    <motion.section
+    <section
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.8, ease: "easeOut" }}
@@ -19,7 +19,7 @@ const GlassSection = ({ children, className = "", delay = 0 }) => {
 
       {/* Section content */}
       <div className="relative z-10">{children}</div>
-    </motion.section>
+    </section>
   );
 };
 
