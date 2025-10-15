@@ -90,7 +90,7 @@ const Footer = () => {
             hover:text-white transition-colors duration-300">
             © {new Date().getFullYear()} Innotech. Crafted with ❤️ by{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 font-semibold">
-              AboveAll & Anish
+              AboveAll, Anish & Yaman
             </span>
             .
           </p>
