@@ -136,7 +136,9 @@ const BasicInfoStep = ({ formData, handleFormChange, onSubmit, onBack, selectedC
                     {/* Basic Info */}
                     <FormInput id="name" name="name" label="Full Name" type="text" required value={formData.name} onChange={handleFormChange} placeholder="e.g., John Doe" />
                     <FormInput id="phonenumber" name="phonenumber" label="Phone Number" type="tel" required value={formData.phonenumber} onChange={handleFormChange} placeholder="+1 234 567 890" />
-                    <FormToggle id="isKietian" name="isKietian" label="Are you a student of KIET Group of Institutions?" checked={formData.isKietian} onChange={handleFormChange} />
+                    {(selectedCategory?.title?.toLowerCase() === 'college' || formData.participationCategory === 'college') && (
+                      <FormToggle id="isKietian" name="isKietian" label="Are you a student of KIET Group of Institutions?" checked={formData.isKietian} onChange={handleFormChange} />
+                    )}
 
                     <div className="flex flex-col sm:flex-row gap-4 pt-4">
                         <button type="button" onClick={onBack} className="w-full font-semibold text-lg text-cyan-300 border border-cyan-300 py-3 px-6 rounded-lg hover:bg-cyan-300/10 transition-colors duration-300">
@@ -347,7 +349,7 @@ const App = () => {
     };
 
     return (
-        <div className="min-h-screen w-full bg-gray-900 text-white font-sans bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] p-4 sm:p-8 flex flex-col justify-center items-center">
+        <div className="min-h-screen w-full text-white font-sans bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] p-4 sm:p-8 flex flex-col justify-center items-center">
             <ProgressBar currentStep={step} />
             <main className="flex-grow flex items-center w-full">
                 <div className="w-full">

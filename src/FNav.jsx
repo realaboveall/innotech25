@@ -13,7 +13,7 @@ const FNav = () => {
   useEffect(() => {
     const token = getTokenFromCookie() || (() => { try { return localStorage.getItem('authToken'); } catch { return null; } })();
     setHasToken(!!token);
-  }, []);
+  }, [localStorage]);
 
   return (
     <>

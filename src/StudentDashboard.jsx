@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { getTokenFromCookie } from './auth';
+import { getTokenFromCookie, clearAuthCookie } from './auth';
 
 // --- Helper Components (Reused for consistent styling) ---
 
@@ -122,6 +122,27 @@ function StudentDashboard() {
         checkProfileStatus();
     }, [navigate]);
 
+    const handleLogout = async () => {
+        setLoading(true);
+        try {
+            const token = getTokenFromCookie() || (() => { try { return localStorage.getItem('authToken'); } catch (e) { return null; } })();
+            // call backend logout (use full tunnel URL)
+            await fetch('https://2q766kvz-8001.inc1.devtunnels.ms/auth/logout', {
+                method: 'POST',
+                headers: token ? { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' } : { 'Content-Type': 'application/json' },
+                credentials: 'include'
+            });
+        } catch (err) {
+            console.warn('Logout failed', err);
+        } finally {
+            // clear client-side tokens
+            try { clearAuthCookie(); } catch (e) {}
+            try { localStorage.removeItem('authToken'); } catch (e) {}
+            setLoading(false);
+            navigate('/register');
+        }
+    };
+
     const renderProfileDetails = () => {
         if (!userProfile?.profileDetails) return null;
         switch (userProfile.participationCategory) {
@@ -154,7 +175,7 @@ function StudentDashboard() {
     }
 
     return (
-        <div className="min-h-screen w-full bg-gray-900  text-white font-sans bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] p-4 sm:p-8 flex flex-col items-center">
+        <div className="min-h-screen w-full  text-white font-sans bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] p-4 sm:p-8 flex flex-col items-center">
             <div className="w-full max-w-7xl my-8 mt-20">
                 {userProfile && !userProfile.isProfileComplete.categoryProfile ? (
                     <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="w-full">
@@ -174,11 +195,16 @@ function StudentDashboard() {
                 ) : userProfile ? (
                      <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="w-full">
                         <GlassSection>
-                             <div className="flex flex-col sm:flex-row items-center mb-8">
-                                <img src={userProfile.profileImage} alt="Profile" className="w-24 h-24 rounded-full border-2 border-purple-400 shadow-lg mb-4 sm:mb-0 sm:mr-6"/>
-                                <div>
-                                    <h1 className="text-4xl font-bold text-white text-center sm:text-left">{userProfile.name}</h1>
-                                    <p className="text-gray-400 text-lg text-center sm:text-left">Welcome to your dashboard.</p>
+                            <div className="flex flex-col sm:flex-row items-center mb-8 justify-between">
+                                <div className="flex items-center">
+                                    <img src={userProfile.profileImage} alt="Profile" className="w-24 h-24 rounded-full border-2 border-purple-400 shadow-lg mb-4 sm:mb-0 sm:mr-6"/>
+                                    <div>
+                                        <h1 className="text-4xl font-bold text-white text-center sm:text-left">{userProfile.name}</h1>
+                                        <p className="text-gray-400 text-lg text-center sm:text-left">Welcome to your dashboard.</p>
+                                    </div>
+                                </div>
+                                <div className="mt-4 sm:mt-0 sm:ml-4">
+                                    <button onClick={handleLogout} className="px-4 py-2 rounded-md bg-red-600 hover:bg-red-500 text-white font-semibold">Logout</button>
                                 </div>
                             </div>
                             <div className="border-t border-white/10 pt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
