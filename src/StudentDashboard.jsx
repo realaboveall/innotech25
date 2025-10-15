@@ -35,7 +35,7 @@ const SchoolDetails = ({ details }) => (
         <DetailItem label="School" value={details.school} />
         <DetailItem label="Standard" value={details.standard} />
         <DetailItem label="Board" value={details.board} />
-        <DetailItem label="School ID (UID)" value={details.uid} />
+        <DetailItem label="Student Adhar ID" value={details.uid} />
     </>
 );
 
@@ -58,7 +58,7 @@ const StartupDetails = ({ details }) => (
         <DetailItem label="Founder Name" value={details.founderName} />
         <DetailItem label="Founder Email" value={details.founderEmail} />
         <DetailItem label="Founder Phone" value={details.founderPhonenumber} />
-        <DetailItem label="Founder ID (UID)" value={details.founderUid} />
+        <DetailItem label="Founder Adhar ID" value={details.founderUid} />
     </>
 );
 
@@ -67,7 +67,7 @@ const ResearcherDetails = ({ details }) => (
         <h3 className="text-xl font-semibold text-cyan-300 sm:col-span-2 mb-2">Research Information</h3>
         <DetailItem label="University/Institution" value={details.universityName} />
         <DetailItem label="Pursuing Degree" value={details.pursuingDegree} />
-        <DetailItem label="Researcher ID (UID)" value={details.uid} />
+        <DetailItem label="Researcher Adhar ID" value={details.uid} />
     </>
 );
 
