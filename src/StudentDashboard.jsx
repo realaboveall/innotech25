@@ -5,6 +5,7 @@ import { CheckCircle2, Copy, Lock } from 'lucide-react';
 import { getTokenFromCookie, clearAuthCookie } from './auth';
 import TeamManagement from './TeamManagement';
 import TeamDashboard from './TeamDashboard';
+import { PendingRequests } from './TeamRequests';
 
 // --- Helper Components (Reused for consistent styling) ---
 
@@ -147,6 +148,58 @@ function StudentDashboard() {
         }
     };
 
+    const fetchUser = async () => {
+        setLoading(true);
+        try {
+            const token = getTokenFromCookie() || (() => {
+                try { return localStorage.getItem('authToken'); } catch (e) { return null; }
+            })();
+
+            if (!token) {
+                // No token found, ask user to authenticate
+                navigate('/register');
+                return;
+            }
+
+            const res = await fetch('https://api.innotech.yaytech.in/api/user/check/complete-profile', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            const contentType = res.headers.get('content-type') || '';
+            if (!res.ok) {
+                const text = await res.text();
+                throw new Error(text || `Request failed with status ${res.status}`);
+            }
+
+            if (!contentType.includes('application/json')) {
+                const text = await res.text();
+                throw new Error('Unexpected response content-type: ' + contentType + '\n' + text);
+            }
+
+            const data = await res.json();
+
+            // Support responses that either wrap the user in { success, user } or return the user directly
+            const user = data?.user ?? (data && data.name ? data : null);
+            if (!user) throw new Error(data?.message || 'Failed to retrieve user data');
+
+            setCurrentUser(user);
+            setFormData(prev => ({
+                ...prev,
+                name: user.name || prev.name,
+                isKietian: typeof user.isKietian === 'boolean' ? user.isKietian : prev.isKietian,
+                college: user.isKietian ? "KIET Group of institutions" : prev.college,
+                rollno: user?.categoryProfile?.rollno ?? user?.rollno ?? prev.rollno,
+            }));
+
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => { fetchUser(); }, [navigate]);
+
     const renderProfileDetails = () => {
         if (!userProfile?.profileDetails) return null;
         switch (userProfile.participationCategory) {
@@ -237,6 +290,12 @@ function StudentDashboard() {
                                         >
                                             Complete Your Profile
                                         </button>
+                                        <div>
+                                            <PendingRequests onAction={() => fetchUser()} />
+                                            <div className="mt-6">
+                                                <StartupForm formData={formData} handleFormChange={handleFormChange} />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -251,7 +310,7 @@ function StudentDashboard() {
                                     <div>
                                         <h1 className="text-2xl sm:text-4xl font-bold text-white sm:text-left">{userProfile.name}</h1>
                                         <div className="flex items-center sm:gap-3 mt-1">
-                                            <p className="text-gray-400 sm:text-lg text-sm sm:text-left">User ID: <br/><span className="font-mono text-white ">{userProfile.userId || 'N/A'}<button
+                                            <p className="text-gray-400 sm:text-lg text-sm sm:text-left">User ID: <br /><span className="font-mono text-white ">{userProfile.userId || 'N/A'}<button
                                                 type="button"
                                                 onClick={async () => {
                                                     try {
@@ -277,7 +336,7 @@ function StudentDashboard() {
                                             >
                                                 <Copy className='w-4 h-4' />
                                             </button></span></p>
-                                            
+
                                             {copied && <span className="text-sm text-green-400">Copied!</span>}
                                         </div>
                                     </div>
@@ -297,11 +356,11 @@ function StudentDashboard() {
                                 {renderProfileDetails()}
                             </div>
 
-                            
+
 
                         </GlassSection>
                         {/* ---  NEW Team Management Section --- */}
-                            <TeamDashboard userProfile={userProfile} />
+                        <TeamDashboard userProfile={userProfile} />
                     </motion.div>
                 ) : null}
             </div>

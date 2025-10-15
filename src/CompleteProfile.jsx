@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from 'react-router-dom';
 import { getTokenFromCookie } from './auth';
-import { PendingRequests } from './TeamRequests';
+
 
 // --- Helper Components (Reused for consistent styling) ---
 
@@ -344,15 +344,7 @@ const CompleteProfile = () => {
             case 'school':
                 return <SchoolForm formData={formData} handleFormChange={handleFormChange} />;
             case 'startup':
-                // For startup users, show incoming pending team-join requests (if any) above the form.
-                return (
-                    <div>
-                        <PendingRequests onAction={() => fetchUser()} />
-                        <div className="mt-6">
-                            <StartupForm formData={formData} handleFormChange={handleFormChange} />
-                        </div>
-                    </div>
-                );
+                return <StartupForm formData={formData} handleFormChange={handleFormChange} />;
             case 'researcher':
                 return <ResearchForm formData={formData} handleFormChange={handleFormChange} />;
             default:
