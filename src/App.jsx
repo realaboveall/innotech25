@@ -9,10 +9,12 @@ import Register from "./Register.jsx";
 import Form from "./Form.jsx";
 import CompleteProfile from "./CompleteProfile.jsx";
 import StudentDashboard from "./StudentDashboard.jsx";
+import PersistentBackground from "./PersistentBackground.jsx";
 
 const App = () => {
   return (
     <BrowserRouter>
+    <PersistentBackground />
       <Preloader src={KIETlogo}>
         {/* <Navbar /> */}
         <FNav />

@@ -12,11 +12,13 @@ import Register from "./Register";
 import InnovationDomains from "./Domains";
 import Sponsor from "./Investors";
 import { Element } from "react-scroll";
+import { useNavigate } from "react-router-dom";
 
 function Hero() {
   const [openModal, setOpenModal] = useState(null);
   const handleOpen = (type) => setOpenModal(type);
   const handleClose = () => setOpenModal(null);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -74,7 +76,7 @@ function Hero() {
                     "from-cyan-400/40 via-emerald-400/30 to-lime-400/40",
                   border: "border-cyan-400/40",
                   glow: "shadow-[0_0_20px_rgba(34,211,238,0.5)]",
-                  onClick: () => handleOpen("register"),
+                  onClick: () => navigate("/register"),
                 },
                 {
                   label: "How to Participate",
