@@ -22,17 +22,15 @@ const FNav = () => {
     setHasToken(!!token);
   }, []);
 
-  // ✅ Smooth scroll settings
   const scrollSettings = {
     smooth: true,
     duration: 600,
-    offset: -80, // adjust for navbar height
+    offset: -80,
     spy: true,
     activeClass:
       "text-white font-semibold after:absolute after:bottom-[-6px] after:left-1/2 after:-translate-x-1/2 after:w-1.5 after:h-1.5 after:rounded-full after:bg-gradient-to-r after:from-cyan-400 after:to-pink-400",
   };
 
-  // Closes menu after scrolling
   const handleScroll = () => setMenuOpen(false);
 
   return (
@@ -46,7 +44,7 @@ const FNav = () => {
         rounded-3xl px-6 py-3 w-[90%] max-w-7xl">
       <div className="flex items-center justify-between">
         {/* LEFT: Logos */}
-        <div className="flex items-center gap-5 md:gap-3">
+        <div className="flex items-center gap-5 md:gap-4">
           <Link to="/">
             <motion.img
               src="https://www.tbi-kiet.in/kietlogo.svg"
@@ -56,12 +54,8 @@ const FNav = () => {
             />
           </Link>
 
-          <div className="animate-pulse">
-            <div className="relative h-5 w-5 flex items-center justify-center">
-              <div className="absolute w-5 h-[2px] bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 rotate-45" />
-              <div className="absolute w-5 h-[2px] bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 -rotate-45" />
-            </div>
-          </div>
+          {/* 🌌 Glowing Dot Divider */}
+          <div className="w-3 h-3 rounded-full bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 shadow-[0_0_10px_rgba(255,255,255,0.6)] animate-pulse" />
 
           <Link to="/">
             <motion.img
@@ -72,20 +66,17 @@ const FNav = () => {
             />
           </Link>
 
-          <div className="animate-pulse flex items-center justify-center">
-            <div className="relative h-5 w-5 mr-2 flex items-center justify-center">
-              <div className="absolute w-5 h-[2px] bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 rotate-45" />
-              <div className="absolute w-5 h-[2px] bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 -rotate-45" />
-            </div>
-            <Link to="/">
-              <motion.img
-                src="/InnotechLogo.jpg"
-                alt="Right Logo"
-                whileHover={{ scale: 1.05 }}
-                className="h-10 md:h-10 w-auto drop-shadow-[0_0_8px_rgba(255,255,255,0.4)] rounded-2xl"
-              />
-            </Link>
-          </div>
+          {/* 🌌 Glowing Dot Divider */}
+          <div className="w-3 h-3 rounded-full bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 shadow-[0_0_10px_rgba(255,255,255,0.6)] animate-pulse" />
+
+          <Link to="/">
+            <motion.img
+              src="/InnotechLogo.jpg"
+              alt="Innotech Logo"
+              whileHover={{ scale: 1.05 }}
+              className="h-10 md:h-10 w-auto drop-shadow-[0_0_8px_rgba(255,255,255,0.4)] rounded-2xl"
+            />
+          </Link>
         </div>
 
         {/* MIDDLE: Nav Links (Desktop) */}

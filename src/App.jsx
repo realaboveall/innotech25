@@ -14,7 +14,7 @@ import PersistentBackground from "./PersistentBackground.jsx";
 const App = () => {
   return (
     <BrowserRouter>
-    <PersistentBackground />
+      <PersistentBackground />
       <Preloader src={KIETlogo}>
         {/* <Navbar /> */}
         <FNav />
@@ -24,8 +24,8 @@ const App = () => {
           <Route path="/" element={<Hero />} />
           <Route path="/register" element={<Register />} />
           <Route path="/form" element={<Form />}></Route>
-          <Route path="/complete-profile" element={<CompleteProfile/>}/>
-          <Route path="/dashboard" element={<StudentDashboard/>} />
+          <Route path="/complete-profile" element={<CompleteProfile />} />
+          <Route path="/dashboard" element={<StudentDashboard />} />
         </Routes>
 
         <Footer />

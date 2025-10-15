@@ -34,15 +34,15 @@ function Hero() {
             className="mb-4 text-xs sm:text-sm md:text-base lg:text-lg font-pt tracking-[1.5px] md:tracking-[2px]
       uppercase text-transparent bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-400 
       bg-clip-text drop-shadow-[0_0_10px_rgba(147,51,234,0.5)]">
-            <h1 className="text-white">
+            <span className="text-white">
               Technology Business Incubator{" "}
               <span
                 className="lowercase scale-125 text-transparent bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-400 
       bg-clip-text drop-shadow-[0_0_10px_rgba(147,51,234,0.5)]">
-                x
+                with
               </span>{" "}
               KIET Group of Institutions
-            </h1>
+            </span>
           </motion.p>
 
           {/* Presents Button */}
