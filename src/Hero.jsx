@@ -7,7 +7,7 @@ import Contact from "./Contact";
 import Footer from "./Footer";
 import Gallery from "./Gallery";
 import Hyperspeed from "./Hyperspeed";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
 import Theme from "./Theme";
 import Register from "./Register";
 import InnovationDomains from "./Domains";
@@ -16,13 +16,9 @@ import { Element } from "react-scroll";
 
 function Hero() {
   const [openModal, setOpenModal] = useState(null);
-  const [showIntro, setShowIntro] = useState(false);
 
   const handleOpen = (type) => setOpenModal(type);
   const handleClose = () => setOpenModal(null);
-
-  const handleIntro = () => setShowIntro(true);
-  const handleCloseIntro = () => setShowIntro(false);
 
   return (
     <>
@@ -75,7 +71,6 @@ function Hero() {
           {/* Road to Innotech Button */}
           <div className="absolute top-50 flex justify-center w-full z-20">
             <button
-              onClick={handleIntro}
               className="relative px-6 py-2 rounded-full border border-white/20 
                 text-white/90 font-medium text-sm tracking-wider 
                 backdrop-blur-md bg-white/5 hover:bg-white/10 transition-all duration-500 
@@ -163,63 +158,18 @@ function Hero() {
                     transition-all duration-700 hover:-translate-y-1 hover:scale-[1.05]
                     ${glow} hover:shadow-[0_0_35px_rgba(255,255,255,0.25)]
                     overflow-hidden group`}>
-                  {/* Animated gradient overlay */}
                   <span
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent 
                     translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[2000ms] ease-in-out rounded-2xl"
                   />
-                  {/* Button text */}
                   <span className="relative z-10 tracking-wide drop-shadow-[0_0_5px_rgba(255,255,255,0.4)]">
                     {label}
                   </span>
-                  {/* Subtle neon border animation */}
                   <span className="absolute inset-0 rounded-2xl border border-white/10 group-hover:border-white/30 transition-all duration-700" />
                 </button>
               ))}
             </div>
           </div>
-
-          {/* Fullscreen Intro Overlay */}
-          <AnimatePresence>
-            {showIntro && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.8, ease: "easeInOut" }}
-                className="fixed inset-0 bg-black/80 backdrop-blur-2xl z-50 flex flex-col items-center justify-center px-6 text-center border border-white/10 rounded-3xl">
-                <motion.div
-                  initial={{ y: 40, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.3, duration: 0.8 }}
-                  className="max-w-3xl">
-                  <h2 className="text-4xl md:text-5xl font-Fira font-bold bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-6">
-                    Where innovation meets opportunity and the future takes
-                    shape.
-                  </h2>
-                  <p className="text-gray-300 italic font-pt text-lg mb-4">
-                    Innotech 2025 is more than just a tech fest — it's a
-                    launchpad for innovation, a networking powerhouse, and a
-                    celebration of technological excellence.
-                  </p>
-                  <p className="text-gray-400 font-pt text-base leading-relaxed">
-                    Join hundreds of brilliant minds as we explore the frontiers
-                    of AI, robotics, web development, and emerging technologies.
-                    From coding challenges to project showcases, expert
-                    workshops to industry mentorship — Innotech bridges academic
-                    learning and real-world innovation.
-                  </p>
-
-                  <button
-                    onClick={handleCloseIntro}
-                    className="mt-8 px-6 py-2 rounded-full border border-white/20 text-white/80 
-                      bg-white/5 hover:bg-white/10 transition-all duration-300 hover:border-white/40">
-                    ✕ Close
-                  </button>
-                </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </section>
       </Element>
 
