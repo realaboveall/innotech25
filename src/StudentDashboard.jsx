@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Lock } from 'lucide-react';
 import { getTokenFromCookie, clearAuthCookie } from './auth';
+import TeamManagement from './TeamManagement';
+import TeamDashboard from './TeamDashboard';
 
 // --- Helper Components (Reused for consistent styling) ---
 
@@ -299,28 +301,7 @@ function StudentDashboard() {
 
                         </GlassSection>
                         {/* ---  NEW Team Management Section --- */}
-                            <div className="border-2 border-white/10 mt-8 pt-6 min-h-fit w-full rounded-xl text-white font-sans bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] p-4 sm:p-8 ">
-                                <h3 className="text-xl font-semibold text-cyan-300 mb-4">Team Management</h3>
-                                <div className="p-4 rounded-lg bg-black bg-opacity-20">
-                                    <div className="flex flex-col sm:flex-row items-center justify-between space-y-3 sm:space-y-0 sm:space-x-4">
-                                        
-                                        <div className="flex items-center">
-                                            <span className="text-gray-400 italic">This feature will be available soon...</span>
-                                        </div>
-                                        <button
-                                            disabled
-                                            className="w-full sm:w-auto px-6 py-2 rounded-md bg-cyan-600 text-white font-semibold opacity-50 cursor-not-allowed"
-                                            aria-label="Create Team (feature coming soon)"
-                                        >
-                                            Create Team
-                                            <Lock className="w-4 h-4 ml-2 inline-block" />
-                                        </button>
-                                    </div>
-                                    <p className="text-gray-500 text-sm mt-3">
-                                        Once enabled, you will be able to create your team and invite members here.
-                                    </p>
-                                </div>
-                            </div>
+                            <TeamDashboard userProfile={userProfile} />
                     </motion.div>
                 ) : null}
             </div>
