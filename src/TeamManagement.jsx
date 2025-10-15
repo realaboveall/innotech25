@@ -293,6 +293,7 @@ function TeamManagement({ userProfile }) {
             const result = await res.json();
             if (result.success) {
                 alert('Team created successfully!');
+                 window.location.reload();
             } else {
                  throw new Error(result.message || 'An unknown error occurred.');
             }
@@ -304,12 +305,6 @@ function TeamManagement({ userProfile }) {
         }
     };
 
-    
-    useEffect(() => {
-        if (isSubmitting) {
-            window.location.reload();
-        }
-    }, [isSubmitting]);
 
     return (
         <motion.div 
