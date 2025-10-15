@@ -132,19 +132,19 @@ const CategorySpecificFields = ({ category, fields, setFields }) => {
                     
                     {(category === 'college' || category === 'school') && (
                         <>
-                             <InputField label="Innovation Idea Name (Optional)" name="inovationIdeaName" value={fields.inovationIdeaName || ''} onChange={handleFieldChange} placeholder="Your innovative idea" required={false}/>
-                             <InputField label="Innovation Idea Description (Optional)" name="inovationIdeaDesc" value={fields.inovationIdeaDesc || ''} onChange={handleFieldChange} placeholder="Describe your idea" required={false}/>
+                             <InputField label="Innovation Idea Name " name="inovationIdeaName" value={fields.inovationIdeaName || ''} onChange={handleFieldChange} placeholder="Your innovative idea" required={false}/>
+                             <InputField label="Innovation Idea Description" name="inovationIdeaDesc" value={fields.inovationIdeaDesc || ''} onChange={handleFieldChange} placeholder="Describe your idea" required={false}/>
                         </>
                     )}
                 </>
             );
         case 'startup':
-            return <InputField label="Startup ID" name="startupId" value={fields.startupId || ''} onChange={handleFieldChange} placeholder="e.g., 1" />;
+            // return <InputField label="Startup ID" name="startupId" value={fields.startupId || ''} onChange={handleFieldChange} placeholder="e.g., 1" />;
         case 'researcher':
             return (
                 <>
-                    <InputField label="Innovation Idea Name (Optional)" name="inovationIdeaName" value={fields.inovationIdeaName || ''} onChange={handleFieldChange} placeholder="Your research idea" required={false}/>
-                    <InputField label="Innovation Idea Description (Optional)" name="inovationIdeaDesc" value={fields.inovationIdeaDesc || ''} onChange={handleFieldChange} placeholder="Describe your research" required={false}/>
+                    <InputField label="Innovation Idea Name" name="inovationIdeaName" value={fields.inovationIdeaName || ''} onChange={handleFieldChange} placeholder="Your research idea" required={false}/>
+                    <InputField label="Innovation Idea Description" name="inovationIdeaDesc" value={fields.inovationIdeaDesc || ''} onChange={handleFieldChange} placeholder="Describe your research" required={false}/>
                 </>
             );
         default:
@@ -238,19 +238,21 @@ function TeamManagement({ userProfile }) {
                 });
                 break;
             case 'startup':
-                 Object.assign(payload, { startupId: parseInt(categoryFields.startupId) });
+                 Object.assign(payload, { startupId: parseInt(userProfile.profileDetails.id) });
                  break;
             case 'school':
                  Object.assign(payload, {
                     schoolStudentId: parseInt(categoryFields.schoolStudentId),
                     categoryId: parseInt(categoryFields.categoryId),
                     problemStatementId: parseInt(categoryFields.problemStatementId),
+                    startupId: parseInt(userProfile.profileDetails.id),
                     ...(categoryFields.inovationIdeaName && { inovationIdeaName: categoryFields.inovationIdeaName }),
                     ...(categoryFields.inovationIdeaDesc && { inovationIdeaDesc: categoryFields.inovationIdeaDesc }),
                  });
                  break;
             case 'researcher':
                 Object.assign(payload, {
+                    researchId: parseInt(userProfile.profileDetails.id),
                     ...(categoryFields.inovationIdeaName && { inovationIdeaName: categoryFields.inovationIdeaName }),
                     ...(categoryFields.inovationIdeaDesc && { inovationIdeaDesc: categoryFields.inovationIdeaDesc }),
                 });
