@@ -225,7 +225,7 @@ function TeamManagement({ userProfile }) {
         const payload = {
             teamName,
             memberUserIds: members.map(m => m.id),
-            department: userProfile.profileDetails?.branch || 'other', 
+            department: userProfile.profileDetails?.branch || 'Other', 
         };
         
         switch(userProfile.participationCategory) {
