@@ -5,7 +5,6 @@ const GlassSection = ({ children, className = "", delay = 0 }) => {
   return (
     <section
       initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.8, ease: "easeOut" }}
       viewport={{ once: true }}
       className={`relative z-10 py-20 px-6 md:px-12 

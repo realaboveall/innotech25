@@ -69,9 +69,7 @@ const Sponsor = () => {
           <div
             key={item.title}
             initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1, duration: 0.5 }}
-            whileHover={{ scale: 1.03 }}
             className="relative bg-black/40 backdrop-blur-xl border border-white/10 
               rounded-2xl p-6 flex flex-col items-start justify-between 
               hover:border-white/20 hover:shadow-[0_0_20px_rgba(255,255,255,0.07)]

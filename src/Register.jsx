@@ -293,8 +293,7 @@ const App = () => {
 
   const handleGoogleSignIn = async () => {
     try {
-      window.location.href =
-        "https://api.innotech.yaytech.in/auth/google";
+      window.location.href = "https://api.innotech.yaytech.in/auth/google";
     } catch (err) {
       console.error("Google login error:", err);
     }
@@ -378,82 +377,92 @@ const App = () => {
                   Authorization: `Bearer ${token}`,
                   "Content-Type": "application/json",
                 },
-              });
-              const contentType = res.headers.get('content-type') || '';
-              if (!res.ok) {
-                const text = await res.text();
-                console.warn('Profile fetch failed', text);
-                return;
               }
-              if (!contentType.includes('application/json')) {
-                const text = await res.text();
-                console.warn('Profile fetch unexpected content-type', contentType, text);
-                return;
-              }
-              const data = await res.json();
-              console.log(data)
-              if (data?.success && data.user) {
-                const u = data.user;
-                setFormData(prev => ({
-                  ...prev,
-                  name: u.name || prev.name,
-                  phonenumber: u.phonenumber || prev.phonenumber,
-                  isKietian: !!u.isKietian,
-                  participationCategory: u.participationCategory || prev.participationCategory,
-                }));
-                // If basic profile already complete, go straight to dashboard
-                const basicComplete = u?.isProfileComplete?.basicProfile === true;
-                if (basicComplete) {
-                  navigate('/dashboard');
-                  return;
-                }
-                if (u.participationCategory) {
-                  // map participationCategory to selectedCategory object
-                  const map = {
-                    school: { title: 'School' },
-                    college: { title: 'College' },
-                    researcher: { title: 'researcher' },
-                    startup: { title: 'Startup' },
-                  };
-                  const sc = map[u.participationCategory.toLowerCase()];
-                  if (sc) setSelectedCategory(sc);
-                  // advance to basic info so user can edit
-                  setStep(3);
-                }
-              }
-            } catch (err) {
-              console.warn('Profile fetch error', err);
+            );
+            const contentType = res.headers.get("content-type") || "";
+            if (!res.ok) {
+              const text = await res.text();
+              console.warn("Profile fetch failed", text);
+              return;
             }
-          })();
-        } catch (err) {
-          console.warn('token extraction failed', err);
-        }
-      };
-
-      // If token already in cookie, check profile completion and possibly redirect to dashboard
-      const tokenInCookie = getTokenFromCookie();
-      if (tokenInCookie) {
-        (async () => {
-          try {
-            const res = await fetch('https://api.innotech.yaytech.in/api/user/check/complete-profile', {
-              headers: { Authorization: `Bearer ${tokenInCookie}` }
-            });
-            const contentType = res.headers.get('content-type') || '';
-            if (res.ok && contentType.includes('application/json')) {
-              const data = await res.json();
-              const basicComplete = data?.user?.isProfileComplete?.basicProfile === true;
+            if (!contentType.includes("application/json")) {
+              const text = await res.text();
+              console.warn(
+                "Profile fetch unexpected content-type",
+                contentType,
+                text
+              );
+              return;
+            }
+            const data = await res.json();
+            console.log(data);
+            if (data?.success && data.user) {
+              const u = data.user;
+              setFormData((prev) => ({
+                ...prev,
+                name: u.name || prev.name,
+                phonenumber: u.phonenumber || prev.phonenumber,
+                isKietian: !!u.isKietian,
+                participationCategory:
+                  u.participationCategory || prev.participationCategory,
+              }));
+              // If basic profile already complete, go straight to dashboard
+              const basicComplete = u?.isProfileComplete?.basicProfile === true;
               if (basicComplete) {
-                navigate('/dashboard');
+                navigate("/dashboard");
                 return;
+              }
+              if (u.participationCategory) {
+                // map participationCategory to selectedCategory object
+                const map = {
+                  school: { title: "School" },
+                  college: { title: "College" },
+                  researcher: { title: "researcher" },
+                  startup: { title: "Startup" },
+                };
+                const sc = map[u.participationCategory.toLowerCase()];
+                if (sc) setSelectedCategory(sc);
+                // advance to basic info so user can edit
+                setStep(3);
               }
             }
           } catch (err) {
-            console.warn('Profile check failed', err);
+            console.warn("Profile fetch error", err);
           }
-          setStep(2);
         })();
-        return;
+      } catch (err) {
+        console.warn("token extraction failed", err);
       }
+    };
+
+    // If token already in cookie, check profile completion and possibly redirect to dashboard
+    const tokenInCookie = getTokenFromCookie();
+    if (tokenInCookie) {
+      (async () => {
+        try {
+          const res = await fetch(
+            "https://api.innotech.yaytech.in/api/user/check/complete-profile",
+            {
+              headers: { Authorization: `Bearer ${tokenInCookie}` },
+            }
+          );
+          const contentType = res.headers.get("content-type") || "";
+          if (res.ok && contentType.includes("application/json")) {
+            const data = await res.json();
+            const basicComplete =
+              data?.user?.isProfileComplete?.basicProfile === true;
+            if (basicComplete) {
+              navigate("/dashboard");
+              return;
+            }
+          }
+        } catch (err) {
+          console.warn("Profile check failed", err);
+        }
+        setStep(2);
+      })();
+      return;
+    }
 
     tryExtractToken();
   }, []);
