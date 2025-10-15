@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from 'react-router-dom';
 import { getTokenFromCookie } from './auth';
+import { PendingRequests } from './TeamRequests';
 
 // --- Helper Components (Reused for consistent styling) ---
 
@@ -157,59 +158,58 @@ const CompleteProfile = () => {
         uid: "",
     });
 
-    useEffect(() => {
-        const fetchUser = async () => {
-            setLoading(true);
-            try {
-                const token = getTokenFromCookie() || (() => {
-                    try { return localStorage.getItem('authToken'); } catch (e) { return null; }
-                })();
+    // Hoist fetchUser so other components (e.g. PendingRequests) can trigger a refresh
+    const fetchUser = async () => {
+        setLoading(true);
+        try {
+            const token = getTokenFromCookie() || (() => {
+                try { return localStorage.getItem('authToken'); } catch (e) { return null; }
+            })();
 
-                if (!token) {
-                    // No token found, ask user to authenticate
-                    navigate('/register');
-                    return;
-                }
-
-                const res = await fetch('https://api.innotech.yaytech.in/api/user/check/complete-profile', {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-
-                const contentType = res.headers.get('content-type') || '';
-                if (!res.ok) {
-                    const text = await res.text();
-                    throw new Error(text || `Request failed with status ${res.status}`);
-                }
-
-                if (!contentType.includes('application/json')) {
-                    const text = await res.text();
-                    throw new Error('Unexpected response content-type: ' + contentType + '\n' + text);
-                }
-
-                const data = await res.json();
-
-                // Support responses that either wrap the user in { success, user } or return the user directly
-                const user = data?.user ?? (data && data.name ? data : null);
-                if (!user) throw new Error(data?.message || 'Failed to retrieve user data');
-
-                setCurrentUser(user);
-                setFormData(prev => ({
-                    ...prev,
-                    name: user.name || prev.name,
-                    isKietian: typeof user.isKietian === 'boolean' ? user.isKietian : prev.isKietian,
-                    college: user.isKietian ? "KIET Group of institutions" : prev.college,
-                    rollno: user?.categoryProfile?.rollno ?? user?.rollno ?? prev.rollno,
-                }));
-
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
+            if (!token) {
+                // No token found, ask user to authenticate
+                navigate('/register');
+                return;
             }
-        };
 
-        fetchUser();
-    }, [navigate]);
+            const res = await fetch('https://api.innotech.yaytech.in/api/user/check/complete-profile', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            const contentType = res.headers.get('content-type') || '';
+            if (!res.ok) {
+                const text = await res.text();
+                throw new Error(text || `Request failed with status ${res.status}`);
+            }
+
+            if (!contentType.includes('application/json')) {
+                const text = await res.text();
+                throw new Error('Unexpected response content-type: ' + contentType + '\n' + text);
+            }
+
+            const data = await res.json();
+
+            // Support responses that either wrap the user in { success, user } or return the user directly
+            const user = data?.user ?? (data && data.name ? data : null);
+            if (!user) throw new Error(data?.message || 'Failed to retrieve user data');
+
+            setCurrentUser(user);
+            setFormData(prev => ({
+                ...prev,
+                name: user.name || prev.name,
+                isKietian: typeof user.isKietian === 'boolean' ? user.isKietian : prev.isKietian,
+                college: user.isKietian ? "KIET Group of institutions" : prev.college,
+                rollno: user?.categoryProfile?.rollno ?? user?.rollno ?? prev.rollno,
+            }));
+
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => { fetchUser(); }, [navigate]);
 
     const handleFormChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -344,7 +344,15 @@ const CompleteProfile = () => {
             case 'school':
                 return <SchoolForm formData={formData} handleFormChange={handleFormChange} />;
             case 'startup':
-                return <StartupForm formData={formData} handleFormChange={handleFormChange} />;
+                // For startup users, show incoming pending team-join requests (if any) above the form.
+                return (
+                    <div>
+                        <PendingRequests onAction={() => fetchUser()} />
+                        <div className="mt-6">
+                            <StartupForm formData={formData} handleFormChange={handleFormChange} />
+                        </div>
+                    </div>
+                );
             case 'researcher':
                 return <ResearchForm formData={formData} handleFormChange={handleFormChange} />;
             default:
