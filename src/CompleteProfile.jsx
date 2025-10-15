@@ -170,7 +170,7 @@ const CompleteProfile = () => {
                     return;
                 }
 
-                const res = await fetch('https://2q766kvz-8001.inc1.devtunnels.ms/api/user/check/complete-profile', {
+                const res = await fetch('https://api.innotech.yaytech.in/api/user/check/complete-profile', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
 
@@ -241,7 +241,7 @@ const CompleteProfile = () => {
 
             const mapped = categoryMap[category];
             if (mapped) {
-                let categoryUrl = `https://2q766kvz-8001.inc1.devtunnels.ms/api/user/complete-profile/${mapped}`;
+                let categoryUrl = `https://api.innotech.yaytech.in/api/user/complete-profile/${mapped}`;
                 let body = null;
 
                 switch (mapped) {

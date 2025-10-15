@@ -93,7 +93,7 @@ function StudentDashboard() {
                     return;
                 }
 
-                const res = await fetch('https://2q766kvz-8001.inc1.devtunnels.ms/api/user/check/complete-profile', {
+                const res = await fetch('https://api.innotech.yaytech.in/api/user/check/complete-profile', {
                     headers: { 'Authorization': `Bearer ${token}` },
                 });
 
@@ -128,7 +128,7 @@ function StudentDashboard() {
         try {
             const token = getTokenFromCookie() || (() => { try { return localStorage.getItem('authToken'); } catch (e) { return null; } })();
             // call backend logout (use full tunnel URL)
-            await fetch('https://2q766kvz-8001.inc1.devtunnels.ms/auth/logout', {
+            await fetch('https://api.innotech.yaytech.in/auth/logout', {
                 method: 'POST',
                 headers: token ? { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' } : { 'Content-Type': 'application/json' },
                 credentials: 'include'

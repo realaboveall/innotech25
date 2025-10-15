@@ -294,7 +294,7 @@ const App = () => {
   const handleGoogleSignIn = async () => {
     try {
       window.location.href =
-        "https://2q766kvz-8001.inc1.devtunnels.ms/auth/google";
+        "https://api.innotech.yaytech.in/auth/google";
     } catch (err) {
       console.error("Google login error:", err);
     }
@@ -372,7 +372,7 @@ const App = () => {
           if (!token) return;
           try {
             const res = await fetch(
-              "https://2q766kvz-8001.inc1.devtunnels.ms/api/user/profile",
+              "https://api.innotech.yaytech.in/api/user/profile",
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -435,7 +435,7 @@ const App = () => {
       if (tokenInCookie) {
         (async () => {
           try {
-            const res = await fetch('https://2q766kvz-8001.inc1.devtunnels.ms/api/user/check/complete-profile', {
+            const res = await fetch('https://api.innotech.yaytech.in/api/user/check/complete-profile', {
               headers: { Authorization: `Bearer ${tokenInCookie}` }
             });
             const contentType = res.headers.get('content-type') || '';
@@ -485,7 +485,7 @@ const App = () => {
 
     try {
       const res = await fetch(
-        "https://2q766kvz-8001.inc1.devtunnels.ms/api/user/complete-profile",
+        "https://api.innotech.yaytech.in/api/user/complete-profile",
         {
           method: "PUT",
           headers: {
