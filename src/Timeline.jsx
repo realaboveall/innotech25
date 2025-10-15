@@ -5,7 +5,7 @@ import GlassSection from "./GlassSection";
 const Timeline = () => {
   const events = [
     {
-      date: "October 1",
+      date: "October 15",
       emoji: "🚀",
       title: "Registrations Open",
       time: "9:00 AM",
@@ -13,7 +13,7 @@ const Timeline = () => {
         "Registration for Innotech 25 opens. Participants can sign up for competitions, workshops, and events.",
     },
     {
-      date: "October 20",
+      date: "October 29",
       emoji: "💻",
       title: "Registrations Close",
       time: "11:59 PM",
@@ -21,7 +21,7 @@ const Timeline = () => {
         "Final deadline to register. Ensure your team and event selections are submitted before midnight.",
     },
     {
-      date: "November 7",
+      date: "November 3",
       emoji: "🤖",
       title: "Departmental Level",
       time: "10:00 AM",
