@@ -15,7 +15,7 @@ const MemberCard = ({ member }) => {
             <img src={member.profileImage} alt={member.name} className="w-10 h-10 rounded-full" />
             <div>
                 <p className="font-semibold text-white">{member.name}</p>
-                <p className="text-sm text-gray-400 font-mono">{member.userId || 'No ID'}</p>
+
             </div>
         </div>
     );
