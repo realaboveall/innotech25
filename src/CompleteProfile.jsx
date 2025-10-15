@@ -249,7 +249,7 @@ const CompleteProfile = () => {
                     case 'college-student':
                         body = {
                             college: formData.college,
-                            rollno: formData.rollno,
+                            uid: formData.rollno,
                             course: formData.course,
                             year: Number(formData.year) || undefined,
                             branch: formData.branch
