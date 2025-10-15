@@ -53,6 +53,7 @@ const FormToggle = ({ id, label, ...props }) => (
     const CollegeForm = ({ formData, handleFormChange }) => (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <FormInput id="college" name="college" label="College Name" type="text" required value={formData.college} onChange={handleFormChange} placeholder="KIET Group of Institutions" />
+        <FormInput id="rollno" name="rollno" label="Roll Number" type="text" required value={formData.rollno} onChange={handleFormChange} placeholder="e.g., 20BCS123" />
         <FormInput id="course" name="course" label="Course" type="text" required value={formData.course} onChange={handleFormChange} placeholder="B.Tech" />
         <FormSelect id="year" name="year" label="Year of Study" required value={formData.year} onChange={handleFormChange}>
             <option value="">Select Year</option>
@@ -142,7 +143,7 @@ const CompleteProfile = () => {
         // Basic Info
         name: "", phonenumber: "", isKietian: false,
         // College
-        college: "", course: "", year: "", branch: "",
+        college: "", rollno: "", course: "", year: "", branch: "",
         // School
         school: "", standard: "", board: "",
         // Startup
@@ -196,8 +197,8 @@ const CompleteProfile = () => {
                     ...prev,
                     name: user.name || prev.name,
                     isKietian: typeof user.isKietian === 'boolean' ? user.isKietian : prev.isKietian,
-                    college: user.isKietian? "KIET Group of institutions":prev.college,
-
+                    college: user.isKietian ? "KIET Group of institutions" : prev.college,
+                    rollno: user?.categoryProfile?.rollno ?? user?.rollno ?? prev.rollno,
                 }));
 
             } catch (err) {
@@ -248,6 +249,7 @@ const CompleteProfile = () => {
                     case 'college-student':
                         body = {
                             college: formData.college,
+                            rollno: formData.rollno,
                             course: formData.course,
                             year: Number(formData.year) || undefined,
                             branch: formData.branch
