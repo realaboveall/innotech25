@@ -13,6 +13,7 @@ import InnovationDomains from "./Domains";
 import Sponsor from "./Investors";
 import { Element } from "react-scroll";
 import { useNavigate } from "react-router-dom";
+import Cat from "./Cat";
 
 function Hero() {
   const [openModal, setOpenModal] = useState(null);
@@ -128,6 +129,8 @@ function Hero() {
       {/* MAIN CONTENT */}
       <section className="relative z-20 bg-black/25">
         <Theme />
+
+        <Cat />
         <Element name="tracks">
           <Tracks />
         </Element>

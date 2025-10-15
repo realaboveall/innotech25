@@ -63,7 +63,8 @@ const Tracks = () => {
         className="text-4xl md:text-5xl font-semibold mb-4 text-center 
           bg-gradient-to-r from-cyan-300 via-purple-300 to-pink-300 
           bg-clip-text text-transparent font-Fira ">
-        Problem Statement Tracks
+        Innovation Category 2: <br />
+        Tracks for College Students
       </motion.h1>
 
       <motion.p
