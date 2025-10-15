@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from 'react-router-dom';
 import { getTokenFromCookie } from './auth';
+import { ChevronDown } from "lucide-react";
 
 
 // --- Helper Components (Reused for consistent styling) ---
@@ -20,11 +21,20 @@ const FormInput = ({ id, label, ...props }) => (
 );
 
 const FormSelect = ({ id, label, children, ...props }) => (
-    <div>
+    <div className="relative"> {/* 1. Make the container relative */}
         <label htmlFor={id} className="block text-sm font-medium text-gray-300 mb-2">{label}</label>
-        <select id={id} {...props} className="w-full bg-black/30 border border-white/20 rounded-lg p-3 text-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition appearance-none bg-no-repeat bg-right-4" style={{ backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`, backgroundSize: '1.5em 1.5em' }}>
+        <select 
+            id={id} 
+            {...props} 
+            // Added padding-right (pr-10) and removed background image classes
+            className="w-full bg-black/30 border border-white/20 rounded-lg p-3 pr-10 text-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition appearance-none"
+        >
             {children}
         </select>
+        {/* 2. Add an absolute-positioned icon */}
+        <div className="absolute inset-y-0 right-0 top-7 flex items-center px-3 pointer-events-none">
+            <ChevronDown className="h-5 w-5 text-gray-400" />
+        </div>
     </div>
 );
 
@@ -71,12 +81,25 @@ const FormToggle = ({ id, label, ...props }) => (
         </FormSelect>
     </div>
 );
-
+const standards = Array.from({ length: 8 }, (_, i) => 5 + i);
 
 const SchoolForm = ({ formData, handleFormChange }) => (
+    
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <FormInput id="school" name="school" label="School Name" type="text" required value={formData.school} onChange={handleFormChange} placeholder="ABC Public School" />
-        <FormInput id="standard" name="standard" label="Class / Standard" type="number" required value={formData.standard} onChange={handleFormChange} placeholder="12" />
+        <FormSelect 
+                id="standard" 
+                name="standard" 
+                label="Class / Standard" 
+                required 
+                value={formData.standard} 
+                onChange={handleFormChange}
+            >
+                <option value="" disabled>-- Select a Standard --</option>
+                {standards.map(std => (
+                    <option key={std} value={std}>{std}</option>
+                ))}
+            </FormSelect>
         <FormInput id="board" name="board" label="Board" type="text" required value={formData.board} onChange={handleFormChange} placeholder="CBSE" />
         <FormInput id="uid_school" name="uid" label="Student Adhar ID" type="text" required value={formData.uid} onChange={handleFormChange} placeholder="Student Adhar ID" />
     </div>

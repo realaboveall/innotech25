@@ -183,7 +183,7 @@ function StudentDashboard() {
             if (!user) throw new Error(data?.message || 'Failed to retrieve user data');
 
             setUserProfile(data.user);
-           
+
 
         } catch (err) {
             setError(err.message);
@@ -275,20 +275,30 @@ function StudentDashboard() {
                                             <div className="w-4 h-4 bg-purple-500 rounded-full animate-pulse"></div>
                                         </div>
                                     </div>
-                                    <div>
+                                    <div >
                                         <h3 className="font-semibold text-white text-lg">Complete Your Profile</h3>
                                         <p className="text-gray-400 text-sm mb-4">Provide the final details to get started.</p>
-                                        <button
-                                            onClick={() => navigate('/complete-profile')}
-                                            className="w-full sm:w-auto font-semibold mb-4 text-lg text-white bg-gradient-to-r from-cyan-500 to-purple-600 py-3 px-6 rounded-lg hover:opacity-90 transition-opacity duration-300 shadow-[0_0_20px_rgba(168,85,247,0.4)]"
-                                        >
-                                            Complete Your Profile
-                                        </button>
-                                        {userProfile.participationCategory === 'startup' && (
-                                            <div >
-                                            <PendingRequests onAction={() => fetchUser()} />
-                                            
-                                        </div>)}
+                                        <div className='flex justify-between items-center gap-10'>
+                                            <button
+                                                onClick={() => navigate('/complete-profile')}
+                                                className="w-full sm:w-auto font-semibold mb-4 text-lg text-white bg-gradient-to-r from-cyan-500 to-purple-600 py-3 px-6 rounded-lg hover:opacity-90 transition-opacity duration-300 shadow-[0_0_20px_rgba(168,85,247,0.4)]"
+                                            >
+                                                Complete Your Profile
+                                            </button>
+                                            {userProfile.participationCategory == 'startup' ? <div
+                                                
+                                                className="w-full sm:w-auto font-semibold mb-4 text-lg text-white bg-gradient-to-r from-cyan-500 to-purple-600 py-3 px-6 rounded-lg hover:opacity-90 transition-opacity duration-300 shadow-[0_0_20px_rgba(168,85,247,0.4)]"
+                                            >
+                                                ID: {userProfile.userId || 'N/A'}
+                                            </div> : null}
+
+                                        </div>
+                                        {console.log(userProfile)}
+                                        {userProfile.participationCategory == 'startup' ? (
+                                            <div>
+                                                <PendingRequests onAction={() => fetchUser()} />
+                                            </div>
+                                        ) : null}
                                     </div>
                                 </div>
                             </div>

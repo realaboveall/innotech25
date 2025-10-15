@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Search, X, UserPlus, Loader2, Send } from 'lucide-react';
+import { Search, X, UserPlus, Loader2, Send, ChevronDown } from 'lucide-react';
 import { getTokenFromCookie } from './auth';
 
 
@@ -27,17 +27,22 @@ const SelectField = ({ label, name, value, onChange, children, disabled = false,
         <label htmlFor={name} className="block text-sm font-medium text-cyan-300 mb-1">
             {label}
         </label>
-        <select
-            id={name}
-            name={name}
-            value={value}
-            onChange={onChange}
-            disabled={disabled}
-            className="w-full bg-black/30 border border-white/20 rounded-md py-2 px-3 text-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition disabled:opacity-50 disabled:cursor-not-allowed"
-            required={required}
-        >
-            {children}
-        </select>
+        <div className="relative">
+            <select
+                id={name}
+                name={name}
+                value={value}
+                onChange={onChange}
+                disabled={disabled}
+                className="w-full bg-black/30 border border-white/20 rounded-md py-2 px-3 pr-10 text-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition disabled:opacity-50 disabled:cursor-not-allowed appearance-none"
+                required={required}
+            >
+                {children}
+            </select>
+            <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+                <ChevronDown className="h-5 w-5 text-gray-400" />
+            </div>
+        </div>
     </div>
 );
 
@@ -100,12 +105,9 @@ const CategorySpecificFields = ({ category, fields, setFields }) => {
 
     switch (category) {
         case 'college':
-        case 'school':
             return (
                 <>
-                    {category === 'school' && (
-                         <InputField label="School Student ID" name="schoolStudentId" value={fields.schoolStudentId || ''} onChange={handleFieldChange} placeholder="e.g., 1" />
-                    )}
+                
                     <SelectField label="Select Category" name="categoryId" value={fields.categoryId || ''} onChange={handleCategoryChange}>
                         <option value="">-- Choose a Category --</option>
                         {categoriesData.map(cat => (
@@ -129,6 +131,18 @@ const CategorySpecificFields = ({ category, fields, setFields }) => {
                            fields.categoryId && <option value="" disabled>No problem statements for this category</option>
                         )}
                     </SelectField>
+                    
+                    {(category === 'college' || category === 'school') && (
+                        <>
+                             <InputField label="Innovation Idea Name " name="inovationIdeaName" value={fields.inovationIdeaName || ''} onChange={handleFieldChange} placeholder="Your innovative idea" required={false}/>
+                             <InputField label="Innovation Idea Description" name="inovationIdeaDesc" value={fields.inovationIdeaDesc || ''} onChange={handleFieldChange} placeholder="Describe your idea" required={false}/>
+                        </>
+                    )}
+                </>
+            );
+        case 'school':
+            return (
+                <>
                     
                     {(category === 'college' || category === 'school') && (
                         <>
@@ -242,9 +256,7 @@ function TeamManagement({ userProfile }) {
                  break;
             case 'school':
                  Object.assign(payload, {
-                    schoolStudentId: parseInt(categoryFields.schoolStudentId),
-                    categoryId: parseInt(categoryFields.categoryId),
-                    problemStatementId: parseInt(categoryFields.problemStatementId),
+                    schoolStudentId: parseInt(userProfile.profileDetails.id),
                     startupId: parseInt(userProfile.profileDetails.id),
                     ...(categoryFields.inovationIdeaName && { inovationIdeaName: categoryFields.inovationIdeaName }),
                     ...(categoryFields.inovationIdeaDesc && { inovationIdeaDesc: categoryFields.inovationIdeaDesc }),
@@ -291,6 +303,13 @@ function TeamManagement({ userProfile }) {
             setIsSubmitting(false);
         }
     };
+
+    
+    useEffect(() => {
+        if (isSubmitting) {
+            window.location.reload();
+        }
+    }, [isSubmitting]);
 
     return (
         <motion.div 
