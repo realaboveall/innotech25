@@ -38,7 +38,7 @@ const Timeline = () => {
   ];
 
   return (
-    <GlassSection className="my-24 relative overflow-hidden">
+    <GlassSection className="relative overflow-hidden">
       <motion.h1
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

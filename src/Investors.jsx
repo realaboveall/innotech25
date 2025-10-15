@@ -1,52 +1,40 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const tracks = [
+const sponsors = [
   {
-    icon: "🌐",
-    title: "Smart Solutions, Smarter Society",
-    desc: "E-projects focused on web, APIs, mobile apps, cyber security, bioinformatics, and support solutions for a smarter society.",
-    num: "Track 1",
-  },
-  {
-    icon: "🤖",
-    title: "AI Solutions for Automation",
-    desc: "AI-based projects focusing on automation, agentic AI, and generative AI solutions.",
-    num: "Track 2",
-  },
-  {
-    icon: "🔧",
-    title: "Automation and Robotics",
-    desc: "IoT, robotics, sensors, manufacturing, and computer vision projects for real-world automation.",
-    num: "Track 3",
+    icon: "💰",
+    title: "Investors Meet",
+    desc: "Startup initiatives will be sponsored and supported by the Technology Business Incubator (TBI) with the theme “Investor Meet” to foster entrepreneurial spirit and real-world applications.",
   },
   {
     icon: "🚀",
-    title: "From Concept to Reality",
-    desc: "Projects transforming concepts into reality with drones, EVs, medical devices, space, and green energy.",
-    num: "Track 4",
+    title: "TBI Support",
+    desc: "In-depth discussions on funding and start-up registrations following the Investor Meet.",
   },
   {
-    icon: "💼",
-    title: "Startup & Business Innovation",
-    desc: "Start-up ideas, productivity, and business models for sustainable economic growth.",
-    num: "Track 5",
+    icon: "🏆",
+    title: "Projects & Ideas: CoE",
+    desc: "Display of groundbreaking projects and ideas developed under various Centres of Excellence.",
   },
   {
-    icon: "👩‍🎓",
-    title: "First-Year Innovators",
-    desc: "Prototypes and innovative solutions exclusively from first-year students.",
-    num: "Track 6",
+    icon: "🤖",
+    title: "Projects by Technical Clubs",
+    desc: "Cutting-edge solutions and innovations presented by different technical clubs.",
   },
   {
-    icon: "🌱",
-    title: "Poster & Creative Visionary",
-    desc: "Posters, models, and infrastructural designs with social, ethical, and environmental focus.",
-    num: "Track 7",
+    icon: "🧑‍🔬",
+    title: "Budding Engineers",
+    desc: "IRPR Cell will coordinate with schools for project displays, ensuring wide participation and impactful exposure.",
+  },
+  {
+    icon: "📈",
+    title: "Start-ups Showcase",
+    desc: "Showcase and promotion of innovative solutions by registered start-ups.",
   },
 ];
 
-const Tracks = () => {
+const Sponsor = () => {
   return (
     <section
       className="relative min-h-screen w-full py-24 px-6 text-white bg-black/70 
@@ -62,8 +50,8 @@ const Tracks = () => {
         transition={{ duration: 0.6 }}
         className="text-4xl md:text-5xl font-semibold mb-4 text-center 
           bg-gradient-to-r from-cyan-300 via-purple-300 to-pink-300 
-          bg-clip-text text-transparent font-Fira ">
-        Problem Statement Tracks
+          bg-clip-text text-transparent font-Fira">
+        Special Attractions & Sponsorships
       </motion.h1>
 
       <motion.p
@@ -71,15 +59,15 @@ const Tracks = () => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.6 }}
         className="text-gray-400 text-lg md:text-xl text-center mb-16 max-w-3xl mx-auto font-pt">
-        Explore seven unique tracks designed to inspire innovation and tackle
-        real-world challenges.
+        Discover the exclusive highlights and institutional support that make
+        Innotech’25 more impactful and exciting.
       </motion.p>
 
-      {/* Tracks Grid */}
+      {/* Sponsor Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {tracks.map((track, i) => (
+        {sponsors.map((item, i) => (
           <div
-            key={track.title}
+            key={item.title}
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1, duration: 0.5 }}
@@ -90,24 +78,17 @@ const Tracks = () => {
               transition-all duration-500">
             <div className="relative z-10">
               <div className="text-4xl mb-4 text-white/80 font-Fira">
-                {track.icon}
+                {item.icon}
               </div>
               <h3
                 className="text-xl font-semibold mb-2 
                   text-white group-hover:text-cyan-300 transition-colors duration-300 font-Fira">
-                {track.title}
+                {item.title}
               </h3>
               <p className="text-gray-400 text-sm leading-relaxed font-pt">
-                {track.desc}
+                {item.desc}
               </p>
             </div>
-
-            <button
-              className="mt-6 self-start text-sm px-4 py-2 rounded-lg border border-white/10 
-                bg-white/5 hover:bg-white/10 hover:border-white/20 
-                text-gray-300 hover:text-white transition-all duration-300">
-              {track.num}
-            </button>
           </div>
         ))}
       </div>
@@ -115,4 +96,4 @@ const Tracks = () => {
   );
 };
 
-export default Tracks;
+export default Sponsor;

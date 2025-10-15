@@ -11,30 +11,30 @@ const Register = () => {
       title: "School",
       icon: "🎓",
       desc: "For school students showcasing creative innovation projects.",
-      route: null,
+      route: "/login",
     },
     {
       title: "College",
       icon: "🏫",
       desc: "For college innovators ready to present research and prototypes.",
-      route: "/tracks",
+      route: "/login",
     },
     {
       title: "Research",
       icon: "🔬",
       desc: "For academic and institutional researchers driving discovery.",
-      route: null,
+      route: "/login",
     },
     {
       title: "Startup",
       icon: "🚀",
       desc: "For startup founders transforming ideas into impact.",
-      route: null,
+      route: "/login",
     },
   ];
 
   return (
-    <GlassSection className="my-24 max-w-6xl mx-auto text-center">
+    <GlassSection className="max-w-6xl mx-auto text-center">
       {/* Heading */}
       <motion.h1
         initial={{ opacity: 0, y: 20 }}
@@ -54,7 +54,7 @@ const Register = () => {
       {/* Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
         {cards.map((card, i) => (
-          <motion.div
+          <div
             key={card.title}
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -83,7 +83,7 @@ const Register = () => {
                 {card.desc}
               </p>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
     </GlassSection>

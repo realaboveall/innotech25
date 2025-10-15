@@ -18,7 +18,7 @@ const Participate = () => {
   };
 
   return (
-    <GlassSection className="max-w-5xl mx-auto my-24">
+    <GlassSection className="max-w-5xl mx-auto">
       <motion.h1
         variants={item}
         initial="hidden"
