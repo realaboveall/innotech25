@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import GlassSection from "./GlassSection";
+import { Link } from "react-router-dom";
 
 const Theme = () => {
   return (
@@ -44,18 +45,20 @@ const Theme = () => {
       </motion.div>
 
       {/* Register Button */}
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        transition={{ duration: 0.3 }}
-        className="relative px-8 py-3 mb-16 text-lg font-semibold text-white rounded-full 
+      <Link to="/register">
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.3 }}
+          className="relative px-8 py-3 mb-16 text-lg font-semibold text-white rounded-full 
           border border-white/20 backdrop-blur-md bg-white/10 hover:bg-white/20 
           hover:border-white/40 transition-all duration-500 group overflow-hidden">
-        <span
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
+          <span
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
           translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[2000ms]"
-        />
-        <span className="relative z-10">Register Now</span>
-      </motion.button>
+          />
+          <span className="relative z-10">Register As</span>
+        </motion.button>
+      </Link>
 
       {/* Stats Section */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-20">
