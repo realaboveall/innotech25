@@ -37,13 +37,13 @@ const Participate = () => {
         {[
           {
             title: "1️⃣ Registration & Login",
-            text: "Sign in using your college email ID via Firebase Authentication. Once logged in, you'll be redirected to the registration form.",
+            text: "Sign in using your email IDs with Google Auth. Once logged in, you'll be redirected to the registration form.",
           },
           {
             title: "2️⃣ Individual Registration",
             text: "Every student must register individually before forming a team.",
             list: [
-              "<span class='font-semibold text-cyan-400'>KIET Students:</span> Enter your roll number. Your details auto-fill — verify and submit.",
+              "<span class='font-semibold text-cyan-400'>KIET Students:</span> Enter your roll number, and other details.",
               "<span class='font-semibold text-cyan-400'>Other Colleges:</span> Fill the form manually and upload a valid ID (Aadhaar/College ID).",
             ],
           },
@@ -53,7 +53,7 @@ const Participate = () => {
             list: [
               "Click “Make Team” – you become the Team Leader.",
               "Choose a Category and a Problem Statement.",
-              "Add 2–5 members by searching their Student Identifier.",
+              "Add 2–5 members by searching their Student Identifier(UID).",
             ],
           },
           {

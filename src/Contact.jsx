@@ -20,6 +20,11 @@ const Contact = () => {
 
   const contacts = [
     {
+      name: "Mr. Sourav Kumar",
+      role: "General Manager TBI",
+      phone: "+91 90693 45557",
+    },
+    {
       name: "Dr. Manish Bhardwaj",
       role: "Planning & Implementation Head",
       phone: "+91 94579 66671",
