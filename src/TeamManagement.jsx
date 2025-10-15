@@ -54,7 +54,7 @@ const CategorySpecificFields = ({ category, fields, setFields }) => {
             setError(null);
             try {
                 const token = getTokenFromCookie() || localStorage.getItem('authToken');
-                const res = await fetch('https://2q766kvz-8001.inc1.devtunnels.ms/api/categories', {
+                const res = await fetch('https://api.innotech.yaytech.in/api/categories', {
                     headers: { 'Authorization': `Bearer ${token}` },
                 });
                 if (!res.ok) throw new Error('Failed to fetch categories.');
@@ -175,7 +175,7 @@ function TeamManagement({ userProfile }) {
         setSearchResult(null);
         try {
             const token = getTokenFromCookie() || localStorage.getItem('authToken');
-            const res = await fetch(`https://2q766kvz-8001.inc1.devtunnels.ms/api/search/users?query=${memberSearchQuery}`, {
+            const res = await fetch(`https://api.innotech.yaytech.in/api/search/users?query=${memberSearchQuery}`, {
                 headers: { 'Authorization': `Bearer ${token}` },
             });
             if (!res.ok) throw new Error('Failed to search for user.');
@@ -261,7 +261,7 @@ function TeamManagement({ userProfile }) {
         console.log('Final Payload to be sent:', JSON.stringify(payload, null, 2));
 
         try {
-            const res = await fetch('https://2q766kvz-8001.inc1.devtunnels.ms/api/team/create', {
+            const res = await fetch('https://api.innotech.yaytech.in/api/team/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getTokenFromCookie } from './auth';
 import { Loader2, Check, X, Send, Trash2, Inbox } from 'lucide-react';
 
-const API_BASE_URL = 'https://2q766kvz-8001.inc1.devtunnels.ms';
+const API_BASE_URL = 'https://api.innotech.yaytech.in';
 
 // --- Pending (Incoming) Requests Component ---
 export function PendingRequests({ onAction }) {
