@@ -250,9 +250,8 @@ function StudentDashboard() {
                                     <img src={userProfile.profileImage} alt="Profile" className="sm:w-24 sm:h-24 w-16 h-16 rounded-full border-2 border-purple-400 shadow-lg sm:mb-0 sm:mr-6" />
                                     <div>
                                         <h1 className="text-2xl sm:text-4xl font-bold text-white sm:text-left">{userProfile.name}</h1>
-                                        <div className="flex items-center gap-3 mt-1">
-                                            <p className="text-gray-400 sm:text-lg text-sm sm:text-left">User ID: <span className="font-mono text-white ml-2">{userProfile.userId || 'N/A'}</span></p>
-                                            <button
+                                        <div className="flex items-center sm:gap-3 mt-1">
+                                            <p className="text-gray-400 sm:text-lg text-sm sm:text-left">User ID: <br/><span className="font-mono text-white ">{userProfile.userId || 'N/A'}<button
                                                 type="button"
                                                 onClick={async () => {
                                                     try {
@@ -274,10 +273,11 @@ function StudentDashboard() {
                                                         console.warn('Copy failed', e);
                                                     }
                                                 }}
-                                                className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-white/6 text-sm text-white hover:bg-white/10 transition"
+                                                className="inline-flex items-center ml-1  gap-2 px-1 py-1 rounded-md bg-white/6 text-sm text-white hover:bg-white/10 transition"
                                             >
                                                 <Copy className='w-4 h-4' />
-                                            </button>
+                                            </button></span></p>
+                                            
                                             {copied && <span className="text-sm text-green-400">Copied!</span>}
                                         </div>
                                     </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Users, Clipboard, Info, CheckCircle } from 'lucide-react';
+import { Users, Clipboard, Info, CheckCircle, Send } from 'lucide-react';
 
 const DetailCard = ({ label, value }) => (
     <div className="bg-black/20 p-3 rounded-lg">
@@ -15,15 +15,32 @@ const MemberCard = ({ member }) => {
             <img src={member.profileImage} alt={member.name} className="w-10 h-10 rounded-full" />
             <div>
                 <p className="font-semibold text-white">{member.name}</p>
-                <p className="text-sm text-gray-400 font-mono">{member.userId}</p>
+                <p className="text-sm text-gray-400 font-mono">{member.userId || 'No ID'}</p>
             </div>
         </div>
     );
 };
 
+// Helper component to show a colored badge for the request status
+const RequestStatusBadge = ({ status }) => {
+    const baseClasses = "px-2.5 py-1 text-xs font-semibold rounded-full capitalize";
+    switch (status?.toLowerCase()) {
+        case 'accepted':
+            return <span className={`${baseClasses} bg-green-500/20 text-green-300`}>Accepted</span>;
+        case 'pending':
+            return <span className={`${baseClasses} bg-yellow-500/20 text-yellow-300`}>Pending</span>;
+        case 'rejected':
+            return <span className={`${baseClasses} bg-red-500/20 text-red-300`}>Rejected</span>;
+        default:
+            return <span className={`${baseClasses} bg-gray-500/20 text-gray-300`}>{status}</span>;
+    }
+};
+
+
 function MyTeamDetails({ team }) {
-    console.log(team)
+    // The leader is already displayed, so we only list other members.
     const members = [team.member1, team.member2, team.member3, team.member4].filter(Boolean);
+    const hasRequests = team.requests && team.requests.length > 0;
 
     return (
         <div className="border-2 border-white/10 mt-8 rounded-2xl p-6 space-y-6">
@@ -62,9 +79,33 @@ function MyTeamDetails({ team }) {
                     <Users className="w-5 h-5" /> Members
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <MemberCard member={team.leaderUser} /> {/* Also show the leader in the member list */}
                     {members.map(member => <MemberCard key={member.id} member={member} />)}
                 </div>
             </div>
+
+        
+            {hasRequests && (
+                <div>
+                    <h4 className="text-lg font-semibold text-cyan-300 mb-3 flex items-center gap-2">
+                        <Send className="w-5 h-5" /> Team Invitations Status
+                    </h4>
+                    <div className="space-y-2">
+                        {team.requests.map(request => (
+                            <div key={request.id} className="flex items-center justify-between p-3 bg-black/30 rounded-lg">
+                                <div className="flex items-center gap-3">
+                                    <img src={request.requestedTo.profileImage} alt={request.requestedTo.name} className="w-10 h-10 rounded-full" />
+                                    <div>
+                                        <p className="font-semibold text-white">{request.requestedTo.name}</p>
+                                        <p className="text-sm text-gray-400">Invitation Sent</p>
+                                    </div>
+                                </div>
+                                <RequestStatusBadge status={request.status} />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

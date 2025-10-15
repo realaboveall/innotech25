@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Search, X, UserPlus, Loader2, Send } from 'lucide-react';
 import { getTokenFromCookie } from './auth';
 
-// --- Reusable Form Field Components ---
+
 const InputField = ({ label, name, value, onChange, placeholder, type = 'text', required = true }) => (
     <div>
         <label htmlFor={name} className="block text-sm font-medium text-cyan-300 mb-1">
@@ -41,7 +41,7 @@ const SelectField = ({ label, name, value, onChange, children, disabled = false,
     </div>
 );
 
-// --- Component to render fields based on user category ---
+
 const CategorySpecificFields = ({ category, fields, setFields }) => {
     const [categoriesData, setCategoriesData] = useState([]);
     const [problemStatements, setProblemStatements] = useState([]);
@@ -129,8 +129,7 @@ const CategorySpecificFields = ({ category, fields, setFields }) => {
                            fields.categoryId && <option value="" disabled>No problem statements for this category</option>
                         )}
                     </SelectField>
-
-                    {/* 👇 CHANGE: This block now renders for both college and school */}
+                    
                     {(category === 'college' || category === 'school') && (
                         <>
                              <InputField label="Innovation Idea Name (Optional)" name="inovationIdeaName" value={fields.inovationIdeaName || ''} onChange={handleFieldChange} placeholder="Your innovative idea" required={false}/>
@@ -156,7 +155,6 @@ const CategorySpecificFields = ({ category, fields, setFields }) => {
 
 // --- Main Team Management Component ---
 function TeamManagement({ userProfile }) {
-    // ... (State and member search/add/remove functions are unchanged) ...
     const [teamName, setTeamName] = useState('');
     const [members, setMembers] = useState([]);
     const [memberSearchQuery, setMemberSearchQuery] = useState('');
@@ -175,9 +173,13 @@ function TeamManagement({ userProfile }) {
         setSearchResult(null);
         try {
             const token = getTokenFromCookie() || localStorage.getItem('authToken');
-            const res = await fetch(`https://api.innotech.yaytech.in/api/search/users?query=${memberSearchQuery}`, {
+            
+            
+            const category = userProfile.participationCategory;
+            const res = await fetch(`https://api.innotech.yaytech.in/api/search/users?query=${memberSearchQuery}&participationCategory=${category}`, {
                 headers: { 'Authorization': `Bearer ${token}` },
             });
+
             if (!res.ok) throw new Error('Failed to search for user.');
             const data = await res.json();
 
@@ -225,10 +227,9 @@ function TeamManagement({ userProfile }) {
             memberUserIds: members.map(m => m.id),
             department: userProfile.profileDetails?.branch || 'N/A', 
         };
-        console.log(userProfile)
+        
         switch(userProfile.participationCategory) {
             case 'college':
-                
                 Object.assign(payload, {
                     categoryId: parseInt(categoryFields.categoryId),
                     problemStatementId: parseInt(categoryFields.problemStatementId),
@@ -298,7 +299,6 @@ function TeamManagement({ userProfile }) {
         >
             <h3 className="text-xl font-semibold text-cyan-300 mb-4">Create Your Team</h3>
             <form onSubmit={handleSubmit} className="space-y-6">
-                 {/* ... (Team Name, Member Search, and Member List JSX is unchanged) ... */}
                 <InputField label="Team Name" name="teamName" value={teamName} onChange={(e) => setTeamName(e.target.value)} placeholder="e.g., The Innovators" />
                 <div>
                     <label className="block text-sm font-medium text-cyan-300 mb-1">Add Team Members (1-4 members)</label>
