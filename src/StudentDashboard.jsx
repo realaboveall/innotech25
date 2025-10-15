@@ -35,7 +35,7 @@ const SchoolDetails = ({ details }) => (
         <DetailItem label="School" value={details.school} />
         <DetailItem label="Standard" value={details.standard} />
         <DetailItem label="Board" value={details.board} />
-        <DetailItem label="School ID (UID)" value={details.uid} />
+        <DetailItem label="Student Adhar ID" value={details.uid} />
     </>
 );
 
@@ -58,7 +58,7 @@ const StartupDetails = ({ details }) => (
         <DetailItem label="Founder Name" value={details.founderName} />
         <DetailItem label="Founder Email" value={details.founderEmail} />
         <DetailItem label="Founder Phone" value={details.founderPhonenumber} />
-        <DetailItem label="Founder ID (UID)" value={details.founderUid} />
+        <DetailItem label="Founder Adhar ID" value={details.founderUid} />
     </>
 );
 
@@ -67,7 +67,7 @@ const ResearcherDetails = ({ details }) => (
         <h3 className="text-xl font-semibold text-cyan-300 sm:col-span-2 mb-2">Research Information</h3>
         <DetailItem label="University/Institution" value={details.universityName} />
         <DetailItem label="Pursuing Degree" value={details.pursuingDegree} />
-        <DetailItem label="Researcher ID (UID)" value={details.uid} />
+        <DetailItem label="Researcher Adhar ID" value={details.uid} />
     </>
 );
 
@@ -79,6 +79,7 @@ function StudentDashboard() {
     const [userProfile, setUserProfile] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [copied, setCopied] = useState(false);
 
     useEffect(() => {
         const checkProfileStatus = async () => {
@@ -247,7 +248,36 @@ function StudentDashboard() {
                                     <img src={userProfile.profileImage} alt="Profile" className="sm:w-24 sm:h-24 w-16 h-16 rounded-full border-2 border-purple-400 shadow-lg sm:mb-0 sm:mr-6" />
                                     <div>
                                         <h1 className="text-2xl sm:text-4xl font-bold text-white sm:text-left">{userProfile.name}</h1>
-                                        <p className="text-gray-400 sm:text-lg text-sm sm:text-left">Welcome to your dashboard.</p>
+                                        <div className="flex items-center gap-3 mt-1">
+                                            <p className="text-gray-400 sm:text-lg text-sm sm:text-left">User ID: <span className="font-mono text-white ml-2">{userProfile.userId || 'N/A'}</span></p>
+                                            <button
+                                                type="button"
+                                                onClick={async () => {
+                                                    try {
+                                                        const id = userProfile.userId || '';
+                                                        if (!id) return;
+                                                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                                                            await navigator.clipboard.writeText(id);
+                                                        } else {
+                                                            const ta = document.createElement('textarea');
+                                                            ta.value = id;
+                                                            document.body.appendChild(ta);
+                                                            ta.select();
+                                                            document.execCommand('copy');
+                                                            document.body.removeChild(ta);
+                                                        }
+                                                        setCopied(true);
+                                                        setTimeout(() => setCopied(false), 2000);
+                                                    } catch (e) {
+                                                        console.warn('Copy failed', e);
+                                                    }
+                                                }}
+                                                className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-white/6 text-sm text-white hover:bg-white/10 transition"
+                                            >
+                                                Copy
+                                            </button>
+                                            {copied && <span className="text-sm text-green-400">Copied!</span>}
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="mt-4 sm:mt-0 sm:ml-4">
