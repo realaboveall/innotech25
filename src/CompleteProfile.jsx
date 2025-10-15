@@ -352,7 +352,7 @@ const CompleteProfile = () => {
     
     if (loading) {
         return (
-             <div className="flex flex-col items-center justify-center min-h-screen w-full bg-gray-900 text-white">
+             <div className="flex flex-col items-center justify-center min-h-screen w-full text-white">
                 <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-purple-500"></div>
                 <p className="mt-4 text-lg">Loading Profile...</p>
             </div>
@@ -361,7 +361,7 @@ const CompleteProfile = () => {
     
     if (error) {
         return (
-            <div className="flex items-center justify-center min-h-screen w-full bg-gray-900 text-white">
+            <div className="flex items-center justify-center min-h-screen w-full text-white">
                  <GlassSection className="text-center">
                     <h2 className="text-2xl font-bold text-red-500 mb-4">An Error Occurred</h2>
                     <p>{error}</p>
@@ -371,7 +371,7 @@ const CompleteProfile = () => {
     }
 
     return (
-        <div className="min-h-screen w-full bg-gray-900 text-white font-sans  bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] p-4 sm:p-8 flex flex-col justify-center items-center">
+        <div className="min-h-screen w-full text-white font-sans  bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] p-4 sm:p-8 flex flex-col justify-center items-center">
             <motion.div key="profile-form" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -30 }} transition={{ duration: 0.5 }} className="w-full">
                 <GlassSection className="max-w-4xl mx-auto mt-16">
                     <div className="text-center mb-8">

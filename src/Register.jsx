@@ -261,6 +261,12 @@ const App = () => {
                   isKietian: !!u.isKietian,
                   participationCategory: u.participationCategory || prev.participationCategory,
                 }));
+                // If basic profile already complete, go straight to dashboard
+                const basicComplete = u?.isProfileComplete?.basicProfile === true;
+                if (basicComplete) {
+                  navigate('/dashboard');
+                  return;
+                }
                 if (u.participationCategory) {
                   // map participationCategory to selectedCategory object
                   const map = {
@@ -284,10 +290,28 @@ const App = () => {
         }
       };
 
-      // If token already in cookie, go to step 2 as well
+      // If token already in cookie, check profile completion and possibly redirect to dashboard
       const tokenInCookie = getTokenFromCookie();
       if (tokenInCookie) {
-        setStep(2);
+        (async () => {
+          try {
+            const res = await fetch('https://2q766kvz-8001.inc1.devtunnels.ms/api/user/check/complete-profile', {
+              headers: { Authorization: `Bearer ${tokenInCookie}` }
+            });
+            const contentType = res.headers.get('content-type') || '';
+            if (res.ok && contentType.includes('application/json')) {
+              const data = await res.json();
+              const basicComplete = data?.user?.isProfileComplete?.basicProfile === true;
+              if (basicComplete) {
+                navigate('/dashboard');
+                return;
+              }
+            }
+          } catch (err) {
+            console.warn('Profile check failed', err);
+          }
+          setStep(2);
+        })();
         return;
       }
 
