@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState } from "react";
-import { auth } from "../../firebase";
-import { onAuthStateChanged } from "firebase/auth";
-const AuthContext = React.createContext();
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { getTokenFromCookie, clearAuthCookie, logoutFromServer } from "../../auth";
+
+const AuthContext = createContext();
 
 export function useAuth() {
   return useContext(AuthContext);
@@ -9,31 +9,46 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
-  const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, initializeUser);
-    return unsubscribe;
+    const fetchProfile = async () => {
+      setLoading(true);
+      const token = getTokenFromCookie();
+      if (!token) {
+        setCurrentUser(null);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/user/profile", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await res.json();
+        if (data?.success && data.user) {
+          setCurrentUser(data.user);
+        } else {
+          setCurrentUser(null);
+        }
+      } catch (err) {
+        console.error("Failed to fetch profile:", err);
+        setCurrentUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
   }, []);
 
-  async function initializeUser(user) {
-    if (user) {
-      setCurrentUser({ ...user });
-      setUserLoggedIn(true);
-    } else {
-      setCurrentUser(null);
-      setUserLoggedIn(false);
-    }
-    setLoading(false);
-  }
-  const value = {
-    currentUser,
-    userLoggedIn,
-    loading,
+  const signOut = async () => {
+    await logoutFromServer();
+    setCurrentUser(null);
+    clearAuthCookie();
   };
-  return;
-  <AuthContext.Provider value={value}>
-    {!loading && children}
-  </AuthContext.Provider>;
+
+  const value = { currentUser, loading, signOut };
+
+  return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;
 }

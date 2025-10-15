@@ -1,0 +1,200 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { getTokenFromCookie } from './auth';
+
+// --- Helper Components (Reused for consistent styling) ---
+
+const GlassSection = ({ children, className = "" }) => (
+    <div className={`bg-black/30 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12 ${className}`}>
+        {children}
+    </div>
+);
+
+const DetailItem = ({ label, value, fullWidth = false }) => (
+    <div className={`py-3 px-4 bg-black/20 rounded-lg ${fullWidth ? 'sm:col-span-2' : ''}`}>
+        <p className="text-sm font-medium text-gray-400 capitalize">{label}</p>
+        <p className="text-lg text-white break-words">{String(value) || 'N/A'}</p>
+    </div>
+);
+
+const CollegeDetails = ({ details }) => (
+    <>
+        <h3 className="text-xl font-semibold text-cyan-300 sm:col-span-2 mb-2">Academic Information</h3>
+        <DetailItem label="College" value={details.college} />
+        <DetailItem label="Course" value={details.course} />
+        <DetailItem label="Year" value={details.year} />
+        <DetailItem label="Branch" value={details.branch} />
+    </>
+);
+
+const SchoolDetails = ({ details }) => (
+    <>
+        <h3 className="text-xl font-semibold text-cyan-300 sm:col-span-2 mb-2">School Information</h3>
+        <DetailItem label="School" value={details.school} />
+        <DetailItem label="Standard" value={details.standard} />
+        <DetailItem label="Board" value={details.board} />
+        <DetailItem label="School ID (UID)" value={details.uid} />
+    </>
+);
+
+const StartupDetails = ({ details }) => (
+    <>
+        <h3 className="text-xl font-semibold text-cyan-300 sm:col-span-2 mb-2">Startup Information</h3>
+        <DetailItem label="Startup Name" value={details.startupName} />
+        <DetailItem label="Website" value={details.website} />
+        <DetailItem label="Sector" value={details.startupSector} />
+        <DetailItem label="Stage" value={details.stage} />
+        <DetailItem label="City" value={details.city} />
+        <DetailItem label="Team Size" value={details.teamSize} />
+        <DetailItem label="Funding Status" value={details.isFunded ? 'Funded' : 'Not Funded'} />
+        {details.isFunded && <DetailItem label="Funded By" value={details.fundedBy} />}
+        <DetailItem label="Description" value={details.description} fullWidth />
+        <DetailItem label="Problem Solving" value={details.problemSolving} fullWidth />
+        <DetailItem label="Unique Value Proposition" value={details.uvp} fullWidth />
+        <DetailItem label="Pitch Deck" value={details.pitchDeckLink} fullWidth />
+        <h3 className="text-xl font-semibold text-cyan-300 sm:col-span-2 mt-4 mb-2">Founder Information</h3>
+        <DetailItem label="Founder Name" value={details.founderName} />
+        <DetailItem label="Founder Email" value={details.founderEmail} />
+        <DetailItem label="Founder Phone" value={details.founderPhonenumber} />
+        <DetailItem label="Founder ID (UID)" value={details.founderUid} />
+    </>
+);
+
+const ResearcherDetails = ({ details }) => (
+    <>
+        <h3 className="text-xl font-semibold text-cyan-300 sm:col-span-2 mb-2">Research Information</h3>
+        <DetailItem label="University/Institution" value={details.universityName} />
+        <DetailItem label="Pursuing Degree" value={details.pursuingDegree} />
+        <DetailItem label="Researcher ID (UID)" value={details.uid} />
+    </>
+);
+
+
+// --- Main Component ---
+
+function StudentDashboard() {
+    const navigate = useNavigate();
+    const [userProfile, setUserProfile] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const checkProfileStatus = async () => {
+            setLoading(true);
+            try {
+                const token = getTokenFromCookie() || (() => {
+                    try { return localStorage.getItem('authToken'); } catch (e) { return null; }
+                })();
+                if (!token) {
+                    // No token found - redirect to register to authenticate
+                    navigate('/register');
+                    return;
+                }
+
+                const res = await fetch('https://2q766kvz-8001.inc1.devtunnels.ms/api/user/check/complete-profile', {
+                    headers: { 'Authorization': `Bearer ${token}` },
+                });
+
+                const contentType = res.headers.get('content-type') || '';
+                if (!res.ok) {
+                    const text = await res.text();
+                    throw new Error(text || `Request failed with status ${res.status}`);
+                }
+
+                if (!contentType.includes('application/json')) {
+                    const text = await res.text();
+                    throw new Error('Unexpected response content-type: ' + contentType + '\n' + text);
+                }
+
+                const data = await res.json();
+                if (!data.success) throw new Error(data.message || 'Failed to fetch profile status');
+
+                setUserProfile(data.user);
+
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        checkProfileStatus();
+    }, [navigate]);
+
+    const renderProfileDetails = () => {
+        if (!userProfile?.profileDetails) return null;
+        switch (userProfile.participationCategory) {
+            case 'college': return <CollegeDetails details={userProfile.profileDetails} />;
+            case 'school': return <SchoolDetails details={userProfile.profileDetails} />;
+            case 'startup': return <StartupDetails details={userProfile.profileDetails} />;
+            case 'researcher': return <ResearcherDetails details={userProfile.profileDetails} />;
+            default: return null;
+        }
+    };
+
+    if (loading) {
+        return (
+             <div className="flex flex-col items-center justify-center min-h-screen w-full bg-gray-900 text-white">
+                <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-purple-500"></div>
+                <p className="mt-4 text-lg">Loading Dashboard...</p>
+            </div>
+        );
+    }
+    
+    if (error) {
+        return (
+            <div className="flex items-center justify-center min-h-screen w-full bg-gray-900 text-white">
+                 <GlassSection className="text-center">
+                    <h2 className="text-2xl font-bold text-red-500 mb-4">An Error Occurred</h2>
+                    <p>{error}</p>
+                 </GlassSection>
+            </div>
+        );
+    }
+
+    return (
+        <div className="min-h-screen w-full bg-gray-900  text-white font-sans bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] p-4 sm:p-8 flex flex-col items-center">
+            <div className="w-full max-w-7xl my-8 mt-20">
+                {userProfile && !userProfile.isProfileComplete.categoryProfile ? (
+                    <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="w-full">
+                        <GlassSection className="max-w-xl mx-auto text-center">
+                            <h1 className="text-3xl font-semibold text-white mb-4">One Last Step!</h1>
+                            <p className="text-gray-300 mb-8">
+                                Please complete your profile to get full access to the dashboard and event features.
+                            </p>
+                            <button 
+                                onClick={() => navigate('/complete-profile')}
+                                className="w-full font-semibold text-lg text-white bg-gradient-to-r from-cyan-500 to-purple-600 py-3 px-6 rounded-lg hover:opacity-90 transition-opacity duration-300 shadow-[0_0_20px_rgba(168,85,247,0.4)]"
+                            >
+                                Complete Your Profile
+                            </button>
+                        </GlassSection>
+                    </motion.div>
+                ) : userProfile ? (
+                     <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="w-full">
+                        <GlassSection>
+                             <div className="flex flex-col sm:flex-row items-center mb-8">
+                                <img src={userProfile.profileImage} alt="Profile" className="w-24 h-24 rounded-full border-2 border-purple-400 shadow-lg mb-4 sm:mb-0 sm:mr-6"/>
+                                <div>
+                                    <h1 className="text-4xl font-bold text-white text-center sm:text-left">{userProfile.name}</h1>
+                                    <p className="text-gray-400 text-lg text-center sm:text-left">Welcome to your dashboard.</p>
+                                </div>
+                            </div>
+                            <div className="border-t border-white/10 pt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                               <h3 className="text-xl font-semibold text-cyan-300 sm:col-span-2 mb-2">Basic Information</h3>
+                               <DetailItem label="Email" value={userProfile.email} />
+                               <DetailItem label="Phone Number" value={userProfile.phonenumber} />
+                               <DetailItem label="Participant Category" value={userProfile.participationCategory} />
+                               <DetailItem label="KIETian" value={userProfile.isKietian ? 'Yes' : 'No'} />
+                               {renderProfileDetails()}
+                            </div>
+                        </GlassSection>
+                     </motion.div>
+                ) : null}
+            </div>
+        </div>
+    );
+}
+
+export default StudentDashboard;

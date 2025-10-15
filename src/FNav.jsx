@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import logo from "/kietlogo.jpg"; // left logo
 import logo2 from "/InnotechLogoLarge.png"; // right logo (replace with your actual second logo path)
+import { getTokenFromCookie } from './auth';
 
 const FNav = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [hasToken, setHasToken] = useState(false);
+
+  useEffect(() => {
+    const token = getTokenFromCookie() || (() => { try { return localStorage.getItem('authToken'); } catch { return null; } })();
+    setHasToken(!!token);
+  }, []);
 
   return (
     <>
@@ -69,18 +76,33 @@ const FNav = () => {
 
           {/* RIGHT: Team Buttons */}
           <div className="hidden md:flex items-center gap-4">
-            <button
-              className="relative px-5 py-2 rounded-full border border-white/20 text-sm text-white/90 
-                backdrop-blur-md bg-white/5 hover:bg-white/10 transition-all duration-500
-                hover:scale-[1.05] hover:border-white/40 overflow-hidden group">
-              <span
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
-                translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[2000ms]"
-              />
-              <span className="relative z-10">Login</span>
-            </button>
+            {!hasToken ? (
+              <Link to="register">
+              <button
+                className="relative px-5 py-2 rounded-full border border-white/20 text-sm text-white/90 
+                  backdrop-blur-md bg-white/5 hover:bg-white/10 transition-all duration-500
+                  hover:scale-[1.05] hover:border-white/40 overflow-hidden group">
+                <span
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
+                  translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[2000ms]"
+                />
+                <span className="relative z-10">Register</span>
+              </button>
+              </Link>
+            ):<Link to="dashboard">
+              <button
+                className="relative px-5 py-2 rounded-full border border-white/20 text-sm text-white/90 
+                  backdrop-blur-md bg-white/5 hover:bg-white/10 transition-all duration-500
+                  hover:scale-[1.05] hover:border-white/40 overflow-hidden group">
+                <span
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
+                  translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[2000ms]"
+                />
+                <span className="relative z-10">Dashboard</span>
+              </button>
+              </Link> }
 
-            <button
+            {/* <button
               className="relative px-5 py-2 rounded-full text-sm font-medium text-white 
                 bg-gradient-to-r from-cyan-400/20 via-purple-400/10 to-pink-400/20
                 border border-white/10 backdrop-blur-md transition-all duration-300 
@@ -91,7 +113,7 @@ const FNav = () => {
                 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[2000ms]"
               />
               <span className="relative z-10">Create a Team</span>
-            </button>
+            </button> */}
           </div>
 
           {/* MOBILE MENU TOGGLE */}
@@ -123,18 +145,20 @@ const FNav = () => {
                 ))}
 
                 <div className="flex flex-col gap-3 pt-4">
-                  <button
-                    className="relative px-5 py-2 rounded-full border border-white/20 text-white/90 text-sm 
-                      backdrop-blur-md bg-white/5 hover:bg-white/10 transition-all duration-500
-                      hover:scale-[1.05] hover:border-white/40 overflow-hidden group">
-                    <span
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
-                      translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[2000ms]"
-                    />
-                    <span className="relative z-10">Join a Team</span>
-                  </button>
+                  {!hasToken && (
+                    <button
+                      className="relative px-5 py-2 rounded-full border border-white/20 text-white/90 text-sm 
+                        backdrop-blur-md bg-white/5 hover:bg-white/10 transition-all duration-500
+                        hover:scale-[1.05] hover:border-white/40 overflow-hidden group">
+                      <span
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
+                        translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[2000ms]"
+                      />
+                      <span className="relative z-10">Register</span>
+                    </button>
+                  )}
 
-                  <button
+                  {/* <button
                     className="relative px-5 py-2 rounded-full text-sm font-medium text-white 
                       bg-gradient-to-r from-cyan-400/30 via-purple-400/20 to-pink-400/30
                       border border-white/10 backdrop-blur-md transition-all duration-300 
@@ -145,7 +169,7 @@ const FNav = () => {
                       translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[2000ms]"
                     />
                     <span className="relative z-10">Create a Team</span>
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </motion.div>

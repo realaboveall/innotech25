@@ -194,7 +194,7 @@ function Hero() {
           onClick={handleClose}>
           <div
             className="relative p-6 rounded-2xl w-[90%] max-w-4xl max-h-[85vh] overflow-y-auto no-scrollbar
-    bg-black/60 backdrop-blur-xl border border-white/10 shadow-[0_0_35px_rgba(147,51,234,0.15)]"
+          bg-black/60 backdrop-blur-xl border border-white/10 shadow-[0_0_35px_rgba(147,51,234,0.15)]"
             onClick={(e) => e.stopPropagation()}>
             <button
               onClick={handleClose}
