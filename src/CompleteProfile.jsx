@@ -53,7 +53,7 @@ const FormToggle = ({ id, label, ...props }) => (
     const CollegeForm = ({ formData, handleFormChange }) => (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <FormInput id="college" name="college" label="College Name" type="text" required value={formData.college} onChange={handleFormChange} placeholder="KIET Group of Institutions" />
-        <FormInput id="rollno" name="rollno" label="Roll Number" type="text" required value={formData.rollno} onChange={handleFormChange} placeholder="e.g., 20BCS123" />
+        <FormInput id="rollno" name="rollno" label="Roll Number/ Adhar ID" type="text" required value={formData.rollno} onChange={handleFormChange} placeholder="123456789012" />
         <FormInput id="course" name="course" label="Course" type="text" required value={formData.course} onChange={handleFormChange} placeholder="B.Tech" />
         <FormSelect id="year" name="year" label="Year of Study" required value={formData.year} onChange={handleFormChange}>
             <option value="">Select Year</option>
