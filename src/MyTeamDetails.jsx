@@ -8,13 +8,13 @@ const DetailCard = ({ label, value }) => (
     </div>
 );
 
-const MemberCard = ({ member }) => {
+const MemberCard = ({ member, leaderUserId }) => {
     if (!member) return null;
     return (
         <div className="flex items-center gap-3 p-3 bg-black/30 rounded-lg">
             <img src={member.profileImage} alt={member.name} className="w-10 h-10 rounded-full" />
             <div>
-                <p className="font-semibold text-white">{member.name}</p>
+                <p className="font-semibold text-white">{member.name}{leaderUserId === member.id && <span className="text-green-500"> (Leader)</span>}</p>
 
             </div>
         </div>
@@ -38,6 +38,7 @@ const RequestStatusBadge = ({ status }) => {
 
 
 function MyTeamDetails({ team }) {
+    console.log(team)
     // The leader is already displayed, so we only list other members.
     const members = [team.member1, team.member2, team.member3, team.member4].filter(Boolean);
     const hasRequests = team.requests && team.requests.length > 0;
@@ -79,8 +80,8 @@ function MyTeamDetails({ team }) {
                     <Users className="w-5 h-5" /> Members
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <MemberCard member={team.leaderUser} /> {/* Also show the leader in the member list */}
-                    {members.map(member => <MemberCard key={member.id} member={member} />)}
+                    <MemberCard member={team.leaderUser} leaderUserId={team.leaderUser.id} /> {/* Also show the leader in the member list */}
+                    {members.map(member => <MemberCard key={member.id} member={member} leaderUserId={team.leaderUser.id} />)}
                 </div>
             </div>
 
