@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import logo from "/kietlogo.jpg";
-import logo2 from "/InnotechLogoLarge.png";
+import logo2 from "/InnotechLogo.jpg";
 
 const FNav = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -39,7 +39,7 @@ const FNav = () => {
                 src={logo}
                 alt="Left Logo"
                 whileHover={{ scale: 1.05 }}
-                className="h-8 w-auto drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]"
+                className="h-10 w-auto drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]"
               />
             </Link>
 
@@ -55,7 +55,7 @@ const FNav = () => {
                 src={logo2}
                 alt="Right Logo"
                 whileHover={{ scale: 1.05 }}
-                className="h-8 w-auto drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]"
+                className="h-12 rounded-2xl w-auto drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]"
               />
             </Link>
           </div>

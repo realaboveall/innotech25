@@ -3,33 +3,42 @@ import { motion } from "framer-motion";
 
 const Footer = () => {
   return (
-    <footer className="relative bg-[#0C0C0C] text-white mt-20">
-      {/* Gradient Border Top */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-cyan-400 to-purple-600"></div>
+    <footer
+      className="relative mt-24 backdrop-blur-2xl bg-white/5 border-t border-white/10
+        text-white shadow-[0_0_25px_rgba(255,255,255,0.05)] overflow-hidden rounded-t-3xl">
+      {/* Glowing Gradient Strip */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 animate-pulse" />
 
-      <div className="container mx-auto px-8 py-12">
+      {/* Background Glow Overlay */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(147,51,234,0.07),transparent_60%)] pointer-events-none" />
+
+      <div className="relative container mx-auto px-8 py-16 z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Left Column - Logo and Description */}
+          {/* Left Section - Logo & Info */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
             className="space-y-6">
-            {/* Logo */}
-            <div className="w-48 h-48 relative">
+            <div className="w-40 h-40 relative mx-auto md:mx-0">
               <img
                 src="https://res.cloudinary.com/dccufw6lh/image/upload/v1759522129/WhatsApp_Image_2025-10-04_at_01.23.50_491e64e9_jq5z5v.jpg"
                 alt="Innotech 25 Logo"
-                className="w-full h-full object-contain rounded-lg"
+                className="w-full h-full object-contain rounded-2xl
+                  border border-white/10 bg-white/5 backdrop-blur-md
+                  shadow-[0_0_25px_rgba(255,255,255,0.05)]"
               />
             </div>
 
-            {/* Title and Description */}
-            <div>
-              <h2 className="text-2xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-purple-600 text-transparent bg-clip-text">
-                INNOTECH 25
+            <div className="text-center md:text-left space-y-2">
+              <h2
+                className="text-3xl font-semibold bg-gradient-to-r 
+                from-cyan-300 via-purple-400 to-pink-400 bg-clip-text 
+                text-transparent drop-shadow-[0_0_10px_rgba(147,51,234,0.4)] font-Fira">
+                INNOTECH ’25
               </h2>
-              <p className="text-gray-400 leading-relaxed max-w-md">
+
+              <p className="text-gray-300/80 leading-relaxed font-pt max-w-md mx-auto md:mx-0">
                 Where innovation meets opportunity. Join us in shaping the
                 future of technology through collaboration, competition, and
                 creativity.
@@ -37,48 +46,53 @@ const Footer = () => {
             </div>
           </motion.div>
 
-          {/* Right Column - Contact Information */}
+          {/* Right Section - Contact Info */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="space-y-6">
-            <div className="space-y-4">
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="space-y-8 text-center md:text-left">
+            <div className="space-y-5">
               {/* Address */}
-              <div className="flex items-start space-x-4">
+              <div className="flex flex-col md:flex-row md:items-center gap-3 justify-center md:justify-start">
                 <span className="text-2xl">📍</span>
-                <p className="text-gray-400">
+                <p className="text-gray-300/80">
                   KIET Group of Institutions, Meerut Road, Ghaziabad
                 </p>
               </div>
 
               {/* Email */}
-              <div className="flex items-start space-x-4">
+              <div className="flex flex-col md:flex-row md:items-center gap-3 justify-center md:justify-start">
                 <span className="text-2xl">📧</span>
                 <a
                   href="mailto:innotech@kiet.edu"
-                  className="text-gray-400 hover:text-cyan-400 transition-colors">
+                  className="text-gray-300/80 hover:text-cyan-300 transition-all duration-300">
                   innotech@kiet.edu
                 </a>
               </div>
             </div>
 
-            {/* Social Links Placeholder - can be added later */}
-            <div className="pt-4">
-              <div className="h-[2px] w-16 bg-gradient-to-r from-cyan-400 to-purple-600"></div>
+            {/* Neon Divider */}
+            <div className="flex justify-center md:justify-start">
+              <div className="h-[2px] w-20 bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 rounded-full animate-pulse"></div>
             </div>
           </motion.div>
         </div>
 
-        {/* Copyright */}
+        {/* Bottom Line */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-12 pt-8 border-t border-gray-800 text-center">
-          <p className="text-gray-500 text-sm">
-            © {new Date().getFullYear()} Innotech. Crafted With ❤️ By AboveAll
-            and Anish.
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="mt-14 pt-6 border-t border-white/10 text-center">
+          <p
+            className="text-gray-400 text-sm font-pt tracking-wide 
+            hover:text-white transition-colors duration-300">
+            © {new Date().getFullYear()} Innotech. Crafted with ❤️ by{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 font-semibold">
+              AboveAll & Anish
+            </span>
+            .
           </p>
         </motion.div>
       </div>
