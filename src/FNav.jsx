@@ -46,7 +46,7 @@ const FNav = () => {
         rounded-3xl px-6 py-3 w-[90%] max-w-7xl">
       <div className="flex items-center justify-between">
         {/* LEFT: Logos */}
-        <div className="flex items-center gap-5 md:gap-6">
+        <div className="flex items-center gap-5 md:gap-3">
           <Link to="/">
             <motion.img
               src="https://www.tbi-kiet.in/kietlogo.svg"
