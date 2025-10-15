@@ -345,7 +345,7 @@ function TeamManagement({ userProfile }) {
                     </div>
                 )}
 
-                <div className="border-t border-white/10 pt-4">
+                {userProfile.participationCategory !== 'startup' ? <div className="border-t border-white/10 pt-4">
                      <h4 className="text-md font-semibold text-gray-300 mb-3">Category Specific Information</h4>
                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <CategorySpecificFields 
@@ -354,7 +354,7 @@ function TeamManagement({ userProfile }) {
                             setFields={setCategoryFields}
                         />
                      </div>
-                </div>
+                </div> : "" }
 
                  {submitError && <p className="text-red-400 text-center">{submitError}</p>}
                  <button type="submit" disabled={isSubmitting} className="w-full font-semibold text-lg text-white bg-gradient-to-r from-cyan-500 to-purple-600 py-3 px-6 rounded-lg hover:opacity-90 transition-opacity duration-300 shadow-[0_0_20px_rgba(168,85,247,0.4)] disabled:opacity-50 flex items-center justify-center gap-2">
