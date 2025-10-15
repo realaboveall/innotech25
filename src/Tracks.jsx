@@ -63,7 +63,7 @@ const Tracks = () => {
         className="text-4xl md:text-5xl font-semibold mb-4 text-center 
           bg-gradient-to-r from-cyan-300 via-purple-300 to-pink-300 
           bg-clip-text text-transparent font-Fira ">
-        Innovation Category 2: <br />
+        Innovation Category 1: <br />
         Tracks for College Students
       </motion.h1>
 
@@ -104,9 +104,9 @@ const Tracks = () => {
             </div>
 
             <button
-              className="mt-6 self-start text-sm px-4 py-2 rounded-lg border border-white/10 
+              className="mt-6 self-start text-2xl px-4 py-2 rounded-lg border border-white/10 
                 bg-white/5 hover:bg-white/10 hover:border-white/20 
-                text-gray-300 hover:text-white transition-all duration-300">
+                text-gray-300 hover:text-white transition-all duration-300 w-full font-pt">
               {track.num}
             </button>
           </div>

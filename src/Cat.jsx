@@ -12,6 +12,7 @@ const categories = [
       "Last date: 29 Oct 2025.",
       "Details to share: School name, Team name, Abstract (100 words).",
     ],
+    num: "Category 2",
   },
   {
     title: "Innovation in Research",
@@ -23,6 +24,7 @@ const categories = [
       "Last date: 29 Oct 2025.",
       "Details to share: University name, Team name, Abstract (100 words).",
     ],
+    num: "Category 3",
   },
   {
     title: "Innovation at Start-up",
@@ -33,6 +35,7 @@ const categories = [
       "Details to share: Start-up/Company name, Product/Service Name, Abstract (100 words) with cost.",
       "Last date: 29 Oct 2025.",
     ],
+    num: "Category 4",
   },
 ];
 
@@ -54,7 +57,7 @@ const Cat = () => {
         className="text-4xl md:text-5xl font-semibold mb-4 text-center 
           bg-gradient-to-r from-cyan-300 via-purple-300 to-pink-300 
           bg-clip-text text-transparent font-Fira">
-        Innovation Category 1:
+        Open Innovation Categories:
       </motion.h1>
 
       <motion.p
@@ -112,16 +115,16 @@ const Cat = () => {
               {/* Action Button */}
               <div className="mt-6">
                 <button
-                  className="relative px-5 py-2 rounded-full text-sm font-medium text-white 
+                  className="relative px-5 py-2 rounded-full text-2xl font-bold text-white 
                     bg-gradient-to-r from-cyan-400/20 via-purple-400/10 to-pink-400/20
                     border border-white/10 backdrop-blur-md transition-all duration-300 
                     hover:scale-105 hover:shadow-[0_0_15px_rgba(255,255,255,0.2)]
-                    overflow-hidden group">
+                    overflow-hidden group w-full font-pt">
                   <span
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent 
                     translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[2000ms]"
                   />
-                  <span className="relative z-10">Learn More</span>
+                  <span className="relative z-10"> {cat.num}</span>
                 </button>
               </div>
             </div>
