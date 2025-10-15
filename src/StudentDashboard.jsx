@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { CheckCircle2, Lock } from 'lucide-react';
+import { CheckCircle2, Copy, Lock } from 'lucide-react';
 import { getTokenFromCookie, clearAuthCookie } from './auth';
 import TeamManagement from './TeamManagement';
 import TeamDashboard from './TeamDashboard';
@@ -276,7 +276,7 @@ function StudentDashboard() {
                                                 }}
                                                 className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-white/6 text-sm text-white hover:bg-white/10 transition"
                                             >
-                                                Copy
+                                                <Copy className='w-4 h-4' />
                                             </button>
                                             {copied && <span className="text-sm text-green-400">Copied!</span>}
                                         </div>
