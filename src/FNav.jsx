@@ -73,7 +73,7 @@ const FNav = () => {
           </Link>
 
           <div className="animate-pulse flex items-center justify-center">
-            <div className="relative h-6 w-6 flex items-center justify-center">
+            <div className="relative h-5 w-5 mr-2 flex items-center justify-center">
               <div className="absolute w-5 h-[2px] bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 rotate-45" />
               <div className="absolute w-5 h-[2px] bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 -rotate-45" />
             </div>

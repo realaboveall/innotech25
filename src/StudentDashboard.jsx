@@ -140,7 +140,7 @@ function StudentDashboard() {
             try { clearAuthCookie(); } catch (e) { }
             try { localStorage.removeItem('authToken'); } catch (e) { }
             setLoading(false);
-            navigate('/register');
+            navigate('/');
         }
     };
 
@@ -242,12 +242,12 @@ function StudentDashboard() {
                 ) : userProfile ? (
                     <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="w-full">
                         <GlassSection>
-                            <div className="flex flex-col sm:flex-row items-center mb-8 justify-between">
-                                <div className="flex items-center">
-                                    <img src={userProfile.profileImage} alt="Profile" className="w-24 h-24 rounded-full border-2 border-purple-400 shadow-lg mb-4 sm:mb-0 sm:mr-6" />
+                            <div className="flex flex-row items-center mb-8 justify-between">
+                                <div className="flex items-center text-left sm:gap-0 gap-2">
+                                    <img src={userProfile.profileImage} alt="Profile" className="sm:w-24 sm:h-24 w-16 h-16 rounded-full border-2 border-purple-400 shadow-lg sm:mb-0 sm:mr-6" />
                                     <div>
-                                        <h1 className="text-4xl font-bold text-white text-center sm:text-left">{userProfile.name}</h1>
-                                        <p className="text-gray-400 text-lg text-center sm:text-left">Welcome to your dashboard.</p>
+                                        <h1 className="text-2xl sm:text-4xl font-bold text-white sm:text-left">{userProfile.name}</h1>
+                                        <p className="text-gray-400 sm:text-lg text-sm sm:text-left">Welcome to your dashboard.</p>
                                     </div>
                                 </div>
                                 <div className="mt-4 sm:mt-0 sm:ml-4">
