@@ -57,7 +57,7 @@ const ProgressBar = ({ currentStep }) => {
 };
 
 // Reusable form input component
-const FormInput = ({ id, label, ...props }) => (
+const FormInput = ({ id, label, error, ...props }) => ( // ✨ ADDED: error prop
   <div>
     <label
       htmlFor={id}
@@ -67,8 +67,15 @@ const FormInput = ({ id, label, ...props }) => (
     <input
       id={id}
       {...props}
-      className="w-full bg-black/30 border border-white/20 rounded-lg p-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+      className={`w-full bg-black/30 border rounded-lg p-3 text-white placeholder-gray-500 focus:ring-2 transition
+        ${
+          error
+            ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+            : "border-white/20 focus:ring-purple-500 focus:border-purple-500"
+        }
+      `}
     />
+    {error && <p className="text-red-400 text-xs mt-2">{error}</p>}
   </div>
 );
 
@@ -201,6 +208,7 @@ const BasicInfoStep = ({
   onSubmit,
   onBack,
   selectedCategory,
+  errors,
 }) => {
   return (
     <motion.div
@@ -231,6 +239,7 @@ const BasicInfoStep = ({
             value={formData.name}
             onChange={handleFormChange}
             placeholder="e.g., John Doe"
+            error={errors.name}
           />
           <FormInput
             id="phonenumber"
@@ -241,6 +250,7 @@ const BasicInfoStep = ({
             value={formData.phonenumber}
             onChange={handleFormChange}
             placeholder="+1 234 567 890"
+            error={errors.phonenumber}
           />
           {(selectedCategory?.title?.toLowerCase() === "college" ||
             formData.participationCategory === "college") && (
@@ -282,6 +292,7 @@ const App = () => {
     isKietian: false,
     participationCategory: "",
   });
+  const [errors, setErrors] = useState({});
 
   const handleFormChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -476,8 +487,37 @@ const App = () => {
     setStep(3);
   };
 
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Rule 1: Name must not be empty
+    if (!formData.name.trim()) {
+      newErrors.name = "Full Name is required.";
+    }
+
+    // Rule 2: Phone number validation
+    const phoneRegex = /^[6-9]\d{9}$/;
+    if (!formData.phonenumber) {
+      newErrors.phonenumber = "Phone Number is required.";
+    } else if (!phoneRegex.test(formData.phonenumber)) {
+      newErrors.phonenumber = "Please enter a valid 10-digit Indian mobile number (starting with 6-9).";
+    }
+
+    return newErrors;
+  };
+
   const handleFinalFormSubmit = async (e) => {
     e.preventDefault();
+
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return; // Stop the submission if there are errors
+    }
+
+    // Clear any previous errors if validation passes
+    setErrors({});
+
     const token = getTokenFromCookie() || localStorage.getItem("authToken");
     if (!token) {
       // Not authenticated, redirect to OAuth
@@ -544,6 +584,7 @@ const App = () => {
                 onSubmit={handleFinalFormSubmit}
                 onBack={() => setStep(2)}
                 selectedCategory={selectedCategory}
+                errors={errors}
               />
             )}
           </AnimatePresence>

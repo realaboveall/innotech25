@@ -15,10 +15,14 @@ export function clearAuthCookie() {
   Cookies.remove("authToken");
 }
 
+export function isLoggedIn() {
+  return !!getTokenFromCookie();
+}
+
 export async function logoutFromServer() {
   const token = getTokenFromCookie();
   try {
-    await fetch("/auth/logout", {
+    await fetch("https://api.innotech.yaytech.in/auth/logout", {
       method: "POST",
       headers: token
         ? {

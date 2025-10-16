@@ -3,24 +3,13 @@ import { Link, NavLink } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { getTokenFromCookie } from "./auth";
+import { getTokenFromCookie, isLoggedIn } from "./auth";
 
 const FNav = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [hasToken, setHasToken] = useState(false);
+  const hasToken = isLoggedIn();
 
-  useEffect(() => {
-    const token =
-      getTokenFromCookie() ||
-      (() => {
-        try {
-          return localStorage.getItem("authToken");
-        } catch {
-          return null;
-        }
-      })();
-    setHasToken(!!token);
-  }, []);
+
 
   const scrollSettings = {
     smooth: true,
