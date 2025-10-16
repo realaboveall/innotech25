@@ -23,10 +23,9 @@ function Hero() {
 
   return (
     <>
-      {/* HERO SECTION */}
+      {/* HERO */}
       <Element name="home">
         <section className="relative h-screen overflow-hidden flex flex-col items-center justify-center text-center px-4">
-          {/* TBI × KIET Text */}
           <motion.p
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -188,7 +187,7 @@ function Hero() {
               ✕
             </button>
 
-            {/* Modal Content (Fullscreen Glass Panel) */}
+            {/* Modal Content (Fullscreen ) */}
             <motion.div
               initial={{ scale: 0.98, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
