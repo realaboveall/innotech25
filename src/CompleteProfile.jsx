@@ -13,35 +13,45 @@ const GlassSection = ({ children, className = "" }) => (
     </div>
 );
 
-const FormInput = ({ id, label, ...props }) => (
+const FormInput = ({ id, label, error, ...props }) => (
     <div>
         <label htmlFor={id} className="block text-sm font-medium text-gray-300 mb-2">{label}</label>
-        <input id={id} {...props} className="w-full bg-black/30 border border-white/20 rounded-lg p-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition" />
+        <input 
+            id={id} 
+            {...props} 
+            className={`w-full bg-black/30 border rounded-lg p-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition ${error ? 'border-red-500' : 'border-white/20'}`} 
+        />
+        {error && <p className="mt-1 text-sm text-red-400">{error}</p>}
     </div>
 );
 
-const FormSelect = ({ id, label, children, ...props }) => (
-    <div className="relative"> {/* 1. Make the container relative */}
+const FormSelect = ({ id, label, error, children, ...props }) => (
+    <div className="relative">
         <label htmlFor={id} className="block text-sm font-medium text-gray-300 mb-2">{label}</label>
         <select 
             id={id} 
             {...props} 
-            // Added padding-right (pr-10) and removed background image classes
-            className="w-full bg-black/30 border border-white/20 rounded-lg p-3 pr-10 text-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition appearance-none"
+            className={`w-full bg-black/30 border rounded-lg p-3 pr-10 text-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition appearance-none ${error ? 'border-red-500' : 'border-white/20'}`}
         >
             {children}
         </select>
-        {/* 2. Add an absolute-positioned icon */}
         <div className="absolute inset-y-0 right-0 top-7 flex items-center px-3 pointer-events-none">
             <ChevronDown className="h-5 w-5 text-gray-400" />
         </div>
+        {error && <p className="mt-1 text-sm text-red-400">{error}</p>}
     </div>
 );
 
-const FormTextarea = ({ id, label, ...props }) => (
+const FormTextarea = ({ id, label, error, ...props }) => (
     <div className="sm:col-span-2">
         <label htmlFor={id} className="block text-sm font-medium text-gray-300 mb-2">{label}</label>
-        <textarea id={id} {...props} rows="3" className="w-full bg-black/30 border border-white/20 rounded-lg p-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"></textarea>
+        <textarea 
+            id={id} 
+            {...props} 
+            rows="3" 
+            className={`w-full bg-black/30 border rounded-lg p-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition ${error ? 'border-red-500' : 'border-white/20'}`}
+        ></textarea>
+        {error && <p className="mt-1 text-sm text-red-400">{error}</p>}
     </div>
 );
 
@@ -61,19 +71,19 @@ const FormToggle = ({ id, label, ...props }) => (
   "CSE_Cyber_Security", "CSE_Data_Science", "ECE_VLSI", "AMIA","MCA","MBA","B_PHARMA","Other"
 ];
 
-    const CollegeForm = ({ formData, handleFormChange }) => (
+    const CollegeForm = ({ formData, handleFormChange, errors }) => (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <FormInput id="college" name="college" label="College Name" type="text" required value={formData.college} onChange={handleFormChange} placeholder="KIET Group of Institutions" />
+        <FormInput id="college" name="college" label="College Name" type="text" required value={formData.college} onChange={handleFormChange} placeholder="KIET Group of Institutions" error={errors.college}/>
         <FormInput id="rollno" name="rollno" label="Roll Number/ Adhar ID" type="text" required value={formData.rollno} onChange={handleFormChange} placeholder="123456789012" />
-        <FormInput id="course" name="course" label="Course" type="text" required value={formData.course} onChange={handleFormChange} placeholder="B.Tech" />
-        <FormSelect id="year" name="year" label="Year of Study" required value={formData.year} onChange={handleFormChange}>
+        <FormInput id="course" name="course" label="Course" type="text" required value={formData.course} onChange={handleFormChange} placeholder="B.Tech" error={errors.course} />
+        <FormSelect id="year" name="year" label="Year of Study" required value={formData.year} onChange={handleFormChange} error={errors.year} >
             <option value="">Select Year</option>
             <option value="1">1st Year</option>
             <option value="2">2nd Year</option>
             <option value="3">3rd Year</option>
             <option value="4">4th Year</option>
         </FormSelect>
-        <FormSelect id="branch" name="branch" label="Branch" required value={formData.branch} onChange={handleFormChange}>
+        <FormSelect id="branch" name="branch" label="Branch" required value={formData.branch} onChange={handleFormChange} error={errors.branch}>
             <option value="">Select Branch</option>
             {departmentOptions.map(option => (
                 <option key={option} value={option}>{option.replace(/_/g, ' ')}</option>
@@ -86,7 +96,7 @@ const standards = Array.from({ length: 8 }, (_, i) => 5 + i);
 const SchoolForm = ({ formData, handleFormChange }) => (
     
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <FormInput id="school" name="school" label="School Name" type="text" required value={formData.school} onChange={handleFormChange} placeholder="ABC Public School" />
+        <FormInput id="school" name="school" label="School Name" type="text" required value={formData.school} onChange={handleFormChange} placeholder="ABC Public School" error={errors.school}/>
         <FormSelect 
                 id="standard" 
                 name="standard" 
@@ -94,46 +104,44 @@ const SchoolForm = ({ formData, handleFormChange }) => (
                 required 
                 value={formData.standard} 
                 onChange={handleFormChange}
+                error={errors.standard}
             >
                 <option value="" disabled>-- Select a Standard --</option>
                 {standards.map(std => (
                     <option key={std} value={std}>{std}</option>
                 ))}
             </FormSelect>
-        <FormInput id="board" name="board" label="Board" type="text" required value={formData.board} onChange={handleFormChange} placeholder="CBSE" />
-        <FormInput id="uid_school" name="uid" label="Student Adhar ID" type="text" required value={formData.uid} onChange={handleFormChange} placeholder="Student Adhar ID" />
+        <FormInput id="board" name="board" label="Board" type="text" required value={formData.board} onChange={handleFormChange} placeholder="CBSE" error={errors.board}/>
+        <FormInput id="uid_school" name="uid" label="Student Adhar ID" type="text" required value={formData.uid} onChange={handleFormChange} placeholder="Student Adhar ID" error={errors.uid}/>
     </div>
 );
 
-const StartupForm = ({ formData, handleFormChange }) => (
+const StartupForm = ({ formData, handleFormChange, errors }) => (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <FormInput id="startupName" name="startupName" label="Startup Name" type="text" required value={formData.startupName} onChange={handleFormChange} placeholder="My Awesome Startup" />
-        <FormInput id="website" name="website" label="Website" type="url" required value={formData.website} onChange={handleFormChange} placeholder="https://example.com" />
-        <FormInput id="startupSector" name="startupSector" label="Startup Sector" type="text" required value={formData.startupSector} onChange={handleFormChange} placeholder="FinTech, EdTech, etc." />
-        <FormSelect id="stage" name="stage" label="Current Stage" required value={formData.stage} onChange={handleFormChange}>
+        <FormInput id="startupName" name="startupName" label="Startup Name" type="text" required value={formData.startupName} onChange={handleFormChange} placeholder="My Awesome Startup" error={errors.startupName}/>
+        <FormInput id="website" name="website" label="Website" type="url" required value={formData.website} onChange={handleFormChange} placeholder="https://example.com" error={errors.website}/>
+        <FormInput id="startupSector" name="startupSector" label="Startup Sector" type="text" required value={formData.startupSector} onChange={handleFormChange} placeholder="FinTech, EdTech, etc." error={errors.startupSector}/>
+        <FormSelect id="stage" name="stage" label="Current Stage" required value={formData.stage} onChange={handleFormChange} error={errors.stage}>
             <option value="ideation">Ideation</option><option value="prototype">Prototype</option><option value="early">Early Stage</option><option value="scaling">Scaling</option>
         </FormSelect>
-        <FormInput id="city" name="city" label="City" type="text" required value={formData.city} onChange={handleFormChange} placeholder="New Delhi" />
-        <FormInput id="teamSize" name="teamSize" label="Team Size" type="number" required value={formData.teamSize} onChange={handleFormChange} placeholder="5" />
+        <FormInput id="city" name="city" label="City" type="text" required value={formData.city} onChange={handleFormChange} placeholder="New Delhi" error={errors.city}/>
+        <FormInput id="teamSize" name="teamSize" label="Team Size" type="number" required value={formData.teamSize} onChange={handleFormChange} placeholder="5" error={errors.teamSize}/>
         
-        {/* Founder Details */}
-        <FormInput id="founderName" name="founderName" label="Founder's Name" type="text" required value={formData.founderName} onChange={handleFormChange} placeholder="Jane Doe" />
-        <FormInput id="founderEmail" name="founderEmail" label="Founder's Email" type="email" required value={formData.founderEmail} onChange={handleFormChange} placeholder="founder@example.com" />
-        <FormInput id="founderUid" name="founderUid" label="Founder's Adhar ID" type="text" required value={formData.founderUid} onChange={handleFormChange} placeholder="Adhar ID" />
-        <FormInput id="founderPhonenumber" name="founderPhonenumber" label="Founder's Phone" type="tel" required value={formData.founderPhonenumber} onChange={handleFormChange} placeholder="+911234567890" />
+        <FormInput id="founderName" name="founderName" label="Founder's Name" type="text" required value={formData.founderName} onChange={handleFormChange} placeholder="Jane Doe" error={errors.founderName}/>
+        <FormInput id="founderEmail" name="founderEmail" label="Founder's Email" type="email" required value={formData.founderEmail} onChange={handleFormChange} placeholder="founder@example.com" error={errors.founderEmail}/>
+        <FormInput id="founderUid" name="founderUid" label="Founder's Adhar ID" type="text" required value={formData.founderUid} onChange={handleFormChange} placeholder="Adhar ID" error={errors.founderUid}/>
+        <FormInput id="founderPhonenumber" name="founderPhonenumber" label="Founder's Phone" type="tel" required value={formData.founderPhonenumber} onChange={handleFormChange} placeholder="+911234567890" error={errors.founderPhonenumber}/>
         
-        {/* Startup Description */}
-        <FormTextarea id="description" name="description" label="Brief Description" required value={formData.description} onChange={handleFormChange} placeholder="What does your startup do?" />
-        <FormTextarea id="problemSolving" name="problemSolving" label="Problem You Are Solving" required value={formData.problemSolving} onChange={handleFormChange} placeholder="Describe the problem." />
-        <FormTextarea id="uvp" name="uvp" label="Unique Value Proposition (UVP)" required value={formData.uvp} onChange={handleFormChange} placeholder="What makes you unique?" />
+        <FormTextarea id="description" name="description" label="Brief Description" required value={formData.description} onChange={handleFormChange} placeholder="What does your startup do?" error={errors.description}/>
+        <FormTextarea id="problemSolving" name="problemSolving" label="Problem You Are Solving" required value={formData.problemSolving} onChange={handleFormChange} placeholder="Describe the problem." error={errors.problemSolving}/>
+        <FormTextarea id="uvp" name="uvp" label="Unique Value Proposition (UVP)" required value={formData.uvp} onChange={handleFormChange} placeholder="What makes you unique?" error={errors.uvp}/>
         
         <div className="sm:col-span-2">
-            <FormInput id="pitchDeckLink" name="pitchDeckLink" label="Pitch Deck Link" type="url" required value={formData.pitchDeckLink} onChange={handleFormChange} placeholder="https://link-to-your-deck.com" />
+            <FormInput id="pitchDeckLink" name="pitchDeckLink" label="Pitch Deck Link" type="url" required value={formData.pitchDeckLink} onChange={handleFormChange} placeholder="https://link-to-your-deck.com" error={errors.pitchDeckLink}/>
         </div>
         
         <FormToggle id="isFunded" name="isFunded" label="Have you received funding?" checked={formData.isFunded} onChange={handleFormChange} />
         
-        {/* Conditionally rendered and optional fields */}
         {formData.isFunded && (
             <div className="sm:col-span-2">
                 <FormInput id="fundedBy" name="fundedBy" label="Funded By (Optional)" type="text" value={formData.fundedBy} onChange={handleFormChange} placeholder="Investor Name or VC Firm" />
@@ -144,12 +152,12 @@ const StartupForm = ({ formData, handleFormChange }) => (
     </div>
 );
 
-const ResearchForm = ({ formData, handleFormChange }) => (
+const ResearchForm = ({ formData, handleFormChange, errors }) => (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <FormInput id="uid_researcher" name="uid" label="Adhar ID" type="text" required value={formData.uid} onChange={handleFormChange} placeholder="Adhar ID" />
-        <FormInput id="universityName" name="universityName" label="University / Institution Name" type="text" required value={formData.universityName} onChange={handleFormChange} placeholder="Indian Institute of Technology, Delhi" />
+        <FormInput id="uid_researcher" name="uid" label="Adhar ID" type="text" required value={formData.uid} onChange={handleFormChange} placeholder="Adhar ID" error={errors.uid}/>
+        <FormInput id="universityName" name="universityName" label="University / Institution Name" type="text" required value={formData.universityName} onChange={handleFormChange} placeholder="Indian Institute of Technology, Delhi" error={errors.universityName}/>
         <div className="sm:col-span-2">
-            <FormSelect id="pursuingDegree" name="pursuingDegree" label="Pursuing Degree" required value={formData.pursuingDegree} onChange={handleFormChange}>
+            <FormSelect id="pursuingDegree" name="pursuingDegree" label="Pursuing Degree" required value={formData.pursuingDegree} onChange={handleFormChange} error={errors.pursuingDegree}>
                 <option value="Masters">Masters</option><option value="PhD">PhD</option><option value="Other">Other</option>
             </FormSelect>
         </div>
@@ -163,6 +171,7 @@ const CompleteProfile = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const [errors, setErrors] = useState({});
     const [formData, setFormData] = useState({
         // Basic Info
         name: "", phonenumber: "", isKietian: false,
@@ -237,10 +246,69 @@ const CompleteProfile = () => {
     const handleFormChange = (e) => {
         const { name, value, type, checked } = e.target;
         setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
+        if (errors[name]) {
+            setErrors(prev => ({ ...prev, [name]: null }));
+        }
+    };
+
+    const validateForm = () => {
+        const newErrors = {};
+        const category = currentUser.participationCategory;
+
+        // URL and Email validation regex
+        const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        switch (category) {
+            case 'college':
+                if (!formData.college.trim()) newErrors.college = "College name is required.";
+                if (!formData.course.trim()) newErrors.course = "Course is required.";
+                if (!formData.year) newErrors.year = "Year of study is required.";
+                if (!formData.branch) newErrors.branch = "Branch is required.";
+                // No validation for 'rollno'
+                break;
+            case 'school':
+                if (!formData.school.trim()) newErrors.school = "School name is required.";
+                if (!formData.standard) newErrors.standard = "Standard is required.";
+                if (!formData.board.trim()) newErrors.board = "Board is required.";
+                if (!formData.uid.trim()) newErrors.uid = "Student Adhar ID is required.";
+                break;
+            case 'startup':
+                if (!formData.startupName.trim()) newErrors.startupName = "Startup name is required.";
+                if (!formData.website.trim() || !urlRegex.test(formData.website)) newErrors.website = "A valid website URL is required.";
+                if (!formData.startupSector.trim()) newErrors.startupSector = "Startup sector is required.";
+                if (!formData.stage) newErrors.stage = "Stage is required.";
+                if (!formData.city.trim()) newErrors.city = "City is required.";
+                if (!formData.teamSize) newErrors.teamSize = "Team size is required.";
+                if (!formData.founderName.trim()) newErrors.founderName = "Founder's name is required.";
+                if (!formData.founderEmail.trim() || !emailRegex.test(formData.founderEmail)) newErrors.founderEmail = "A valid founder's email is required.";
+                if (!formData.founderUid.trim()) newErrors.founderUid = "Founder's Adhar ID is required.";
+                if (!formData.founderPhonenumber.trim()) newErrors.founderPhonenumber = "Founder's phone number is required.";
+                if (!formData.description.trim()) newErrors.description = "Description is required.";
+                if (!formData.problemSolving.trim()) newErrors.problemSolving = "Problem solving section is required.";
+                if (!formData.uvp.trim()) newErrors.uvp = "UVP is required.";
+                if (!formData.pitchDeckLink.trim() || !urlRegex.test(formData.pitchDeckLink)) newErrors.pitchDeckLink = "A valid pitch deck link is required.";
+                break;
+            case 'researcher':
+                if (!formData.uid.trim()) newErrors.uid = "Adhar ID is required.";
+                if (!formData.universityName.trim()) newErrors.universityName = "University name is required.";
+                if (!formData.pursuingDegree) newErrors.pursuingDegree = "Degree is required.";
+                break;
+        }
+        return newErrors;
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const formErrors = validateForm();
+        if (Object.keys(formErrors).length > 0) {
+            setErrors(formErrors);
+            return; // Stop submission if there are errors
+        }
+        
+        setErrors({});
+
         if (!currentUser) {
             setError('No current user found. Please login again.');
             return;
@@ -360,16 +428,17 @@ const CompleteProfile = () => {
 
     const renderFormByCategory = () => {
         if (!currentUser) return null;
+        const props = { formData, handleFormChange, errors };
         
         switch (currentUser.participationCategory) {
             case 'college':
-                return <CollegeForm formData={formData} handleFormChange={handleFormChange} />;
+                return <CollegeForm {...props} />;
             case 'school':
-                return <SchoolForm formData={formData} handleFormChange={handleFormChange} />;
+                return <SchoolForm {...props} />;
             case 'startup':
-                return <StartupForm formData={formData} handleFormChange={handleFormChange} />;
+                return <StartupForm {...props} />;
             case 'researcher':
-                return <ResearchForm formData={formData} handleFormChange={handleFormChange} />;
+                return <ResearchForm {...props} />;
             default:
                 return <p className="text-center text-red-400">Invalid participation category found for your profile.</p>;
         }
