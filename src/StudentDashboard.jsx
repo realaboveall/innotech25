@@ -293,7 +293,7 @@ function StudentDashboard() {
                                             </div> : null}
 
                                         </div>
-                                        {console.log(userProfile)}
+                                        {/* {console.log(userProfile)} */}
                                         {userProfile.participationCategory == 'startup' ? (
                                             <div>
                                                 <PendingRequests onAction={() => fetchUser()} />

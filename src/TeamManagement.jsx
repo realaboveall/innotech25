@@ -273,7 +273,7 @@ function TeamManagement({ userProfile }) {
                 break;
         }
 
-        console.log('Final Payload to be sent:', JSON.stringify(payload, null, 2));
+        // console.log('Final Payload to be sent:', JSON.stringify(payload, null, 2));
 
         try {
             const res = await fetch('https://api.innotech.yaytech.in/api/team/create', {

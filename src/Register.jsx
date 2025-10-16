@@ -341,7 +341,7 @@ const App = () => {
         try {
           token = decodeURIComponent(token);
         } catch (e) {}
-        console.log("Register: captured token", token);
+        // console.log("Register: captured token", token);
         try {
           saveTokenToCookie(token, { expires: 7 });
         } catch (e) {
@@ -406,7 +406,7 @@ const App = () => {
               return;
             }
             const data = await res.json();
-            console.log(data);
+            // console.log(data);
             if (data?.success && data.user) {
               const u = data.user;
               setFormData((prev) => ({

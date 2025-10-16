@@ -18,6 +18,6 @@ export async function checkAuthToken() {
       console.error("Redirect failed:", err);
     }
   } else {
-    console.log("✅ Token found:", token);
+    // console.log("✅ Token found:", token);
   }
 }

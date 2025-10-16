@@ -38,7 +38,7 @@ const RequestStatusBadge = ({ status }) => {
 
 
 function MyTeamDetails({ team }) {
-    console.log(team)
+    // console.log(team)
     // The leader is already displayed, so we only list other members.
     const members = [team.member1, team.member2, team.member3, team.member4].filter(Boolean);
     const hasRequests = team.requests && team.requests.length > 0;
