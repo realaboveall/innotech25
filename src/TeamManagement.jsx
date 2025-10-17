@@ -47,7 +47,7 @@ const SelectField = ({ label, name, value, onChange, children, disabled = false,
 );
 
 
-const CategorySpecificFields = ({ category, fields, setFields }) => {
+const CategorySpecificFields = ({ category, fields, setFields, userProfile }) => {
     const [categoriesData, setCategoriesData] = useState([]);
     const [problemStatements, setProblemStatements] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -59,7 +59,7 @@ const CategorySpecificFields = ({ category, fields, setFields }) => {
             setError(null);
             try {
                 const token = getTokenFromCookie() || localStorage.getItem('authToken');
-                const res = await fetch('https://api.innotech.yaytech.in/api/categories', {
+                const res = await fetch(`https://api.innotech.yaytech.in/api/categories?year=${userProfile?.profileDetails?.year}`, {
                     headers: { 'Authorization': `Bearer ${token}` },
                 });
                 if (!res.ok) throw new Error('Failed to fetch categories.');
@@ -366,6 +366,7 @@ function TeamManagement({ userProfile }) {
                             category={userProfile.participationCategory} 
                             fields={categoryFields}
                             setFields={setCategoryFields}
+                            userProfile={userProfile}
                         />
                      </div>
                 </div> : "" }

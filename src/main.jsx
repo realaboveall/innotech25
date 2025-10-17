@@ -20,7 +20,7 @@ window.addEventListener("load", () => {
 ╠══════════════════════════════════════════════════════╣
 ║  🖥️  Frontend : Atulya Rounak(/realaboveall)         ║
 ║  ⚙️  Backend  : Anish Kumar (7anish)                 ║
-║  🌐  Integration : Yaman Saini (yamanSaini0405)         ║
+║  🌐  Integration : Yaman Saini (yamanSaini0405)      ║
 ╚══════════════════════════════════════════════════════╝`;
 
   console.log(
