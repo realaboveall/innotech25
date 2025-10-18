@@ -143,6 +143,47 @@ function Hero() {
               </button>
             ))}
           </div>
+          {/* 🔹 Powered By Infinite Logo Slider */}
+          <div className="mt-20 w-full overflow-hidden">
+            <div className="text-center mb-6">
+              <h3
+                className="text-sm sm:text-base md:text-lg font-pt tracking-[3px] uppercase 
+      text-transparent bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-400 
+      bg-clip-text drop-shadow-[0_0_10px_rgba(147,51,234,0.4)]">
+                Powered By
+              </h3>
+            </div>
+
+            <div className="relative w-full">
+              <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black pointer-events-none z-10"></div>
+
+              {/* Infinite Scroll Wrapper */}
+              <div
+                className="flex items-center gap-12 sm:gap-16 md:gap-20 animate-scroll-x 
+      px-8 py-4 rounded-2xl border border-white/10 backdrop-blur-xl bg-white/5
+      shadow-[0_0_30px_rgba(255,255,255,0.05)]">
+                {[
+                  "/logos/DPIIT.png",
+                  "/logos/DST.png",
+                  "/logos/logo2.png",
+                  "/logos/MEITY.png",
+                  "/logos/MSH.png",
+                  "/logos/DPIIT.png",
+                  "/logos/DST.png",
+                  "/logos/logo2.png",
+                  "/logos/MEITY.png",
+                  "/logos/MSH.png",
+                ].map((logo, i) => (
+                  <img
+                    key={i}
+                    src={logo}
+                    alt={`Logo ${i}`}
+                    className="h-10 sm:h-12 md:h-14 w-auto opacity-80 hover:opacity-100 transition-all duration-500 drop-shadow-[0_0_10px_rgba(255,255,255,0.15)]"
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
         </section>
       </Element>
 
