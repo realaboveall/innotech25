@@ -157,7 +157,6 @@ function Hero() {
             <div className="relative w-full">
               <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black pointer-events-none z-10"></div>
 
-              {/* Infinite Scroll Wrapper */}
               <div
                 className="flex items-center gap-12 sm:gap-16 md:gap-20 animate-scroll-x 
       px-8 py-4 rounded-2xl border border-white/10 backdrop-blur-xl bg-white/5
