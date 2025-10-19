@@ -49,7 +49,7 @@ export function PendingRequests({ onAction }) {
                         </div>
                         <div className="flex gap-2">
                             <button onClick={() => handleResponse(req.id, 'accept')} className="p-2 bg-green-600 hover:bg-green-500 rounded-md"><Check className="w-5 h-5"/></button>
-                            <button onClick={() => handleResponse(req.id, 'reject')} className="p-2 bg-red-600 hover:bg-red-500 rounded-md"><X className="w-5 h-5"/></button>
+                            {/* <button onClick={() => handleResponse(req.id, 'reject')} className="p-2 bg-red-600 hover:bg-red-500 rounded-md"><X className="w-5 h-5"/></button> */}
                         </div>
                     </div>
                 ))}
