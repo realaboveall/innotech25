@@ -1,9 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import GlassSection from "./GlassSection";
 import { Link } from "react-router-dom";
 
 const Theme = () => {
+
+  const [stats, setStats] = useState({
+    totalUsers: "...",
+    totalTeams: "...",
+    totalPrizePool: "...",
+    totalAwards: "...",
+  });
+
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await fetch(
+          "https://api.innotech.yaytech.in/api/participantsstats"
+        );
+        const result = await response.json();
+        if (result.success) {
+       
+          setStats(result.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch stats:", error);
+      }
+    };
+
+    fetchStats();
+  }, []); 
+
+
+  const statItems = [
+    { label: "Participants", value: stats.totalUsers },
+    { label: "Teams", value: stats.totalTeams },
+    { label: "Prize Pool", value: stats.totalPrizePool },
+    { label: "Awards", value: stats.totalAwards },
+  ];
+
   return (
     <GlassSection className="my-24 max-w-6xl mx-auto text-center">
       {/* Title */}
@@ -13,8 +49,9 @@ const Theme = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
         className="text-4xl md:text-6xl font-extrabold tracking-tight 
-          bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 
-          bg-clip-text text-transparent mb-4 font-Fira">
+           bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 
+           bg-clip-text text-transparent mb-4 font-Fira"
+      >
         A Step towards Innovation, Start-ups and Sustainable Society
       </motion.h1>
       {/* Description */}
@@ -22,7 +59,8 @@ const Theme = () => {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.8 }}
-        className="text-gray-300 leading-relaxed max-w-3xl mx-auto mb-12 font-pt text-2xl">
+        className="text-gray-300 leading-relaxed max-w-3xl mx-auto mb-12 font-pt text-2xl"
+      >
         Innotech’25 aims to address societal challenges and deliver innovative
         solutions aligned with the UN Sustainable Development Goals (SDGs).
       </motion.p>
@@ -32,7 +70,8 @@ const Theme = () => {
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.6, duration: 0.8 }}
-        className="flex flex-col sm:flex-row items-center justify-center gap-6 text-gray-300 text-lg mb-12">
+        className="flex flex-col sm:flex-row items-center justify-center gap-6 text-gray-300 text-lg mb-12"
+      >
         <div className="flex items-center gap-2">
           <span className="text-2xl font-Fira font-extrabold">📅</span> November
           13, 2025
@@ -44,22 +83,18 @@ const Theme = () => {
         </div>
       </motion.div>
 
-      {/* Stats Section */}
+      {/* Stats Section - Now using dynamic data */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-20">
-        {[
-          { label: "Participants", value: "42+" },
-          { label: "Teams", value: "4+" },
-          { label: "Prize Pool", value: "₹2.6L+" },
-          { label: "Awards", value: "100+" },
-        ].map((stat, i) => (
+        {statItems.map((stat, i) => (
           <motion.div
             key={stat.label}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.15 }}
             className="bg-black/50 backdrop-blur-lg border border-white/10 rounded-xl py-6 px-4 
-              shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(236,72,153,0.15)] 
-              transition-all duration-500">
+               shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(236,72,153,0.15)] 
+               transition-all duration-500"
+          >
             <h3 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
               {stat.value}
             </h3>
