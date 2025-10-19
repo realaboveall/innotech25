@@ -57,7 +57,7 @@ const ProgressBar = ({ currentStep }) => {
 };
 
 // Reusable form input component
-const FormInput = ({ id, label, error, ...props }) => ( // ✨ ADDED: error prop
+const FormInput = ({ id, label, error, ...props }) => ( 
   <div>
     <label
       htmlFor={id}
@@ -406,7 +406,6 @@ const App = () => {
               return;
             }
             const data = await res.json();
-            // console.log(data);
             if (data?.success && data.user) {
               const u = data.user;
               setFormData((prev) => ({
@@ -418,7 +417,7 @@ const App = () => {
                   u.participationCategory || prev.participationCategory,
               }));
               // If basic profile already complete, go straight to dashboard
-              const basicComplete = u?.isProfileComplete?.basicProfile === true;
+              const basicComplete = u?.isProfileComplete?.basicProfile == true;
               if (basicComplete) {
                 navigate("/dashboard");
                 return;
@@ -461,7 +460,7 @@ const App = () => {
           if (res.ok && contentType.includes("application/json")) {
             const data = await res.json();
             const basicComplete =
-              data?.user?.isProfileComplete?.basicProfile === true;
+              data?.user?.isProfileComplete?.basicProfile == true;
             if (basicComplete) {
               navigate("/dashboard");
               return;
