@@ -41,7 +41,7 @@ const Theme = () => {
   ];
 
   return (
-    <GlassSection className="my-24 max-w-6xl mx-auto text-center">
+    <GlassSection className="sm:my-24 max-w-6xl mx-auto text-center">
       {/* Title */}
       <motion.h1
         initial={{ opacity: 0, y: 20 }}

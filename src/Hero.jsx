@@ -25,7 +25,7 @@ function Hero() {
     <>
       {/* HERO */}
       <Element name="home">
-        <section className="relative h-screen overflow-hidden flex flex-col items-center justify-center text-center px-4">
+        <section className="relative h-screen overflow-hidden flex flex-col items-center justify-center text-center px-4 sm:mt-12">
           <motion.p
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
