@@ -13,7 +13,7 @@ const Timeline = () => {
         "Registration for Innotech 25 opens. Participants can sign up for competitions, workshops, and events.",
     },
     {
-      date: "October 29",
+      date: "October 31",
       emoji: "💻",
       title: "Registrations Close",
       time: "11:59 PM",
