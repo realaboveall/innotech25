@@ -28,7 +28,7 @@ const Timeline = () => {
       description: "Projects would be evaluated at the departmental level.",
     },
     {
-      date: "November 13",
+      date: "November 14",
       emoji: "📊",
       title: "Institute Level",
       time: "10:00 AM",
