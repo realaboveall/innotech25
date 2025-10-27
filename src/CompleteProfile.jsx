@@ -95,7 +95,7 @@ const FormToggle = ({ id, label, ...props }) => (
 );
 const standards = Array.from({ length: 8 }, (_, i) => 5 + i);
 
-const SchoolForm = ({ formData, handleFormChange }) => (
+const SchoolForm = ({ formData, handleFormChange, errors }) => (
     
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <FormInput id="school" name="school" label="School Name" type="text" required value={formData.school} onChange={handleFormChange} placeholder="ABC Public School" error={errors.school}/>
