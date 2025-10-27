@@ -181,8 +181,20 @@ const FNav = () => {
                   )
               )}
 
-              <div className="flex flex-col gap-3 pt-4">
-                {!hasToken && (
+              <div className="flex flex-col justify-center items-center gap-2 pt-4">
+                <Link to="/login" onClick={() => setMenuOpen(false)}>
+                    <button
+                      className="relative px-5 py-2 rounded-full border border-white/20 text-white/90 text-sm 
+                      backdrop-blur-md bg-white/5 hover:bg-white/10 transition-all duration-500
+                      hover:scale-[1.05] hover:border-white/40 overflow-hidden group">
+                      <span
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
+                      translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[2000ms]"
+                      />
+                      <span className="relative z-10">Login</span>
+                    </button>
+                  </Link>
+                {!hasToken ? (
                   <Link to="/register" onClick={() => setMenuOpen(false)}>
                     <button
                       className="relative px-5 py-2 rounded-full border border-white/20 text-white/90 text-sm 
@@ -195,7 +207,18 @@ const FNav = () => {
                       <span className="relative z-10">Register</span>
                     </button>
                   </Link>
-                )}
+                ):<Link to="/dashboard" onClick={() => setMenuOpen(false)}>
+                    <button
+                      className="relative px-5 py-2 rounded-full border border-white/20 text-white/90 text-sm 
+                      backdrop-blur-md bg-white/5 hover:bg-white/10 transition-all duration-500
+                      hover:scale-[1.05] hover:border-white/40 overflow-hidden group">
+                      <span
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
+                      translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[2000ms]"
+                      />
+                      <span className="relative z-10">Dashboad</span>
+                    </button>
+                  </Link>}
               </div>
             </div>
           </motion.div>
