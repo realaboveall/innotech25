@@ -100,7 +100,7 @@ const FNav = () => {
 
         {/* RIGHT: Buttons */}
         <div className="hidden md:flex items-center gap-2">
-          <Link to="/login">
+          {!hasToken && (<Link to="/login">
               <button
                 className="relative px-5 py-2 rounded-full border border-white/20 text-sm text-white/90 
                 backdrop-blur-md bg-white/5 hover:bg-white/10 transition-all duration-500
@@ -111,7 +111,7 @@ const FNav = () => {
                 />
                 <span className="relative z-10">Login</span>
               </button>
-            </Link>
+            </Link>)}
           {!hasToken ? (
             <Link to="/register">
               <button
@@ -182,7 +182,7 @@ const FNav = () => {
               )}
 
               <div className="flex flex-col justify-center items-center gap-2 pt-4">
-                <Link to="/login" onClick={() => setMenuOpen(false)}>
+                {!hasToken && (<Link to="/login" onClick={() => setMenuOpen(false)}>
                     <button
                       className="relative px-5 py-2 rounded-full border border-white/20 text-white/90 text-sm 
                       backdrop-blur-md bg-white/5 hover:bg-white/10 transition-all duration-500
@@ -193,7 +193,7 @@ const FNav = () => {
                       />
                       <span className="relative z-10">Login</span>
                     </button>
-                  </Link>
+                  </Link>)}
                 {!hasToken ? (
                   <Link to="/register" onClick={() => setMenuOpen(false)}>
                     <button
