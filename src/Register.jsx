@@ -289,7 +289,7 @@ const App = () => {
   const [formData, setFormData] = useState({
     name: "",
     phonenumber: "",
-    isKietian: false,
+    isKietian: true,
     participationCategory: "",
   });
   const [errors, setErrors] = useState({});

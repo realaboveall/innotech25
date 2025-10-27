@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 
 // Cookie helpers for backend JWT token
 // Cookie helpers for backend JWT token
@@ -13,6 +14,18 @@ export function getTokenFromCookie() {
 
 export function clearAuthCookie() {
   Cookies.remove("authToken");
+}
+
+
+export function checkAuthStatus() {
+  const token = getTokenFromCookie(); // Gets the token
+  
+  if (isTokenValid(token)) {
+    return true; 
+  } else {
+    clearAuthStorage();
+    return false;
+  }
 }
 
 export function isLoggedIn() {
@@ -36,5 +49,28 @@ export async function logoutFromServer() {
     console.warn("Logout request failed:", err);
   } finally {
     clearAuthCookie();
+  }
+}
+
+export function isTokenValid(token) {
+  if (!token) return false;
+  try {
+    const decoded = jwtDecode(token); // <-- correct function
+    if (!decoded.exp) return false;
+    // exp is in seconds, Date.now() is in ms
+    return decoded.exp * 1000 > Date.now();
+  } catch (e) {
+    return false;
+  }
+}
+
+export function clearAuthStorage() {
+  Cookies.remove("authToken");
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.removeItem('authToken');
+    } catch (e) {
+      console.warn('Failed to clear localStorage', e);
+    }
   }
 }

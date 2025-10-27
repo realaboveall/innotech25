@@ -3,11 +3,19 @@ import { Link, NavLink } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { getTokenFromCookie, isLoggedIn } from "./auth";
+import { checkAuthStatus, getTokenFromCookie, isLoggedIn } from "./auth";
 
 const FNav = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const hasToken = isLoggedIn();
+ 
+  let hasToken = checkAuthStatus();
+  useEffect(() => {
+    hasToken = checkAuthStatus();
+    console.log("Auth status:", hasToken);
+  }, []);
+
+
+  console.log(hasToken,"dhdbhash");
 
 
 
