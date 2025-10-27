@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 import { saveTokenToCookie, getTokenFromCookie } from "./auth";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 
 // --- Helper Components ---
@@ -35,17 +37,15 @@ const ProgressBar = ({ currentStep }) => {
               <div
                 className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg
                   transition-all duration-500
-                  ${
-                    isActive
-                      ? "bg-purple-500 text-white shadow-[0_0_15px_rgba(168,85,247,0.5)]"
-                      : "bg-gray-700 text-gray-400"
+                  ${isActive
+                    ? "bg-purple-500 text-white shadow-[0_0_15px_rgba(168,85,247,0.5)]"
+                    : "bg-gray-700 text-gray-400"
                   }`}>
                 {stepNumber}
               </div>
               <p
-                className={`text-xs sm:text-sm text-center mt-2 font-semibold transition-colors duration-500 ${
-                  isActive ? "text-white" : "text-gray-400"
-                }`}>
+                className={`text-xs sm:text-sm text-center mt-2 font-semibold transition-colors duration-500 ${isActive ? "text-white" : "text-gray-400"
+                  }`}>
                 {label}
               </p>
             </div>
@@ -57,7 +57,7 @@ const ProgressBar = ({ currentStep }) => {
 };
 
 // Reusable form input component
-const FormInput = ({ id, label, error, ...props }) => ( 
+const FormInput = ({ id, label, error, ...props }) => (
   <div>
     <label
       htmlFor={id}
@@ -68,10 +68,9 @@ const FormInput = ({ id, label, error, ...props }) => (
       id={id}
       {...props}
       className={`w-full bg-black/30 border rounded-lg p-3 text-white placeholder-gray-500 focus:ring-2 transition
-        ${
-          error
-            ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-            : "border-white/20 focus:ring-purple-500 focus:border-purple-500"
+        ${error
+          ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+          : "border-white/20 focus:ring-purple-500 focus:border-purple-500"
         }
       `}
     />
@@ -254,14 +253,14 @@ const BasicInfoStep = ({
           />
           {(selectedCategory?.title?.toLowerCase() === "college" ||
             formData.participationCategory === "college") && (
-            <FormToggle
-              id="isKietian"
-              name="isKietian"
-              label="Are you a student of KIET Group of Institutions?"
-              checked={formData.isKietian}
-              onChange={handleFormChange}
-            />
-          )}
+              <FormToggle
+                id="isKietian"
+                name="isKietian"
+                label="Are you a student of KIET Group of Institutions?"
+                checked={formData.isKietian}
+                onChange={handleFormChange}
+              />
+            )}
 
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <button
@@ -340,7 +339,7 @@ const App = () => {
         if (!token) return;
         try {
           token = decodeURIComponent(token);
-        } catch (e) {}
+        } catch (e) { }
         // console.log("Register: captured token", token);
         try {
           saveTokenToCookie(token, { expires: 7 });
@@ -349,7 +348,7 @@ const App = () => {
         }
         try {
           localStorage.setItem("authToken", token);
-        } catch (e) {}
+        } catch (e) { }
 
         // remove token from URL without reloading
         try {
@@ -417,7 +416,7 @@ const App = () => {
                   u.participationCategory || prev.participationCategory,
               }));
               // If basic profile already complete, go straight to dashboard
-              const basicComplete = u?.isProfileComplete?.basicProfile == true;
+              const basicComplete = u?.isProfileComplete?.basicProfile === true;
               if (basicComplete) {
                 navigate("/dashboard");
                 return;
@@ -460,7 +459,7 @@ const App = () => {
           if (res.ok && contentType.includes("application/json")) {
             const data = await res.json();
             const basicComplete =
-              data?.user?.isProfileComplete?.basicProfile == true;
+              data?.user?.isProfileComplete?.basicProfile === true;
             if (basicComplete) {
               navigate("/dashboard");
               return;
@@ -563,13 +562,35 @@ const App = () => {
       // On success redirect to dashboard
       navigate("/dashboard");
     } catch (err) {
-      console.error("Profile update failed", err);
-      alert(err.message || "Update failed");
+      console.log(err); // For debugging the full error
+
+      let errorMessage = "Update failed"; // Default message
+
+      if (err.message) {
+        try {
+          // Try to parse the err.message as JSON
+          const errorObject = JSON.parse(err.message);
+
+          // If successful, use the message from inside the JSON object
+          errorMessage = errorObject.message || "Update failed";
+        } catch (parseError) {
+          // If parsing fails, it's just a regular string. Use it directly.
+          errorMessage = err.message;
+        }
+      }
+
+      // Show the final, clean error message
+      toast.error(errorMessage, {
+        position: 'top-right',
+        autoClose: 5000,
+        pauseOnHover: true
+      });
     }
   };
 
   return (
     <div className="min-h-screen w-full text-white font-sans bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] p-4 sm:p-8 flex flex-col justify-center items-center">
+      <ToastContainer />
       <ProgressBar currentStep={step} />
       <main className="flex-grow flex items-center w-full">
         <div className="w-full">

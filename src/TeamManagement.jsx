@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, X, UserPlus, Loader2, Send, ChevronDown } from 'lucide-react';
 import { getTokenFromCookie } from './auth';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const InputField = ({ label, name, value, onChange, placeholder, type = 'text', required = true }) => (
@@ -82,6 +84,12 @@ const CategorySpecificFields = ({ category, fields, setFields, userProfile }) =>
             setLoading(false);
         }
     }, [category]);
+    useEffect(() => {
+        if (error) {
+            toast.error(String(error), { position: 'top-right', autoClose: 5000, pauseOnHover: true });
+            setError(null);
+        }
+    }, [error]);
     
     const handleCategoryChange = (e) => {
         const categoryId = e.target.value;
@@ -101,7 +109,7 @@ const CategorySpecificFields = ({ category, fields, setFields, userProfile }) =>
     };
 
     if (loading) return <p className="text-gray-400 sm:col-span-2">Loading category options...</p>;
-    if (error) return <p className="text-red-400 sm:col-span-2">Error: {error}</p>;
+    
 
     switch (category) {
         case 'college':
@@ -179,6 +187,22 @@ function TeamManagement({ userProfile }) {
     
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState('');
+
+    // Show searchError as toast
+    useEffect(() => {
+        if (searchError) {
+            toast.error(String(searchError), { position: 'top-right', autoClose: 5000, pauseOnHover: true });
+            setSearchError('');
+        }
+    }, [searchError]);
+
+    // Show submitError as toast
+    useEffect(() => {
+        if (submitError) {
+            toast.error(String(submitError), { position: 'top-right', autoClose: 5000, pauseOnHover: true });
+            setSubmitError('');
+        }
+    }, [submitError]);
 
     const handleSearchMember = async () => {
         if (!memberSearchQuery.trim()) return;
@@ -292,8 +316,9 @@ function TeamManagement({ userProfile }) {
             
             const result = await res.json();
             if (result.success) {
-                alert('Team created successfully!');
-                 window.location.reload();
+                toast.success('Team created successfully!', { position: 'top-right', autoClose: 3000 });
+                // give the toast a moment to display before reloading
+                setTimeout(() => window.location.reload(), 900);
             } else {
                  throw new Error(result.message || 'An unknown error occurred.');
             }
@@ -313,6 +338,7 @@ function TeamManagement({ userProfile }) {
             transition={{ duration: 0.5 }}
             className="border-2 border-white/10 mt-8 rounded-2xl p-6"
         >
+            <ToastContainer />
             <h3 className="text-xl font-semibold text-cyan-300 mb-4">Create Your Team</h3>
             <form onSubmit={handleSubmit} className="space-y-6">
                 <InputField label="Team Name" name="teamName" value={teamName} onChange={(e) => setTeamName(e.target.value)} placeholder="e.g., The Innovators" />
@@ -324,7 +350,7 @@ function TeamManagement({ userProfile }) {
                             {searchLoading ? <Loader2 className="animate-spin w-5 h-5"/> : <Search className="w-5 h-5"/>}
                         </button>
                     </div>
-                    {searchError && <p className="text-red-400 text-sm mt-2">{searchError}</p>}
+                        {/* searchError shown via toast */}
                 </div>
                 {searchResult && (
                     <div className="p-3 bg-white/5 rounded-lg flex items-center justify-between">

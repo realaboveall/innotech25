@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { getTokenFromCookie } from './auth';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import TeamManagement from './TeamManagement'; // The create-team form
 import MyTeamDetails from './MyTeamDetails'; // The team details view
 import { PendingRequests, SentRequests } from './TeamRequests'; // The request lists
@@ -46,6 +48,13 @@ function TeamDashboard({ userProfile }) {
     useEffect(() => {
         checkTeamStatus();
     }, [checkTeamStatus]);
+     // show error as toast instead of an inline error box
+    useEffect(() => {
+        if (error) {
+            toast.error(String(error), { position: 'top-right', autoClose: 5000, pauseOnHover: true });
+            setError(null);
+        }
+    }, [error]);
     
     if (loading) {
         return (
@@ -55,10 +64,7 @@ function TeamDashboard({ userProfile }) {
             </div>
         );
     }
-    
-    if (error) {
-        return <div className="text-red-400 text-center p-8 bg-red-500/10 rounded-lg">{error}</div>;
-    }
+   
 
     if (hasTeam && teamData) {
         return <MyTeamDetails team={teamData} />;
@@ -66,6 +72,7 @@ function TeamDashboard({ userProfile }) {
     
     return (
         <div>
+            <ToastContainer />
             <PendingRequests onAction={checkTeamStatus} />
             <SentRequests />
             <TeamManagement userProfile={userProfile} />

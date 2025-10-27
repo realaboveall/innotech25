@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Copy, Lock } from 'lucide-react';
 import { getTokenFromCookie, clearAuthCookie } from './auth';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import TeamManagement from './TeamManagement';
 import TeamDashboard from './TeamDashboard';
 import { PendingRequests } from './TeamRequests';
@@ -193,6 +195,13 @@ function StudentDashboard() {
     };
 
     useEffect(() => { fetchUser(); }, [navigate]);
+    // show errors via toast notifications instead of a full-page error
+    useEffect(() => {
+        if (error) {
+            toast.error(String(error), { position: 'top-right', autoClose: 5000, pauseOnHover: true });
+            setError(null);
+        }
+    }, [error]);
 
     const renderProfileDetails = () => {
         if (!userProfile?.profileDetails) return null;
@@ -214,19 +223,11 @@ function StudentDashboard() {
         );
     }
 
-    if (error) {
-        return (
-            <div className="flex items-center justify-center min-h-screen w-full text-white">
-                <GlassSection className="text-center">
-                    <h2 className="text-2xl font-bold text-red-500 mb-4">An Error Occurred</h2>
-                    <p>{error}</p>
-                </GlassSection>
-            </div>
-        );
-    }
+  
 
     return (
         <div className="min-h-screen w-full  text-white font-sans bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] p-4 sm:p-8 flex flex-col items-center">
+            <ToastContainer />
             <div className="w-full max-w-7xl my-8 mt-20">
                 {userProfile && !userProfile.isProfileComplete.categoryProfile ? (
                     <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="w-full">

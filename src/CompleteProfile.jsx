@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { useNavigate } from 'react-router-dom';
 import { getTokenFromCookie } from './auth';
 import { ChevronDown } from "lucide-react";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 // --- Helper Components (Reused for consistent styling) ---
@@ -242,6 +244,14 @@ const CompleteProfile = () => {
     };
 
     useEffect(() => { fetchUser(); }, [navigate]);
+      // Show errors as toast notifications instead of returning an error page
+    React.useEffect(() => {
+        if (error) {
+            toast.error(String(error), { position: 'top-right', autoClose: 5000, pauseOnHover: true });
+            // clear the error after showing toast to avoid duplicate toasts on re-render
+            setError(null);
+        }
+    }, [error]);
 
     const handleFormChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -453,19 +463,11 @@ const CompleteProfile = () => {
         );
     }
     
-    if (error) {
-        return (
-            <div className="flex items-center justify-center min-h-screen w-full text-white">
-                 <GlassSection className="text-center">
-                    <h2 className="text-2xl font-bold text-red-500 mb-4">An Error Occurred</h2>
-                    <p>{error}</p>
-                 </GlassSection>
-            </div>
-        );
-    }
+  
 
     return (
         <div className="min-h-screen w-full text-white font-sans  bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] p-4 sm:p-8 flex flex-col justify-center items-center">
+            <ToastContainer />
             <motion.div key="profile-form" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -30 }} transition={{ duration: 0.5 }} className="w-full">
                 <GlassSection className="max-w-4xl mx-auto mt-16">
                     <div className="text-center mb-8">
