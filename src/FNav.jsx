@@ -11,11 +11,8 @@ const FNav = () => {
   let hasToken = checkAuthStatus();
   useEffect(() => {
     hasToken = checkAuthStatus();
-    console.log("Auth status:", hasToken);
   }, []);
 
-
-  console.log(hasToken,"dhdbhash");
 
 
 
