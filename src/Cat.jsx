@@ -9,7 +9,7 @@ const categories = [
     points: [
       "Innovative ideas from school students.",
       "Team size: 2–8 students (can be from different classes or age groups).",
-      "Last date: 29 Oct 2025.",
+      "Last date: 31 Oct 2025.",
       "Details to share: School name, Team name, Abstract (100 words).",
     ],
     num: "Category 2",
@@ -21,7 +21,7 @@ const categories = [
     points: [
       "Innovative ideas from Research Scholars.",
       "Team size: 1–3 students (can be from different courses or colleges).",
-      "Last date: 29 Oct 2025.",
+      "Last date: 31 Oct 2025.",
       "Details to share: University name, Team name, Abstract (100 words).",
     ],
     num: "Category 3",
@@ -33,7 +33,7 @@ const categories = [
     points: [
       "Innovative ideas from Start-ups/Innovators (registered or to be registered).",
       "Details to share: Start-up/Company name, Product/Service Name, Abstract (100 words) with cost.",
-      "Last date: 29 Oct 2025.",
+      "Last date: 31 Oct 2025.",
     ],
     num: "Category 4",
   },

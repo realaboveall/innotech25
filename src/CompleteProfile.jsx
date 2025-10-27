@@ -68,7 +68,7 @@ const FormToggle = ({ id, label, ...props }) => (
 // --- Category-Specific Forms ---
     const departmentOptions = [
   "CSE", "IT", "CSIT", "CS", "CSE_AI", "CSE_AIML", "ECE", "ELCE", "EEE", "ME", 
-  "CSE_Cyber_Security", "CSE_Data_Science", "ECE_VLSI", "AMIA","MCA","MBA","B_PHARMA","Other"
+  "CSE_Cyber_Security", "CSE_Data_Science", "ECE_VLSI", "AMIA","MCA","MBA","B_PHARMA" , "M_PHARMA" ,"D_PHARMA","Other"
 ];
 
     const CollegeForm = ({ formData, handleFormChange, errors }) => (

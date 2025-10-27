@@ -4,14 +4,12 @@ import GlassSection from "./GlassSection";
 import { Link } from "react-router-dom";
 
 const Theme = () => {
-
   const [stats, setStats] = useState({
     totalUsers: "...",
     totalTeams: "...",
     totalPrizePool: "...",
     totalAwards: "...",
   });
-
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -21,7 +19,6 @@ const Theme = () => {
         );
         const result = await response.json();
         if (result.success) {
-       
           setStats(result.data);
         }
       } catch (error) {
@@ -30,8 +27,7 @@ const Theme = () => {
     };
 
     fetchStats();
-  }, []); 
-
+  }, []);
 
   const statItems = [
     { label: "Participants", value: stats.totalUsers },
@@ -50,8 +46,7 @@ const Theme = () => {
         transition={{ duration: 0.8 }}
         className="text-4xl md:text-6xl font-extrabold tracking-tight 
            bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 
-           bg-clip-text text-transparent mb-4 font-Fira"
-      >
+           bg-clip-text text-transparent mb-4 font-Fira">
         A Step towards Innovation, Start-ups and Sustainable Society
       </motion.h1>
       {/* Description */}
@@ -59,8 +54,7 @@ const Theme = () => {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.8 }}
-        className="text-gray-300 leading-relaxed max-w-3xl mx-auto mb-12 font-pt text-2xl"
-      >
+        className="text-gray-300 leading-relaxed max-w-3xl mx-auto mb-12 font-pt text-2xl">
         Innotech’25 aims to address societal challenges and deliver innovative
         solutions aligned with the UN Sustainable Development Goals (SDGs).
       </motion.p>
@@ -70,11 +64,10 @@ const Theme = () => {
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.6, duration: 0.8 }}
-        className="flex flex-col sm:flex-row items-center justify-center gap-6 text-gray-300 text-lg mb-12"
-      >
+        className="flex flex-col sm:flex-row items-center justify-center gap-6 text-gray-300 text-lg mb-12">
         <div className="flex items-center gap-2">
           <span className="text-2xl font-Fira font-extrabold">📅</span> November
-          13, 2025
+          14, 2025
         </div>
         <div className="hidden sm:block text-gray-500">•</div>
         <div className="flex items-center gap-2">
@@ -93,8 +86,7 @@ const Theme = () => {
             transition={{ delay: i * 0.15 }}
             className="bg-black/50 backdrop-blur-lg border border-white/10 rounded-xl py-6 px-4 
                shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(236,72,153,0.15)] 
-               transition-all duration-500"
-          >
+               transition-all duration-500">
             <h3 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
               {stat.value}
             </h3>
