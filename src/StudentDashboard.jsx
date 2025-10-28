@@ -139,6 +139,7 @@ function StudentDashboard() {
                 headers: token ? { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' } : { 'Content-Type': 'application/json' },
                 credentials: 'include'
             });
+            window.location.reload();
         } catch (err) {
             console.warn('Logout failed', err);
         } finally {

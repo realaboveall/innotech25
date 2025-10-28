@@ -66,8 +66,10 @@ function TeamDashboard({ userProfile }) {
     }
    
 
-    if (hasTeam && teamData) {
-        return <MyTeamDetails team={teamData} />;
+   if (hasTeam && teamData) {
+        // Passing 'userProfile' to check if current user is leader
+        // Passing 'onTeamUpdate' to allow MyTeamDetails to refresh the dashboard
+        return <MyTeamDetails team={teamData} userProfile={userProfile} onTeamUpdate={checkTeamStatus} />;
     }
     
     return (
