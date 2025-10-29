@@ -343,7 +343,7 @@ function TeamManagement({ userProfile }) {
             <form onSubmit={handleSubmit} className="space-y-6">
                 <InputField label="Team Name" name="teamName" value={teamName} onChange={(e) => setTeamName(e.target.value)} placeholder="e.g., The Innovators" />
                 <div>
-                    <label className="block text-sm font-medium text-cyan-300 mb-1">Add Team Members (1-4 members)</label>
+                    <label className="block text-sm font-medium text-cyan-300 mb-1">Add Team Members</label>
                     <div className="flex items-center gap-2">
                         <input type="text" value={memberSearchQuery} onChange={(e) => setMemberSearchQuery(e.target.value)} placeholder="Enter member's User ID to search" className="flex-grow bg-black/30 border border-white/20 rounded-md py-2 px-3 text-white focus:ring-2 focus:ring-purple-500"/>
                         <button type="button" onClick={handleSearchMember} disabled={searchLoading} className="px-4 py-2 bg-purple-600 rounded-md hover:bg-purple-500 disabled:opacity-50 disabled:cursor-wait">
