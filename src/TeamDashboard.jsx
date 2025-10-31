@@ -6,14 +6,68 @@ import TeamManagement from './TeamManagement'; // The create-team form
 import MyTeamDetails from './MyTeamDetails'; // The team details view
 import { PendingRequests, SentRequests } from './TeamRequests'; // The request lists
 import { Loader2 } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Lock } from 'lucide-react'; 
 
 const API_BASE_URL = 'https://api.innotech.yaytech.in';
+
+const RegistrationClosedCard = () => (
+    <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="border-2 border-white/10 mt-8 rounded-2xl p-6 text-center"
+    >
+        <h3 className="text-xl font-semibold text-cyan-300 mb-4">
+            Team Creation is Closed
+        </h3>
+        <span><Lock className="inline-block w-20 h-20 mr-1" /></span>
+        <p className="text-gray-400 mt-2">
+            The period for creating new teams has ended. You can still manage
+            your existing team invitations above.
+        </p>
+    </motion.div>
+);
 
 function TeamDashboard({ userProfile }) {
     const [teamData, setTeamData] = useState(null);
     const [hasTeam, setHasTeam] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const [regStatusLoading, setRegStatusLoading] = useState(true);
+    const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
+
+    useEffect(() => {
+        const checkRegistrationStatus = async () => {
+            try {
+                const token = getTokenFromCookie() || localStorage.getItem('authToken');
+                const res = await fetch(`${API_BASE_URL}/api/registration/status`, {
+                    headers: { 'Authorization': `Bearer ${token}` },
+                });
+                
+                if (!res.ok) {
+                    throw new Error("Failed to fetch registration status");
+                }
+
+                const data = await res.json();
+
+                if (data.success && data.data.isRegistrationOpen) {
+                    setIsRegistrationOpen(true);
+                } else {
+                    setIsRegistrationOpen(false);
+                }
+            } catch (err) {
+                // On error, default to closed
+                setIsRegistrationOpen(false); 
+                console.error("Registration status check failed:", err);
+            } finally {
+                setRegStatusLoading(false);
+            }
+        };
+
+        checkRegistrationStatus();
+    }, []);
 
     const checkTeamStatus = useCallback(async () => {
         setLoading(true);
@@ -56,7 +110,7 @@ function TeamDashboard({ userProfile }) {
         }
     }, [error]);
     
-    if (loading) {
+    if (loading || regStatusLoading) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[300px] text-white">
                 <Loader2 className="w-12 h-12 border-4 border-dashed rounded-full animate-spin border-purple-500" />
@@ -77,7 +131,11 @@ function TeamDashboard({ userProfile }) {
             <ToastContainer />
             <PendingRequests onAction={checkTeamStatus} />
             <SentRequests />
-            <TeamManagement userProfile={userProfile} />
+            {isRegistrationOpen ? (
+                <TeamManagement userProfile={userProfile} />
+            ) : (
+                <RegistrationClosedCard />
+            )}
         </div>
     );
 }
