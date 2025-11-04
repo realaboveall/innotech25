@@ -127,11 +127,12 @@ function TeamDashboard({ userProfile }) {
     }
     
     return (
+        //  && !userProfile.isKietian
         <div>
             <ToastContainer />
             <PendingRequests onAction={checkTeamStatus} />
             <SentRequests />
-            {isRegistrationOpen && !userProfile.isKietian  ? (
+            {isRegistrationOpen  ? (
                 <TeamManagement userProfile={userProfile} />
             ) : (
                 <RegistrationClosedCard />
