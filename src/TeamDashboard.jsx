@@ -132,7 +132,7 @@ function TeamDashboard({ userProfile }) {
             <ToastContainer />
             <PendingRequests onAction={checkTeamStatus} />
             <SentRequests />
-            {isRegistrationOpen && !userProfile.isKietian ? (
+            {isRegistrationOpen ? (
                 <TeamManagement userProfile={userProfile} />
             ) : (
                 <RegistrationClosedCard />
