@@ -121,8 +121,6 @@ function TeamDashboard({ userProfile }) {
    
 
    if (hasTeam && teamData) {
-        // Passing 'userProfile' to check if current user is leader
-        // Passing 'onTeamUpdate' to allow MyTeamDetails to refresh the dashboard
         return <MyTeamDetails team={teamData} userProfile={userProfile} onTeamUpdate={checkTeamStatus} />;
     }
     
@@ -132,7 +130,7 @@ function TeamDashboard({ userProfile }) {
             <ToastContainer />
             <PendingRequests onAction={checkTeamStatus} />
             <SentRequests />
-            {isRegistrationOpen && userProfile.isKietian ? (
+            {isRegistrationOpen ? (
                 <TeamManagement userProfile={userProfile} />
             ) : (
                 <RegistrationClosedCard />
