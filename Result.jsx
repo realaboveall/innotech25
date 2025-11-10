@@ -369,24 +369,27 @@ const CollapsibleTrack = ({ track, index }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="rounded-2xl border border-white/10 bg-black/10 backdrop-blur-2xl overflow-hidden 
-                 hover:border-white/20 hover:shadow-[0_0_25px_rgba(255,255,255,0.07)] transition-all duration-500">
+      className="rounded-xl border border-white/10 bg-black/20 backdrop-blur-xl overflow-hidden
+             hover:border-white/20 hover:shadow-[0_0_15px_rgba(255,255,255,0.06)] transition-all duration-500">
       {/* Track Header */}
       <button
         onClick={() => setOpen(!open)}
-        className="w-full text-center py-6 flex flex-col items-center justify-center gap-2 
-                   text-white/90 font-Fira hover:bg-white/5 transition-all duration-300">
-        <div className="text-4xl">{track.icon}</div>
-        <h2 className="text-2xl md:text-3xl font-semibold tracking-wide">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-400">
-            Track {track.trackNum}
-          </span>{" "}
-          — {track.title}
-        </h2>
+        className="w-full flex items-center justify-between px-6 py-4 md:px-8 md:py-5
+               text-white/90 font-Fira hover:bg-white/5 transition-all duration-300">
+        <div className="flex items-center gap-3 text-left">
+          <div className="text-2xl md:text-3xl">{track.icon}</div>
+          <h2 className="text-lg md:text-xl font-semibold tracking-wide">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-400">
+              Track {track.trackNum}
+            </span>{" "}
+            — {track.title}
+          </h2>
+        </div>
+
         <motion.div
           animate={{ rotate: open ? 180 : 0 }}
           transition={{ duration: 0.3 }}
-          className="text-xl text-white/70 mt-1">
+          className="text-lg md:text-xl text-white/70 ml-3">
           ⌄
         </motion.div>
       </button>
@@ -399,37 +402,38 @@ const CollapsibleTrack = ({ track, index }) => {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.6, ease: "easeInOut" }}
-            className="px-6 md:px-10 pb-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="px-5 md:px-8 pb-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
               {track.branches.map((branch, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 8 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.05 }}
-                  className="bg-white/5 border border-white/10 rounded-xl p-4 md:p-5
-                             hover:bg-white/10 hover:border-white/20 transition-all duration-300">
-                  <h3 className="font-Fira text-lg md:text-xl mb-3 text-white/90 text-center">
+                  transition={{ duration: 0.35, delay: i * 0.04 }}
+                  className="bg-white/5 border border-white/10 rounded-lg p-3 md:p-4
+                         hover:bg-white/10 hover:border-white/20 transition-all duration-300">
+                  <h3 className="font-Fira text-base md:text-lg mb-2 text-white/90 text-center">
                     {branch.branch}
                   </h3>
+
                   {branch.teams && branch.teams.length > 0 ? (
-                    <ul className="space-y-2 font-pt text-sm md:text-base text-gray-300">
+                    <ul className="space-y-1.5 font-pt text-[13px] md:text-sm text-gray-300">
                       {branch.teams.map((t, j) => (
                         <li
                           key={j}
                           className="flex items-center justify-between bg-black/30 border border-white/10 
-                                     rounded-lg px-3 py-2 hover:bg-black/40 hover:border-white/20 transition">
+                                 rounded-md px-2.5 py-1.5 hover:bg-black/40 hover:border-white/20 transition">
                           <span>{t.name}</span>
-                          <span className="text-xs font-mono text-white/80 bg-white/5 border border-white/10 px-2 py-0.5 rounded">
+                          <span className="text-[11px] font-mono text-white/80 bg-white/5 border border-white/10 px-1.5 py-[1px] rounded">
                             {t.code}
                           </span>
                         </li>
                       ))}
                     </ul>
                   ) : (
-                    <p className="text-gray-400 text-sm text-center">
+                    <p className="text-gray-400 text-xs text-center">
                       No teams listed.
                     </p>
                   )}
