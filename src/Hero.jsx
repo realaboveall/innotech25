@@ -68,7 +68,7 @@ function Hero() {
 
                 {/* Button Text */}
                 <span className="relative z-10 drop-shadow-[0_0_6px_rgba(255,255,255,0.4)] font-Fira">
-                  🚀 Results
+                  🚀 Round 1 - Shortlisted Teams
                 </span>
               </button>
             </Link>
