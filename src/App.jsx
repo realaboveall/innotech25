@@ -10,6 +10,7 @@ import Form from "./Form.jsx";
 import CompleteProfile from "./CompleteProfile.jsx";
 import StudentDashboard from "./StudentDashboard.jsx";
 import PersistentBackground from "./PersistentBackground.jsx";
+import Result from "../Result.jsx";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="/form" element={<Form />}></Route>
           <Route path="/complete-profile" element={<CompleteProfile />} />
           <Route path="/dashboard" element={<StudentDashboard />} />
+          <Route path="/result" element={<Result />} />
         </Routes>
 
         <Footer />

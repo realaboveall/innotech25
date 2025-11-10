@@ -12,7 +12,7 @@ import Register from "./Register";
 import InnovationDomains from "./Domains";
 import Sponsor from "./Investors";
 import { Element } from "react-scroll";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cat from "./Cat";
 
 function Hero() {
@@ -25,7 +25,7 @@ function Hero() {
     <>
       {/* HERO */}
       <Element name="home">
-        <section className="relative h-screen overflow-hidden flex flex-col items-center justify-center text-center px-4 sm:mt-12">
+        <section className="relative h-screen overflow-hidden flex flex-col items-center justify-center text-center px-4">
           <motion.p
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -50,21 +50,28 @@ function Hero() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="mb-8">
-            <button
-              className="relative px-8 sm:px-12 py-3 sm:py-4 rounded-full border border-white/20 
-        text-white/90 font-semibold text-sm sm:text-base md:text-lg tracking-wider 
-        backdrop-blur-md bg-white/5 hover:bg-white/10 transition-all duration-500 
-        hover:scale-[1.08] hover:border-white/40 overflow-hidden group
-        shadow-[0_0_25px_rgba(255,255,255,0.08)]">
-              <span
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
+            <Link to="/result">
+              <button
+                className="relative px-8 sm:px-12 py-3 sm:py-4 rounded-full border border-white/20 
+      text-white/90 font-semibold text-sm sm:text-base md:text-lg tracking-wider 
+      backdrop-blur-md bg-white/5 hover:bg-white/10 transition-all duration-500 
+      hover:scale-[1.08] hover:border-white/40 overflow-hidden group
+      shadow-[0_0_25px_rgba(255,255,255,0.08)]">
+                {/* Shimmer Line */}
+                <span
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
         translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[2000ms]"
-              />
-              <span className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400/20 via-fuchsia-400/20 to-purple-400/20 opacity-0 group-hover:opacity-100 blur-lg transition-opacity duration-700" />
-              <span className="relative z-10 drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]">
-                🚀 Presents
-              </span>
-            </button>
+                />
+
+                {/* Subtle Glow */}
+                <span className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400/20 via-fuchsia-400/20 to-purple-400/20 opacity-0 group-hover:opacity-100 blur-lg transition-opacity duration-700" />
+
+                {/* Button Text */}
+                <span className="relative z-10 drop-shadow-[0_0_6px_rgba(255,255,255,0.4)] font-Fira">
+                  🚀 Results
+                </span>
+              </button>
+            </Link>
           </motion.div>
 
           {/* Hero Title */}
