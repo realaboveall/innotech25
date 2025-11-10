@@ -143,10 +143,10 @@ function MyTeamDetails({ team, userProfile, onTeamUpdate }) {
                         <span className="font-mono text-lg">{team.teamCode}</span>
                     </div>
                 </div>
-                {team.isCompleted && (
+                {team.isDepartmentQualified && (
                     <div className="flex items-center gap-2 px-4 py-2 bg-green-500/20 text-green-300 rounded-full">
-                        <CheckCircle className="w-5 h-5" />
-                        <span className="font-semibold">Team Complete</span>
+                        {/* <CheckCircle className="w-5 h-5" /> */}
+                        <span className="font-semibold">Team Qualified For Finale🎉</span>
                     </div>
                 )}
             </div>
